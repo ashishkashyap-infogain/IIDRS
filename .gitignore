@@ -338,3 +338,6 @@ IIDRS/Web.config
 IIDRS/Web.config
 *.config
 *.config
+*.config
+*.pdb
+*.dll
