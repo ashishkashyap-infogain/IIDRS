@@ -344,3 +344,14 @@ IIDRS/Web.config
 .vs/IIDRSnew/v16/.suo
 IIDRS/bin/IIDRS.dll
 IIDRS/bin/IIDRS.pdb
+*/**/bin/Debug
+*/**/bin/Release
+*/**/obj/Debug
+*/**/obj/Release
+.vs/IIDRSnew/v16/.suo
+*.exe
+*.pdb
+*.manifest
+*.cache
+*.dll
+*.pdb
