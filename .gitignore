@@ -355,3 +355,10 @@ IIDRS/bin/IIDRS.pdb
 *.cache
 *.dll
 *.pdb
+OBJ
+IIDRS/bin
+bin
+*/bin
+bin/ 	# ignore bin directory 
+*.obj 	# ignore any files with .obj postfix
+*.dll
