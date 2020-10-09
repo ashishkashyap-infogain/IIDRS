@@ -338,3 +338,28 @@ IIDRS/Web.config
 IIDRS/Web.config
 *.config
 *.config
+*.config
+*.pdb
+*.dll
+.vs/IIDRSnew/v16/.suo
+IIDRS/bin/IIDRS.dll
+IIDRS/bin/IIDRS.pdb
+*/**/bin/Debug
+*/**/bin/Release
+*/**/obj/Debug
+*/**/obj/Release
+.vs/IIDRSnew/v16/.suo
+*.exe
+*.pdb
+*.manifest
+*.cache
+*.dll
+*.pdb
+OBJ
+IIDRS/bin
+bin
+*/bin
+bin/ 	# ignore bin directory 
+*.obj 	# ignore any files with .obj postfix
+*.dll
+IIDRS/Web.config
