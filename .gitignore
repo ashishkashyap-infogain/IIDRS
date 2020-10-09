@@ -341,3 +341,6 @@ IIDRS/Web.config
 *.config
 *.pdb
 *.dll
+.vs/IIDRSnew/v16/.suo
+IIDRS/bin/IIDRS.dll
+IIDRS/bin/IIDRS.pdb
