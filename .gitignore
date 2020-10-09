@@ -335,3 +335,5 @@ IIDRS/bin/IIDRS.dll
 IIDRS/bin/IIDRS.dll.config
 *.pdb
 IIDRS/Web.config
+IIDRS/Web.config
+*.config
