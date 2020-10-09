@@ -1,0 +1,370 @@
+﻿@model IEnumerable<IIDRS.M_USER>
+
+@{
+    ViewBag.Title = "Authorization";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Search.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+@*<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>*@
+@*<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>*@
+@*<link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"  rel="stylesheet" />*@ 
+@*<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>*@
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+@*<script src="~/Scripts/pagination.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="~/Content/pagination.css"/>*@
+<script src="~/Scripts/twbsPagination.js" type="text/javascript"></script>
+<div style="float:right">
+    <button style="float:right" class="btn btn-sm btn-primary rounded-0" id="btnAddRow"><i class="fa fa-address-book"></i>Add</button>
+    @*<a href="/Customer/Edit" class="btn btn-sm btn-primary rounded-0"><i class="fa fa-edit"></i>Edit</a>
+        <a href="/Customer/Delete" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Are you sure?') "><i class="fa fa-trash"></i>Delete</a>
+        <a href="/Customer/Save" class="btn btn-sm btn-success rounded-0"><i class="fa fa-save"></i>Save</a>*@
+    <br /><br />
+</div>
+
+<div class="flexbox">
+    <div class="search">
+        <div>
+            <input type="text" placeholder="Search . . ." required id="Search">
+        </div>
+    </div>
+</div>
+
+@*<div class="container">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="search" id="Search" placeholder="Search" class="form-control" />
+            </div>
+        </div>
+    </div>*@
+
+
+
+
+<table id="DataTable" class="table table-bordered table-striped table-hover">
+
+    <thead class="thead-dark">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.USER_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LOGIN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LOGIN_DOMAIN)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.USER_FLG)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.CHALLENGE_ANSWER)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CHALLENGE_QUESTION)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CTI_ACD_USERID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CTI_PWD)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EXCHNG_PROF_NAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EXCHNG_PROF_PWD)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EXCHNG_STOREID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EXCHNG_SYNC_TYPE)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.PASSWORD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PW_LAST_UPD)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.RPT_SRVR_PWD)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CREATED_DT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CREATED_BY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LAST_UPD_DT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LAST_UPD_BY)
+            </th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr class="Search">
+
+                <td class="nr">
+                    @Html.DisplayFor(modelItem => item.USER_ID, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LOGIN)
+                </td>
+                <td id="Login">
+                    @Html.DisplayFor(modelItem => item.LOGIN_DOMAIN)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.USER_FLG, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.CHALLENGE_ANSWER)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CHALLENGE_QUESTION)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CTI_ACD_USERID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CTI_PWD)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EXCHNG_PROF_NAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EXCHNG_PROF_PWD)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EXCHNG_STOREID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EXCHNG_SYNC_TYPE)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.PASSWORD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PW_LAST_UPD, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.RPT_SRVR_PWD)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.CREATED_DT, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CREATED_BY, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LAST_UPD_DT, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LAST_UPD_BY)
+                </td>
+
+            </tr>
+        </tbody>
+    }
+
+</table>
+<div class="container">
+    <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination"></ul>
+    </nav>
+</div>
+        <script src="~/scripts/bootstable.js">
+            //reference of bootstable.js
+
+        </script>
+
+
+        <script>
+            //built in methods in bootstable.js script......location of bootstable.js in script folder
+            let addedInLast = false;
+            $('#DataTable').SetEditable({
+                columnsEd: "1,2,3",
+                $addButton: $('#btnAddRow'),
+                onAdd: function () {
+                    addedInLast = true
+                    $('#btnAddRow').attr("disabled", "disabled");
+                },
+                onEdit: (row) => {
+                    let data
+                    if (addedInLast) {
+                        data = getRowData()
+                        makeRequest(data)
+                    }
+                    else {
+                        data = getEditData(row)
+                        editRequest(data)
+                    }
+                },
+                //onBeforeDelete: (row) => {
+                //    var doc = prompt("Are you sure you want to delete?"); 
+                //},
+                onDelete: (row) => {
+                    $("#btnAddRow").removeAttr("disabled");
+                    let data
+                    data = getId(row)
+                    if (data != null) {
+                        deleteRequest(data)
+                    }
+                }
+            });
+            //for addition
+            function getRowData(row = null) //default null #TODO incase for edit we have to send row number to get data of specific row
+            {
+                addedInLast = false
+
+                let lastRow = $('#DataTable tr').eq(1);
+
+                console.log(lastRow);
+                let totalCols = lastRow[0].cells.length - 1
+
+                let headings = ["USER_ID", "LOGIN", "LOGIN_DOMAIN", "PASSWORD", "PW_LAST_UPD", "CREATED_DT", "CREATED_BY", "LAST_UPD_DT", "LAST_UPD_BY"]
+
+                let data = {}
+
+                for (let col = 0; col < totalCols; col++) {
+                    let colData = lastRow[0].cells[col].innerText
+                    data[headings[col]] = colData
+                }
+                return data
+            }
+            //for edit of row
+            function getEditData(row) {
+                let headings = ["USER_ID", "LOGIN", "LOGIN_DOMAIN", "PASSWORD", "PW_LAST_UPD", "CREATED_DT", "CREATED_BY", "LAST_UPD_DT", "LAST_UPD_BY"]
+
+                let data = {}
+
+                for (let col = 0; col < headings.length - 1; col++) {
+                    let colData = row.eq(col).text();
+                    data[headings[col]] = colData
+                }
+
+                return data;
+            }
+            //for delete of row
+            function getId(row) {
+                addedInLast = false
+
+                let headings = ["USER_ID"]
+
+                let data = {}
+
+                data[headings[0]] = row.text();
+
+                return data
+            }
+            //ajax post request for add
+            function makeRequest(dataToBeSent) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "https://localhost:44350/Customer/Create",
+                    data: dataToBeSent,
+                    success: function () {
+                        $("#btnAddRow").removeAttr("disabled");
+                        window.location.reload();
+                    }
+                });
+            }
+            //ajax post request for edit
+            function editRequest(dataToBeSent) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "https://localhost:44350/Customer/Edit",
+                    data: dataToBeSent,
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function () {
+                        window.location.reload();
+                        
+                    }
+                });
+            }
+            //ajax post request for delete
+            function deleteRequest(dataToBeSent) {
+
+                $.ajax({
+                    type: "POST",
+                    url: 'https://localhost:44350/Customer/Delete',
+                    data: dataToBeSent,
+                    success: function () {
+
+                        window.location.reload();
+                    },
+                    error: function () {
+                        window.location.reload();
+                    }
+                });
+            }
+
+            //for pagination
+            $(document).ready(function () {
+                let pageSize = 7;
+                var visibleRows = $('table#DataTable tbody tr:visible');
+
+                function drawPagination(totalitems) {
+                    var $pagination = $('#pagination');
+                    var totalValue = totalitems;
+                    var toShow = 7;
+                    var numOfPage = Math.ceil(totalValue / toShow);
+                    if (numOfPage > 1) {
+                        var totalPages = numOfPage;
+                        var currentPage = $pagination.twbsPagination('getCurrentPage');
+                        $pagination.twbsPagination('destroy');
+                        $pagination.twbsPagination($.extend({}, {
+                            startPage: currentPage,
+                            totalPages: totalPages,
+                            visiblePages: 7,
+                            onPageClick: function (event, page) {
+                                refreshPage(event, page);
+                            }
+                        }));
+                    } else {
+                        $pagination.twbsPagination('destroy');
+                    }
+                }
+                function refreshPage(event,page) {
+                    var pageStart = (pageSize * page) - pageSize;
+                    var pageLast = pageSize * page;
+                    $(visibleRows).hide();
+                    var currentRows = $(visibleRows).slice(pageStart, pageLast);
+                    $(currentRows).show();
+                }
+
+                drawPagination(visibleRows.length);
+                
+                //for search
+                function Contains(text_one, text_two) {
+                    if (text_one.indexOf(text_two) != -1)
+                        return true;
+                }
+                $("#Search").keyup(function () {
+                    var searchtext = $("#Search").val().toLowerCase();
+                    $(".Search").each(function () {
+                        if (!Contains($(this).text().toLowerCase(), searchtext)) {
+                            $(this).hide();
+                        }
+                        else {
+                            $(this).show();
+                        }
+                    });
+                });
+            });
+        </script>
+
+

@@ -1,0 +1,50 @@
+﻿<script type="text/javascript">
+    if ('@ViewBag.Error' != "")
+    alert('@ViewBag.Error');
+</script>
+@{
+	ViewBag.Title = "IDRS - Login";
+	Layout = "~/Views/Shared/_LayoutPageLogin.cshtml";
+}
+
+@*<h1>IIDRS</h1>*@
+
+<div class="row" style="background: rgba(255, 255, 255, 0.7117647058823529); position: relative; top: 70px">
+	<div class="column">
+		<img src="~/images/infogain-logo.png" alt="infogain" style="width:75%;margin-top:10px">
+	</div>
+	<div class="column">
+		<img src="~/images/IDRS2.png" alt="idrs" style="width:80%; float:right;margin-top:-25px">
+	</div>
+</div>
+<div class=" w3l-login-form" style="position:relative; top:70px">
+	<h2>Login Here</h2>
+	<form action="/Home/Login2" method="POST">
+
+		<div class=" w3l-form-group">
+			<label>Username:</label>
+			<div class="group">
+				<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewBox="0 0 24 24" fill="none" stroke="#fc3955" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+				<input type="text" name="LOGIN" class="form-control" placeholder="Username" required="required" style="font-size:medium" />
+			</div>
+		</div>
+		<div class=" w3l-form-group">
+			<label>Password:</label>
+			<div class="group">
+				<svg xmlns="http://www.w3.org/2000/svg" width="36" height="25" viewBox="0 0 24 24" fill="none" stroke="#fc3955" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-key"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+				<input type="password" name="PASSWORD" class="form-control" placeholder="Password" required="required" style="font-size:medium" />
+			</div>
+		</div>
+
+		<button type="submit">Login</button>
+	</form>
+</div>
+<footer>
+	<p class="copyright-agileinfo" style="position:relative; top:50px">Copyright &copy; @DateTime.Now.Year Infogain.</p>
+	<p class="copyright-agileinfo" style="position:relative; top:50px">All Rights Reserved. </p>
+</footer>
+
+
+
+
+

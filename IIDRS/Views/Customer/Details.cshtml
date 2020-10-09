@@ -1,0 +1,171 @@
+﻿@model IIDRS.M_USER
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>M_USER</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.M_PARTY.PARTY_UID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.M_PARTY.PARTY_UID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LOGIN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LOGIN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LOGIN_DOMAIN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LOGIN_DOMAIN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USER_FLG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USER_FLG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CHALLENGE_ANSWER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CHALLENGE_ANSWER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CHALLENGE_QUESTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CHALLENGE_QUESTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CTI_ACD_USERID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CTI_ACD_USERID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CTI_PWD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CTI_PWD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EXCHNG_PROF_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EXCHNG_PROF_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EXCHNG_PROF_PWD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EXCHNG_PROF_PWD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EXCHNG_STOREID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EXCHNG_STOREID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EXCHNG_SYNC_TYPE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EXCHNG_SYNC_TYPE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PASSWORD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PASSWORD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PW_LAST_UPD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PW_LAST_UPD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RPT_SRVR_PWD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RPT_SRVR_PWD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_DT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_DT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED_BY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_UPD_DT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_UPD_DT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAST_UPD_BY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAST_UPD_BY)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.USER_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

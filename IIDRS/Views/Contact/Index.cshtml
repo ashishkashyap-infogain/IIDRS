@@ -1,0 +1,211 @@
+﻿@model IEnumerable<IIDRS.M_CONTACT>
+
+@{
+    ViewBag.Title = "Contact Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<link href="~/Content/Search.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="~/Scripts/twbsPagination.js" type="text/javascript"></script>
+
+<div style="float:right">
+    <button style="float:right" class="btn btn-sm btn-primary rounded-0" id="btnAddRow"><i class="fa fa-address-book"></i>Add</button>
+    @*<a href="/Customer/Edit" class="btn btn-sm btn-primary rounded-0"><i class="fa fa-edit"></i>Edit</a>
+        <a href="/Customer/Delete" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Are you sure?') "><i class="fa fa-trash"></i>Delete</a>
+        <a href="/Customer/Save" class="btn btn-sm btn-success rounded-0"><i class="fa fa-save"></i>Save</a>*@
+    <br /><br />
+</div>
+<div class="flexbox">
+    <div class="search">
+        <div>
+            <input type="text" placeholder="Search . . ." required id="Search">
+        </div>
+    </div>
+
+
+
+    @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
+    <table class="table table-bordered table-striped table-hover " id="DataTable">
+        <thead class="thead-dark">
+
+
+            @*<th>
+                    @Html.DisplayNameFor(model => model.M_BU.ROW_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.M_PARTY.PARTY_UID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.M_USER.LOGIN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.M_USER1.LOGIN)
+                </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.ROW_ID)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.ACTIVE_FLG)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EMP_FLG)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.FST_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMAIL_ADDR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMP_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PHONE_NO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_DT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LAST_UPD_DT)
+        </th>
+
+
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr class="Search">
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.M_BU.ROW_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.M_PARTY.PARTY_UID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.M_USER.LOGIN)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.M_USER1.LOGIN)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ROW_ID)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.ACTIVE_FLG)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EMP_FLG)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FST_NAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LAST_NAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EMAIL_ADDR)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EMP_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PHONE_NO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CREATED_DT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LAST_UPD_DT)
+                    </td>
+                    @*<td>
+                            @Html.ActionLink("Edit", "Edit", new { id=item.PERSON_UID }) |
+                            @Html.ActionLink("Details", "Details", new { id=item.PERSON_UID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id=item.PERSON_UID })
+                        </td>*@
+                </tr>
+            </tbody>
+        }
+
+    </table>
+    <div class="container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination" id="pagination"></ul>
+        </nav>
+    </div>
+    <script src="~/scripts/bootstable.js">
+        //reference of bootstable.js
+
+    </script>
+    <script>
+        $('#DataTable').SetEditable({
+            columnsEd: "1,2,3",
+            $addButton: $('#btnAddRow'),
+            onAdd: function () {
+                window.location.reload();
+            }
+        });
+        //for pagination
+        $(document).ready(function () {
+            let pageSize = 7;
+            var visibleRows = $('table#DataTable tbody tr:visible');
+
+            function drawPagination(totalitems) {
+                var $pagination = $('#pagination');
+                var totalValue = totalitems;
+                var toShow = 7;
+                var numOfPage = Math.ceil(totalValue / toShow);
+                if (numOfPage > 1) {
+                    var totalPages = numOfPage;
+                    var currentPage = $pagination.twbsPagination('getCurrentPage');
+                    $pagination.twbsPagination('destroy');
+                    $pagination.twbsPagination($.extend({}, {
+                        startPage: currentPage,
+                        totalPages: totalPages,
+                        visiblePages: 7,
+                        onPageClick: function (event, page) {
+                            refreshPage(event, page);
+                        }
+                    }));
+                } else {
+                    $pagination.twbsPagination('destroy');
+                }
+            }
+            function refreshPage(event, page) {
+                var pageStart = (pageSize * page) - pageSize;
+                var pageLast = pageSize * page;
+                $(visibleRows).hide();
+                var currentRows = $(visibleRows).slice(pageStart, pageLast);
+                $(currentRows).show();
+            }
+
+            drawPagination(visibleRows.length);
+
+        });
+        //for search
+        function Contains(text_one, text_two) {
+            if (text_one.indexOf(text_two) != -1)
+                return true;
+        }
+        $("#Search").keyup(function () {
+            var searchtext = $("#Search").val().toLowerCase();
+            $(".Search").each(function () {
+                if (!Contains($(this).text().toLowerCase(), searchtext)) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        });
+    </script>
+
+
