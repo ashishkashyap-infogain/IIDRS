@@ -362,3 +362,4 @@ bin
 bin/ 	# ignore bin directory 
 *.obj 	# ignore any files with .obj postfix
 *.dll
+IIDRS/Web.config
