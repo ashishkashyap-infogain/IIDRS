@@ -1,0 +1,42 @@
+USE [IDRS]
+GO
+
+/****** Object:  Table [dbo].[M_ZIPCODE]    Script Date: 29-09-2020 00:30:17 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[M_ZIPCODE](
+	[ROW_ID] [varchar](50) NOT NULL,
+	[PAR_ROW_ID] [varchar](50) NULL,
+	[ZIPCODE] [varchar](50) NOT NULL,
+	[COUNTRY] [varchar](50) NULL,
+	[CITY] [varchar](50) NULL,
+	[CONTINENT] [varchar](50) NULL,
+	[COUNTY] [varchar](50) NULL,
+	[LATITUDE] [varchar](50) NULL,
+	[LONGITUDE] [varchar](50) NULL,
+	[STATE_PROV] [varchar](50) NULL,
+	[STREET_ABBREV] [varchar](50) NULL,
+	[STREET_NAME] [varchar](50) NULL,
+	[CREATED_DT] [datetime] NULL,
+	[CREATED_BY] [varchar](50) NULL,
+	[LAST_UPD_DT] [datetime] NULL,
+	[LAST_UPD_BY] [varchar](50) NULL,
+ CONSTRAINT [PK_M_ZIPCODE] PRIMARY KEY CLUSTERED 
+(
+	[ZIPCODE] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+
