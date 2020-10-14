@@ -26,6 +26,7 @@ namespace IIDRS.Controllers
                 var pass = res.PASSWORD == model.PASSWORD;
                 if (pass == true)
                 {
+                    Session["LogedUser"] = res.LOGIN;
                     if (res.LOGIN_DOMAIN == "Customer")
                     {
                         Session["CustId"] = res.USER_ID;

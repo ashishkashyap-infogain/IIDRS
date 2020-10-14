@@ -1,0 +1,46 @@
+USE [IDRS]
+GO
+
+/****** Object:  Table [dbo].[M_USER]    Script Date: 29-09-2020 00:32:38 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[M_USER](
+	[USER_ID] [varchar](50) NOT NULL,
+	[LOGIN] [varchar](50) NULL,
+	[LOGIN_DOMAIN] [varchar](50) NULL,
+	[PAR_ROW_ID] [varchar](50) NULL,
+	[USER_FLG] [varchar](50) NULL,
+	[CHALLENGE_ANSWER] [varchar](50) NULL,
+	[CHALLENGE_QUESTION] [varchar](50) NULL,
+	[CTI_ACD_USERID] [varchar](50) NULL,
+	[CTI_PWD] [varchar](50) NULL,
+	[EXCHNG_PROF_NAME] [varchar](50) NULL,
+	[EXCHNG_PROF_PWD] [varchar](50) NULL,
+	[EXCHNG_STOREID] [varchar](50) NULL,
+	[EXCHNG_SYNC_TYPE] [varchar](50) NULL,
+	[PASSWORD] [varchar](50) NULL,
+	[PW_LAST_UPD] [varchar](50) NULL,
+	[RPT_SRVR_PWD] [varchar](50) NULL,
+	[CREATED_DT] [datetime] NULL,
+	[CREATED_BY] [varchar](50) NULL,
+	[LAST_UPD_DT] [datetime] NULL,
+	[LAST_UPD_BY] [varchar](50) NULL,
+ CONSTRAINT [PK_M_USER] PRIMARY KEY CLUSTERED 
+(
+	[USER_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+

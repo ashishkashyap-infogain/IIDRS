@@ -1,0 +1,41 @@
+USE [IDRS]
+GO
+
+/****** Object:  Table [dbo].[M_ADDR_PER]    Script Date: 29-09-2020 00:35:17 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[M_ADDR_PER](
+	[ROW_ID] [varchar](50) NOT NULL,
+	[PERSON_UID] [varchar](50) NOT NULL,
+	[ADDR] [varchar](50) NULL,
+	[ADDR_LINE_2] [varchar](50) NULL,
+	[ADDR_LINE_3] [varchar](50) NULL,
+	[ADDR_FLG] [varchar](50) NULL,
+	[CITY] [varchar](50) NULL,
+	[COUNTRY] [varchar](50) NULL,
+	[STATE] [varchar](50) NULL,
+	[ZIPCODE] [varchar](50) NULL,
+	[COMMENTS] [varchar](50) NULL,
+	[CREATED_DT] [datetime] NULL,
+	[CREATED_BY] [varchar](50) NULL,
+	[LAST_UPD_DT] [varchar](50) NULL,
+	[LAST_UPD_BY] [varchar](50) NULL,
+ CONSTRAINT [PK_M_ADDR_PER] PRIMARY KEY CLUSTERED 
+(
+	[ROW_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+
