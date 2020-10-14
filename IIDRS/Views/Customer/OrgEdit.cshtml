@@ -29,13 +29,15 @@
 <table id="DataTable" class="table table-bordered table-striped table-hover ">
     <thead class="thead-dark">
     <th>
-        @Html.DisplayNameFor(model => model.M_ADDR_PER.PERSON_UID)
+        Person UId
+
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.M_BU.ROW_ID)
+        Row Id
     </th>
     @*<th>
             @Html.DisplayNameFor(model => model.M_CUST_SURVEY.ROW_ID)
+
         </th>
         <th>
             @Html.DisplayNameFor(model => model.M_PARTY.PARTY_UID)
@@ -44,7 +46,7 @@
             @Html.DisplayNameFor(model => model.M_POSTN.ROW_ID)
         </th>*@
     <th>
-        @Html.DisplayNameFor(model => model.M_USER.LOGIN)
+        Log In
     </th>
     @*<th>
             @Html.DisplayNameFor(model => model.M_USER1.LOGIN)
@@ -53,13 +55,13 @@
             @Html.DisplayNameFor(model => model.M_ZIPCODE.ROW_ID)
         </th>*@
     <th>
-        @Html.DisplayNameFor(model => model.NAME)
+       Name
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.LOC)
+    Location   
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.BU_ID)
+        BU Id
     </th>
     @*<th>
             @Html.DisplayNameFor(model => model.ACCNT_FLG)
@@ -92,26 +94,26 @@
             @Html.DisplayNameFor(model => model.PR_CON_ID)
         </th>*@
     <th>
-        @Html.DisplayNameFor(model => model.RATING)
+        Rating
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.CREATED_DT)
+        Created Date
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.LAST_UPD_DT)
+        Last Updated Date
     </th>
 
     </thead>
 
     @foreach (var item in Model)
-   {
+    {
         <tbody>
             <tr class="Search">
                 <td>
-                    @Html.DisplayFor(modelItem => item.PR_ADDR_ID)
+                    @Html.DisplayFor(modelItem => item.M_ADDR_PER.PERSON_UID)
                 </td>
                 <td>
-                   @Html.DisplayFor(modelItem => item.M_BU.ROW_ID)
+                    @Html.DisplayFor(modelItem => item.M_BU.ROW_ID)
                 </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.M_CUST_SURVEY.ROW_ID)
