@@ -2,6 +2,7 @@ namespace IIDRS
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -27,18 +28,26 @@ namespace IIDRS
 
         [Key]
         [StringLength(50)]
+        [DisplayName("User Id")]
+
         public string USER_ID { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Log In")]
+
         public string LOGIN { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Role")]
+
         public string LOGIN_DOMAIN { get; set; }
 
         [StringLength(50)]
         public string PAR_ROW_ID { get; set; }
 
         [StringLength(50)]
+        [DisplayName("User Flg")]
+
         public string USER_FLG { get; set; }
 
         [StringLength(50)]
@@ -66,22 +75,34 @@ namespace IIDRS
         public string EXCHNG_SYNC_TYPE { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Password")]
+
         public string PASSWORD { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Password Last Updated")]
+
         public string PW_LAST_UPD { get; set; }
 
         [StringLength(50)]
         public string RPT_SRVR_PWD { get; set; }
 
+        [DisplayName("Created Date")]
+
         public DateTime? CREATED_DT { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Created By")]
+
         public string CREATED_BY { get; set; }
+
+        [DisplayName("Last Updated Date")]
 
         public DateTime? LAST_UPD_DT { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Last Updated By")]
+
         public string LAST_UPD_BY { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -2,6 +2,7 @@ namespace IIDRS
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -10,6 +11,8 @@ namespace IIDRS
     {
         [Required]
         [StringLength(50)]
+        [DisplayName("Row Id")]
+
         public string ROW_ID { get; set; }
 
         [Key]
@@ -33,24 +36,41 @@ namespace IIDRS
         public string EMP_FLG { get; set; }
 
         [StringLength(50)]
+        [DisplayName("First Name")]
+
         public string FST_NAME { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Last Name")]
+
+
         public string LAST_NAME { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Email Address")]
+
         public string EMAIL_ADDR { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Employee Id")]
+
         public string EMP_ID { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Phone Number")]
+
         public string PHONE_NO { get; set; }
+
+        [DisplayName("Created Date")]
 
         public DateTime? CREATED_DT { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Created By")]
+
         public string CREATED_BY { get; set; }
+
+        [DisplayName("Last Updated Date")]
 
         public DateTime? LAST_UPD_DT { get; set; }
 
