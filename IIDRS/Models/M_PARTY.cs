@@ -2,6 +2,7 @@ namespace IIDRS
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -21,6 +22,8 @@ namespace IIDRS
 
         //[Required]
         [StringLength(50)]
+        [DisplayName("Party UId")]
+
         public string PARTY_UID { get; set; }
 
         [Key]

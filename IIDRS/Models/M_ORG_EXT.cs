@@ -2,6 +2,7 @@ namespace IIDRS
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -10,15 +11,21 @@ namespace IIDRS
     {
         [Key]
         [StringLength(50)]
+        [DisplayName("Row Id")]
         public string ROW_ID { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Name")]
         public string NAME { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Location")]
+
         public string LOC { get; set; }
 
         [StringLength(50)]
+        [DisplayName("BU Id")]
+
         public string BU_ID { get; set; }
 
         [StringLength(50)]
@@ -65,6 +72,8 @@ namespace IIDRS
         public string SURVEY_ID { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Rating")]
+
         public string RATING { get; set; }
 
         [StringLength(50)]
