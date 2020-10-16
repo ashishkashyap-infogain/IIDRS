@@ -88,13 +88,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.PASSWORD)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.PW_LAST_UPD)
-            </th>
+            </th>*@
             @*<th>
                     @Html.DisplayNameFor(model => model.RPT_SRVR_PWD)
                 </th>*@
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.CREATED_DT)
             </th>
             <th>
@@ -105,7 +105,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LAST_UPD_BY)
-            </th>
+            </th>*@
         </tr>
     </thead>
 
@@ -153,13 +153,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.PASSWORD)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.PW_LAST_UPD, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
-                </td>
+                </td>*@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.RPT_SRVR_PWD)
                     </td>*@
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.CREATED_DT, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
                 </td>
                 <td>
@@ -170,7 +170,7 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LAST_UPD_BY)
-                </td>
+                </td>*@
 
             </tr>
         </tbody>
