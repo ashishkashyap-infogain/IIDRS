@@ -1,0 +1,33 @@
+USE [IIDRS]
+GO
+
+/****** Object:  View [dbo].[Vw_Contact]    Script Date: 22-10-2020 11:48:32 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ 
+
+CREATE VIEW [dbo].[Vw_Contact]  
+AS 
+SELECT 
+BU.DU_NAME AS DU,
+BU.PROJ_NAME AS [Project Name],
+BU.BU_NAME AS BRAND,  
+CON.FST_NAME + '' + CON.LAST_NAME AS [Contact Person],  
+EMAIL_ADDR as Email,  
+CON.PHONE_NO As [Phone],  
+PER.ADDR +', ' + PER.ADDR_LINE_2 + ', ' + PER.ADDR_LINE_3 as [Address Details] ,  
+PER.CITY,  
+PER.STATE,  
+PER.COUNTRY  
+from M_CONTACT CON   
+LEFT JOIN M_ADDR_PER PER ON CON.PERSON_UID=PER.PERSON_UID  
+LEFT JOIN M_BU BU ON BU.BU_ID=CON.BU_ID  
+
+GO
+
+
