@@ -136,6 +136,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthorizationController.cs" />
+    <Compile Include="Controllers\BusinessUnitController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -183,6 +184,7 @@
     <Content Include="Views\Survey\SurveyManage.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Customer\OrgEdit.cshtml" />
+    <Content Include="Views\BusinessUnit\GetAllBU.cshtml" />
     <Content Include="Views\Authorization\Index2.cshtml" />
     <Content Include="Views\Authorization\Create.cshtml" />
     <Content Include="Views\Authorization\Delete.cshtml" />
