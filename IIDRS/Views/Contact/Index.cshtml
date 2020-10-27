@@ -24,118 +24,148 @@
             <input type="text" placeholder="Search . . ." required id="Search">
         </div>
     </div>
-
+    </div>
 
 
     @*<p>
             @Html.ActionLink("Create New", "Create")
         </p>*@
-    <table class="table table-bordered table-striped table-hover " id="DataTable">
-        <thead class="thead-dark">
+<table class="table table-bordered table-striped table-hover " id="DataTable">
+    <thead class="thead-dark">
 
 
-            @*<th>
-                    @Html.DisplayNameFor(model => model.M_BU.ROW_ID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.M_PARTY.PARTY_UID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.M_USER.LOGIN)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.M_USER1.LOGIN)
-                </th>*@
-        <th>
-           Row Id
-        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.M_BU.ROW_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.M_PARTY.PARTY_UID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.M_USER.LOGIN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.M_USER1.LOGIN)
+            </th>*@
+        @*<th>
+               Row Id
+            </th>*@
         @*<th>
                 @Html.DisplayNameFor(model => model.ACTIVE_FLG)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EMP_FLG)
             </th>*@
-        <th>
-            First Name
-        </th>
-        <th>
-           Last Name
-        </th>
-        <th>
-            Email Address
-        </th>
-        <th>
-            Employee Id
-        </th>
-        <th>
-            Phone Number
-        </th>
-        <th>
-            Created Date
-        </th>
-        <th>
-            Last Updated Date
-        </th>
+    <th>
+        Person ID
+    </th>
+    <th>
+        First Name
+    </th>
+    <th>
+        Last Name
+    </th>
+    <th>
+        Email Address
+    </th>
+    <th>
+        Employee Id
+    </th>
+    <th>
+        Phone Number
+    </th>
+    @*<th>
+            BU ID
+        </th>*@
+    <th>
+        Created Date
+    </th>
+    <th>
+        Last Updated Date
+    </th>
+    <th>
+        Active/Deactive
+    </th>
 
 
-        </thead>
+    </thead>
 
-        @foreach (var item in Model)
-        {
-            <tbody>
-                <tr class="Search">
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.M_BU.ROW_ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.M_PARTY.PARTY_UID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.M_USER.LOGIN)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.M_USER1.LOGIN)
-                        </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ROW_ID)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.ACTIVE_FLG)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EMP_FLG)
-                        </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FST_NAME)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LAST_NAME)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EMAIL_ADDR)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EMP_ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PHONE_NO)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CREATED_DT)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LAST_UPD_DT)
-                    </td>
-                    @*<td>
-                            @Html.ActionLink("Edit", "Edit", new { id=item.PERSON_UID }) |
-                            @Html.ActionLink("Details", "Details", new { id=item.PERSON_UID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id=item.PERSON_UID })
-                        </td>*@
-                </tr>
-            </tbody>
-        }
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr class="Search">
+                @*<td>
+            @Html.DisplayFor(modelItem => item.M_BU.ROW_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.M_PARTY.PARTY_UID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.M_USER.LOGIN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.M_USER1.LOGIN)
+        </td>*@
+                @*<td>
+            @Html.DisplayFor(modelItem => item.ROW_ID)
+        </td>*@
+                @*<td>
+            @Html.DisplayFor(modelItem => item.ACTIVE_FLG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMP_FLG)
+        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.PERSON_UID)
+                </td>
+                @*@Html.HiddenFor(modelItem => item.PERSON_UID)*@
 
-    </table>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FST_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LAST_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EMAIL_ADDR)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EMP_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PHONE_NO)
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.BU_ID)
+        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.CREATED_DT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LAST_UPD_DT)
+                </td>
+                <td class="text-center" style="pointer-events:none">
+                    <label class="custom-switch"></label>
+                    @if (item.ACTIVE_FLG == "1")
+                    {
+                        <input type="checkbox" name="custom-switch-checkbox" checked="@item.ACTIVE_FLG" class="custom-switch-input">
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="custom-switch-checkbox" checked="@item.ACTIVE_FLG" disabled class="custom-switch-input">
+
+                    }
+                    <span class="custom-switch-indicator"></span>
+                </td>
+                @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PERSON_UID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PERSON_UID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PERSON_UID })
+        </td>*@
+            </tr>
+        </tbody>
+    }
+
+</table>
     <div class="container">
         <nav aria-label="Page navigation">
             <ul class="pagination" id="pagination"></ul>
@@ -146,13 +176,136 @@
 
     </script>
     <script>
+        let addedInLast = false;
         $('#DataTable').SetEditable({
-            columnsEd: "1,2,3",
+            columnsEd: "1,2,3,4,5",
             $addButton: $('#btnAddRow'),
             onAdd: function () {
-                window.location.reload();
+                addedInLast = true
+                $('#btnAddRow').attr("disabled", "disabled");
+            },
+            onEdit: (row) => {
+                let data
+                if (addedInLast) {
+                    data = getRowData()
+                    makeRequest(data)
+                }
+                else {
+                    data = getEditData(row)
+                    editRequest(data)
+                }
+            },
+            //onBeforeDelete: (row) => {
+            //    var doc = prompt("Are you sure you want to delete?"); 
+            //},
+            onDelete: (row) => {
+                $("#btnAddRow").removeAttr("disabled");
+                let data
+                data = getId(row)
+                if (data != null) {
+                    deleteRequest(data)
+                }
             }
         });
+        //for addition
+        function getRowData(row = null) //default null #TODO incase for edit we have to send row number to get data of specific row
+        {
+            addedInLast = false
+
+            let lastRow = $('#DataTable tr').eq(1);
+
+            console.log(lastRow);
+            let totalCols = lastRow[0].cells.length - 1
+
+            let headings = ["FST_NAME", "LAST_NAME", "EMAIL_ADDR", "EMP_ID", "BU_ID", "PHONE_NO", "CREATED_DT", "LAST_UPD_DT","ACTIVE_FLG"]
+
+            let data = {}
+
+            for (let col = 0; col < totalCols; col++) {
+                let colData = lastRow[0].cells[col].innerText
+                data[headings[col]] = colData
+            }
+            //if (data == null) {
+            //    onDelete(data);
+            //}
+
+            return data;
+        }
+        //for edit of row
+        function getEditData(row) {
+            let headings = ["PERSON_UID", "FST_NAME", "LAST_NAME", "EMAIL_ADDR", "EMP_ID", "BU_ID", "PHONE_NO", "CREATED_DT", "LAST_UPD_DT","ACTIVE_FLG"]
+
+            let data = {}
+            getId(row);
+            for (let col = 0; col < headings.length - 1; col++) {
+                let colData = row.eq(col).text();
+                data[headings[col]] = colData
+            }
+
+            return data;
+        }
+        //for delete of row
+        function getId(row) {
+            addedInLast = false
+
+            let headings = ["PERSON_UID"]
+
+            let data = {}
+
+            data[headings[0]] = row.text();
+
+            return data
+        }
+        //ajax post request for add
+        function makeRequest(dataToBeSent) {
+
+            $.ajax({
+                type: "POST",
+                url: "https://localhost:44350/Contact/Create",
+                data: dataToBeSent,
+                success: function () {
+                    $("#btnAddRow").removeAttr("disabled");
+                    window.location.reload();
+                }
+            });
+            //alert("Record inserted successfully");
+        }
+        //ajax post request for edit
+        function editRequest(dataToBeSent) {
+
+            $.ajax({
+                type: "POST",
+                url: "https://localhost:44350/Contact/Edit",
+                data: dataToBeSent,
+                success: function () {
+                    window.location.reload();
+                },
+                error: function () {
+                    window.location.reload();
+
+                }
+            });
+            //alert("Record edited successfully");
+        }
+        //ajax post request for delete
+        function deleteRequest(dataToBeSent) {
+
+            $.ajax({
+                type: "POST",
+                url: 'https://localhost:44350/Contact/Delete',
+                data: dataToBeSent,
+                success: function () {
+
+                    window.location.reload();
+                },
+                error: function () {
+                    window.location.reload();
+                }
+            });
+            //alert("Record deleted successfully");
+        }
+
+
         //for pagination
         $(document).ready(function () {
             let pageSize = 7;
