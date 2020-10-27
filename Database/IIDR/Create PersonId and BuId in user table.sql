@@ -1,0 +1,10 @@
+
+ALTER TABLE [dbo].[M_USER]
+  ADD [PERSON_UID] VARCHAR(50),
+      [BU_ID] VARCHAR(50);
+
+update [dbo].[M_USER] 
+set PERSON_UID='1-2CONTACT'
+   , BU_ID='1-15BU'
+where USER_ID='1-3GUSER'
+
