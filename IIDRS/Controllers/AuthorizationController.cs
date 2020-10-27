@@ -57,7 +57,7 @@ namespace IIDRS.Controllers
                     var chng1 = res1[0].ToString().Split('-');
                     var inc1 = ((Convert.ToInt32(chng1[1])) + 1).ToString();
 
-                    sb1.Append("1-" + inc1 + "USER");
+                    sb1.Append("2-" + inc1 + "USER");
                     m_PARTY.PARTY_TYPE_CD = sb1.ToString();
 
                 }
@@ -75,7 +75,7 @@ namespace IIDRS.Controllers
                     var res2 = Regex.Split(m_PARTY.PARTY_UID, @"G");
                     var chng2 = res2[0].ToString().Split('-');
                     var inc2 = (Convert.ToInt32(chng2[1]) + 1).ToString();
-                    sb2.Append("1-" + inc2 + "G");
+                    sb2.Append("2-" + inc2 + "G");
                     m_PARTY.PARTY_UID = sb2.ToString();
                 }
                 m_PARTY.TRANS_FLG = "1";
@@ -97,7 +97,7 @@ namespace IIDRS.Controllers
                 {
 
 
-                    StringBuilder sb = new StringBuilder("1-");
+                    StringBuilder sb = new StringBuilder("2-");
                     var chng = res[1].ToString();
                     var inc = (Convert.ToInt32(chng) + 1).ToString();
                     sb.Append(inc + "GUSER");

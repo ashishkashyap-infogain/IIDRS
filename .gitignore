@@ -358,3 +358,6 @@ bin
 bin/ 	# ignore bin directory 
 *.obj 	# ignore any files with .obj postfix
 *.dll
+/IIDRS/Views/Customer/Create.cshtml
+/IIDRS/Views/Customer/Edit.cshtml
+/IIDRS/Views/Customer/Delete.cshtml

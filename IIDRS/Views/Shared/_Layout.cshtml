@@ -94,7 +94,7 @@
                                 if (ViewBag.Title == "Authorization")
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="/Customer/Index2">
+                                        <a class="nav-link active" href="/Authorization/Index2">
                                             <span data-feather="users"></span>
                                             Authorization
                                         </a>
@@ -103,7 +103,7 @@
                                 else
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link " href="/Customer/Index2">
+                                        <a class="nav-link " href="/Authorization/Index2">
                                             <span data-feather="users"></span>
                                             Authorization
                                         </a>
@@ -127,27 +127,46 @@
                                         </a>
                                     </li>
                                 }
-                                if (ViewBag.Title == "Contact Details")
+                                if (ViewBag.Title == "Customer Management")
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="/Contact/Index" >
-                                            <span data-feather="phone"></span>
-                                            Contacts
+                                        <a class="nav-link active" href="/Customer/OrgEdit">
+                                            <span data-feather="users"></span>
+                                            Survey Summary
                                         </a>
                                     </li>
                                 }
                                 else
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/Contact/Index">
-                                            <span data-feather="phone"></span>
-                                            Contacts
+                                        <a class="nav-link" href="/Customer/OrgEdit">
+                                            <span data-feather="users"></span>
+                                            Survey Summary
                                         </a>
                                     </li>
                                 }
                             }
+                            if (ViewBag.Title == "Contact Details")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/Contact/Index">
+                                        <span data-feather="phone"></span>
+                                        Contacts
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Contact/Index">
+                                        <span data-feather="phone"></span>
+                                        Contacts
+                                    </a>
+                                </li>
+                            }
+                        }
 
-                        
+
                         @*else if (ViewBag.Title == "Index")
         {
             <li class="nav-item">
@@ -184,16 +203,16 @@
         }*@
 
 
-                        else if (Session["CustId"] != null)
+                        @*else if (Session["CustId"] != null)
                         {
                         <li class="nav-item">
-                            @*<a class="nav-link active" href="#">
+                            <a class="nav-link active" href="#">
                 <span data-feather="bar-chart-2"></span>
                 Survey<span class="sr-only">(current)</span>
-            </a>*@
+            </a>
                         </li>
                         }
-                        }
+                        }*@
 
                     </ul>
                 </div>
@@ -228,7 +247,7 @@
                             }
                             else if (ViewBag.Title == "Customer Management")
                             {
-                                <h1 class="h2">Customer Details</h1>
+                                <h1 class="h2">Survey Summary</h1>
                             }
 
                         }
