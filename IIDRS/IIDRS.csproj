@@ -137,6 +137,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Models\M_POSTN.cs" />
     <Compile Include="Models\M_USER.cs" />
     <Compile Include="Models\M_ZIPCODE.cs" />
+    <Compile Include="Models\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +179,6 @@
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Test.cshtml" />
-    <Content Include="Views\Customer\Index2.cshtml" />
     <Content Include="Views\Survey\Index.cshtml" />
     <Content Include="Views\Admin\AdminActivities.cshtml" />
     <Content Include="Views\Survey\Thankyou.cshtml" />
@@ -185,6 +186,10 @@
     <Content Include="Views\Survey\SurveyManage.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Customer\OrgEdit.cshtml" />
+    <Content Include="Views\Authorization\Index2.cshtml" />
+    <Content Include="Views\Authorization\Create.cshtml" />
+    <Content Include="Views\Authorization\Delete.cshtml" />
+    <Content Include="Views\Authorization\Edit.cshtml" />
     <Content Include="Views\Contact\Create.cshtml" />
     <Content Include="Views\Contact\Edit.cshtml" />
     <Content Include="Views\Contact\Delete.cshtml" />
@@ -197,6 +202,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

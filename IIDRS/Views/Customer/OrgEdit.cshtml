@@ -11,7 +11,7 @@
 <script src="~/Scripts/twbsPagination.js" type="text/javascript"></script>
 
 <div style="float:right">
-    <button style="float:right" class="btn btn-sm btn-primary rounded-0" id="btnAddRow"><i class="fa fa-address-book"></i>Add</button>
+    @*<button style="float:right" class="btn btn-sm btn-primary rounded-0" id="btnAddRow"><i class="fa fa-address-book"></i>Add</button>*@
     @*<a href="/Customer/Edit" class="btn btn-sm btn-primary rounded-0"><i class="fa fa-edit"></i>Edit</a>
         <a href="/Customer/Delete" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Are you sure?') "><i class="fa fa-trash"></i>Delete</a>
         <a href="/Customer/Save" class="btn btn-sm btn-success rounded-0"><i class="fa fa-save"></i>Save</a>*@
@@ -29,12 +29,15 @@
 <table id="DataTable" class="table table-bordered table-striped table-hover ">
     <thead class="thead-dark">
     <th>
-        Person UId
+        Row Id
 
     </th>
     <th>
-        Row Id
+        BU Id
     </th>
+    @*<th>
+            Row Id
+        </th>*@
     @*<th>
             @Html.DisplayNameFor(model => model.M_CUST_SURVEY.ROW_ID)
 
@@ -45,9 +48,9 @@
         <th>
             @Html.DisplayNameFor(model => model.M_POSTN.ROW_ID)
         </th>*@
-    <th>
-        Log In
-    </th>
+    @*<th>
+            Log In
+        </th>*@
     @*<th>
             @Html.DisplayNameFor(model => model.M_USER1.LOGIN)
         </th>*@
@@ -55,14 +58,12 @@
             @Html.DisplayNameFor(model => model.M_ZIPCODE.ROW_ID)
         </th>*@
     <th>
-       Name
+        Name
     </th>
     <th>
-    Location   
+        Location
     </th>
-    <th>
-        BU Id
-    </th>
+
     @*<th>
             @Html.DisplayNameFor(model => model.ACCNT_FLG)
         </th>
@@ -95,97 +96,45 @@
         </th>*@
     <th>
         Rating
-    </th>
-    <th>
-        Created Date
-    </th>
-    <th>
-        Last Updated Date
-    </th>
+        </th>
+            @*<th>
+                Created Date
+            </th>
+            <th>
+                Last Updated Date
+            </th>*@
 
-    </thead>
+        </thead>
 
-    @foreach (var item in Model)
-    {
+        @foreach (var item in Model)
+        {
         <tbody>
             <tr class="Search">
                 <td>
-                    @Html.DisplayFor(modelItem => item.M_ADDR_PER.PERSON_UID)
+                    @Html.DisplayFor(modelItem => item.ROW_ID)
                 </td>
+             
                 <td>
-                    @Html.DisplayFor(modelItem => item.M_BU.ROW_ID)
+                    @Html.DisplayFor(modelItem => item.BU_ID)
                 </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.M_CUST_SURVEY.ROW_ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.M_PARTY.PARTY_UID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.M_POSTN.ROW_ID)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.M_USER.LOGIN)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.M_USER1.LOGIN)
-                    </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.M_ZIPCODE.ROW_ID)
-                    </td>*@
+              
                 <td>
                     @Html.DisplayFor(modelItem => item.NAME)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LOC)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BU_ID)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.ACCNT_FLG)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ACTIVE_FLG)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CUST_END_DT)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CUST_SINCE_DT)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PARTNER_FLG)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PAR_DIVN_ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PR_ADDR_PER_ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PR_BL_ADDR_ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PR_BL_PER_ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PR_CON_ID)
-                    </td>*@
+
+                
                 <td>
                     @Html.DisplayFor(modelItem => item.RATING)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CREATED_DT)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LAST_UPD_DT)
-                </td>
+              
             </tr>
         </tbody>
     }
 
-</table>
+    </table>
 
 
 <div class="container">
@@ -202,12 +151,128 @@
             //built in methods in bootstable.js script......location of bootstable.js in script folder
         let addedInLast = false;
     $('#DataTable').SetEditable({
-        columnsEd: "1,2,3",
+        columnsEd: "2,3,4",
         $addButton: $('#btnAddRow'),
         onAdd: function () {
-            window.location.reload();
+            addedInLast = true
+            $('#btnAddRow').attr("disabled", "disabled");
+        },
+        onEdit: (row) => {
+            let data
+            if (addedInLast) {
+                data = getRowData()
+                makeRequest(data)
+            }
+            else {
+                data = getEditData(row)
+                editRequest(data)
+            }
+        },
+        onDelete: (row) => {
+            $("#btnAddRow").removeAttr("disabled");
+            let data
+            data = getId(row)
+            if (data != null) {
+                deleteRequest(data)
+            }
         }
     });
+
+
+    //for addition
+    function getRowData(row = null) //default null #TODO incase for edit we have to send row number to get data of specific row
+    {
+        addedInLast = false
+
+        let lastRow = $('#DataTable tr').eq(1);
+
+        console.log(lastRow);
+        let totalCols = lastRow[0].cells.length - 1
+
+        let headings = ["ROW_ID", "BU_ID", "NAME", "LOC", "RATING"]
+
+        let data = {}
+
+        for (let col = 0; col < totalCols; col++) {
+            let colData = lastRow[0].cells[col].innerText
+            data[headings[col]] = colData
+        }
+        return data
+    }
+
+    //for edit of row
+    function getEditData(row) {
+        let headings = ["ROW_ID", "BU_ID", "NAME", "LOC", "RATING"]
+        let data = {}
+
+        for (let col = 0; col < headings.length - 1; col++) {
+            let colData = row.eq(col).text();
+            data[headings[col]] = colData
+        }
+
+        return data;
+    }
+
+    function getId(row) {
+        addedInLast = false
+
+        let headings = ["ROW_ID"]
+
+        let data = {}
+
+        data[headings[0]] = row.text();
+
+        return data
+    }
+
+    // ajax for add
+    function makeRequest(dataToBeSent) {
+
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44350/Customer/Create",
+            data: dataToBeSent,
+            success: function () {
+                $("#btnAddRow").removeAttr("disabled");
+                window.location.reload();
+            }
+        });
+    }
+
+
+    //ajax for edit
+    function editRequest(dataToBeSent) {
+
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44350/Customer/Edit",
+            data: dataToBeSent,
+            success: function () {
+                window.location.reload();
+            },
+            error: function () {
+                window.location.reload();
+
+            }
+        });
+    }
+    //ajax post request for delete
+    function deleteRequest(dataToBeSent) {
+
+        $.ajax({
+            type: "POST",
+            url: 'https://localhost:44350/Customer/Delete',
+            data: dataToBeSent,
+            success: function () {
+
+                window.location.reload();
+            },
+            error: function () {
+                window.location.reload();
+            }
+        });
+    }
+
     //for pagination
     $(document).ready(function () {
         let pageSize = 7;
