@@ -164,9 +164,25 @@
                                     </a>
                                 </li>
                             }
+                        if (ViewBag.Title == "Business Unit")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/BusinessUnit/GetAllBU">
+                                            <span data-feather="clipboard"></span>
+                                            Business Unit
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/BusinessUnit/GetAllBU">
+                                            <span data-feather="clipboard"></span>
+                                            Business Unit
+                                        </a>
+                                    </li>
+                                }
                         }
-
-
                         @*else if (ViewBag.Title == "Index")
         {
             <li class="nav-item">
@@ -178,29 +194,29 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                    AI Analytics
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="/Customer/Index2">
-                    <span data-feather="users"></span>
-                    Authorization
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="bar-chart-2"></span>
-                    Survey
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="phone"></span>
-                    Contacts
-                </a>
-            </li>
-        }*@
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        AI Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/Customer/Index2">
+                        <span data-feather="users"></span>
+                        Authorization
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span data-feather="bar-chart-2"></span>
+                        Survey
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span data-feather="phone"></span>
+                        Contacts
+                    </a>
+                </li>
+            }*@
 
 
                         @*else if (Session["CustId"] != null)
@@ -249,7 +265,10 @@
                             {
                                 <h1 class="h2">Survey Summary</h1>
                             }
-
+                            else if (ViewBag.Title == "Business Unit")
+                            {
+                                <h1 class="h2">Business Unit</h1>
+                            }
                         }
                     }
                     <div class="btn-toolbar mb-2 mb-md-0">

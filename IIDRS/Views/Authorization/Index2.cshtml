@@ -119,6 +119,7 @@
         <th>
             @Html.DisplayNameFor(model => model.LAST_UPD_BY)
         </th>*@
+            <th class="text-center">Active/Deactive</th>
         </tr>
     </thead>
 
@@ -137,54 +138,66 @@
                     @Html.DisplayFor(modelItem => item.LOGIN_DOMAIN)
                 </td>
                 @*<td>
-                        @Html.DisplayFor(modelItem => item.USER_FLG, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
-                    </td>*@
+            @Html.DisplayFor(modelItem => item.USER_FLG, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+        </td>*@
                 @*<td>
-                        @Html.DisplayFor(modelItem => item.CHALLENGE_ANSWER)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CHALLENGE_QUESTION)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CTI_ACD_USERID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CTI_PWD)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EXCHNG_PROF_NAME)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EXCHNG_PROF_PWD)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EXCHNG_STOREID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EXCHNG_SYNC_TYPE)
-                    </td>*@
+            @Html.DisplayFor(modelItem => item.CHALLENGE_ANSWER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CHALLENGE_QUESTION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CTI_ACD_USERID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CTI_PWD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EXCHNG_PROF_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EXCHNG_PROF_PWD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EXCHNG_STOREID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EXCHNG_SYNC_TYPE)
+        </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.PASSWORD)
                 </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.PW_LAST_UPD, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
-                </td>*@
+            @Html.DisplayFor(modelItem => item.PW_LAST_UPD, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+        </td>*@
                 @*<td>
-                        @Html.DisplayFor(modelItem => item.RPT_SRVR_PWD)
-                    </td>*@
+            @Html.DisplayFor(modelItem => item.RPT_SRVR_PWD)
+        </td>*@
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.CREATED_DT, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+            @Html.DisplayFor(modelItem => item.CREATED_DT, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_BY, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_UPD_DT, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LAST_UPD_BY)
+        </td>*@
+                <td class="text-center" style="pointer-events: none">
+                    <label class="custom-switch">
+                        @if (item.USER_FLG == "1")
+                        {
+                            <input type="checkbox" name="custom-switch-checkbox" checked="@item.USER_FLG" class="custom-switch-input">
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="custom-switch-checkbox" checked="@item.USER_FLG" disabled class="custom-switch-input">
+                        }
+                        <span class="custom-switch-indicator"></span>
+                    </label>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CREATED_BY, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LAST_UPD_DT, new { htmlAttributes = new { @class = "name", @readonly = "readonly" } })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LAST_UPD_BY)
-                </td>*@
-
             </tr>
         </tbody>
     }
