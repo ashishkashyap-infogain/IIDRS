@@ -22,6 +22,7 @@ namespace IIDRS
         public virtual DbSet<M_USER> M_USER { get; set; }
         public virtual DbSet<M_ZIPCODE> M_ZIPCODE { get; set; }
 
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<M_ADDR_PER>()

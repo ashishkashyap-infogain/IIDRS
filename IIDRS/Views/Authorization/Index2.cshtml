@@ -47,17 +47,30 @@
 <table id="DataTable" class="table table-bordered table-striped table-hover">
 
     <thead class="thead-dark">
-        <tr>
+        
+        <tr style="cursor:pointer">
 
-            <th>
+            <th onclick="sortTable(0)">
                 @Html.DisplayNameFor(model => model.USER_ID)
             </th>
-            <th>
+            <th onclick="sortTable(1)">
                 @Html.DisplayNameFor(model => model.LOGIN)
             </th>
-            <th>
+            <th onclick="sortTable(2)">
                 @Html.DisplayNameFor(model => model.LOGIN_DOMAIN)
             </th>
+            <th onclick="sortTable(3)">
+                @Html.DisplayNameFor(model => model.PASSWORD)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.USER_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOGIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOGIN_DOMAIN)
+        </th>*@
             @*<th>
             @Html.DisplayNameFor(model => model.USER_FLG)
         </th>*@
@@ -85,9 +98,9 @@
         <th>
             @Html.DisplayNameFor(model => model.EXCHNG_SYNC_TYPE)
         </th>*@
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.PASSWORD)
-            </th>
+            </th>*@
             @*<th>
             @Html.DisplayNameFor(model => model.PW_LAST_UPD)
         </th>*@
@@ -223,7 +236,7 @@
                     }
                 },
                 //onBeforeDelete: (row) => {
-                //    var doc = prompt("Are you sure you want to delete?"); 
+                //    var doc = prompt("Are you sure you want to delete?");
                 //},
                 onDelete: (row) => {
                     $("#btnAddRow").removeAttr("disabled");
@@ -304,7 +317,7 @@
                     },
                     error: function () {
                         window.location.reload();
-                        
+
                     }
                 });
             }
@@ -351,7 +364,7 @@
                         $pagination.twbsPagination('destroy');
                     }
                 }
-                function refreshPage(event,page) {
+                function refreshPage(event, page) {
                     var pageStart = (pageSize * page) - pageSize;
                     var pageLast = pageSize * page;
                     $(visibleRows).hide();
@@ -360,7 +373,7 @@
                 }
 
                 drawPagination(visibleRows.length);
-                
+
                 //for search
                 function Contains(text_one, text_two) {
                     if (text_one.indexOf(text_two) != -1)
@@ -378,6 +391,68 @@
                     });
                 });
             });
+            function sortTable(n) {
+                var table,
+                    rows,
+                    switching,
+                    i,
+                    x,
+                    y,
+                    shouldSwitch,
+                    dir,
+                    switchcount = 0;
+                table = document.getElementById("DataTable");
+                switching = true;
+                //Set the sorting direction to ascending:
+                dir = "asc";
+                /*Make a loop that will continue until
+                no switching has been done:*/
+                while (switching) {
+                    //start by saying: no switching is done:
+                    switching = false;
+                    rows = table.getElementsByTagName("TR");
+                    /*Loop through all table rows (except the
+                    first, which contains table headers):*/
+                    for (i = 1; i < rows.length - 1; i++) { //Change i=0 if you have the header th a separate table.
+                        //start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /*Get the two elements you want to compare,
+                        one from current row and one from the next:*/
+                        x = rows[i].getElementsByTagName("TD")[n];
+                        y = rows[i + 1].getElementsByTagName("TD")[n];
+                        /*check if the two rows should switch place,
+                        based on the direction, asc or desc:*/
+                        if (dir == "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /*If a switch has been marked, make the switch
+                        and mark that a switch has been done:*/
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        //Each time a switch is done, increase this count by 1:
+                        switchcount++;
+                    } else {
+                        /*If no switching has been done AND the direction is "asc",
+                        set the direction to "desc" and run the while loop again.*/
+                        if (switchcount == 0 && dir == "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
         </script>
 
 

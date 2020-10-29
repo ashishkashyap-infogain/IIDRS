@@ -1,0 +1,693 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="IIDRSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="M_ADDR_PER">
+          <Key>
+            <PropertyRef Name="ROW_ID" />
+          </Key>
+          <Property Name="ROW_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PERSON_UID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ADDR" Type="varchar" MaxLength="50" />
+          <Property Name="ADDR_LINE_2" Type="varchar" MaxLength="50" />
+          <Property Name="ADDR_LINE_3" Type="varchar" MaxLength="50" />
+          <Property Name="ADDR_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="CITY" Type="varchar" MaxLength="50" />
+          <Property Name="COUNTRY" Type="varchar" MaxLength="50" />
+          <Property Name="STATE" Type="varchar" MaxLength="50" />
+          <Property Name="ZIPCODE" Type="varchar" MaxLength="50" />
+          <Property Name="COMMENTS" Type="varchar" MaxLength="50" />
+          <Property Name="CREATED_DT" Type="datetime" />
+          <Property Name="CREATED_BY" Type="varchar" MaxLength="50" />
+          <Property Name="LAST_UPD_DT" Type="varchar" MaxLength="50" />
+          <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="M_BU">
+          <Key>
+            <PropertyRef Name="BU_ID" />
+          </Key>
+          <Property Name="ROW_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BU_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PAR_BU_ID" Type="varchar" MaxLength="50" />
+          <Property Name="BU_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="BU_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="BU_TYPE" Type="varchar" MaxLength="50" />
+          <Property Name="PAR_ROW_ID" Type="varchar" MaxLength="50" />
+          <Property Name="DU_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="PROJ_ID" Type="varchar" MaxLength="50" />
+          <Property Name="PROJ_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="CREATED_DT" Type="datetime" />
+          <Property Name="CREATED_BY" Type="varchar" MaxLength="50" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="M_CONTACT">
+          <Key>
+            <PropertyRef Name="PERSON_UID" />
+          </Key>
+          <Property Name="ROW_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PERSON_UID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BU_ID" Type="varchar" MaxLength="50" />
+          <Property Name="ACTIVE_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="PAR_ROW_ID" Type="varchar" MaxLength="50" />
+          <Property Name="EMP_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="FST_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="LAST_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="EMAIL_ADDR" Type="varchar" MaxLength="50" />
+          <Property Name="EMP_ID" Type="varchar" MaxLength="50" />
+          <Property Name="PHONE_NO" Type="varchar" MaxLength="50" />
+          <Property Name="CREATED_DT" Type="datetime" />
+          <Property Name="CREATED_BY" Type="varchar" MaxLength="50" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="50" />
+          <Property Name="ZIPCODE_ROWID" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="M_CUST_SURVEY">
+          <Key>
+            <PropertyRef Name="SURVEY_ID" />
+          </Key>
+          <Property Name="ROW_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SURVEY_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PAR_ROW_ID" Type="varchar" MaxLength="50" />
+          <Property Name="CUST_SURVEY_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="SURVEY_QUESTION_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="SURVEY_QUESTION_DESC" Type="varchar" MaxLength="400" />
+          <Property Name="SURVEY_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="CREATED_DT" Type="datetime" />
+          <Property Name="CREATED_BY" Type="varchar" MaxLength="50" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="M_ORG_EXT">
+          <Key>
+            <PropertyRef Name="ROW_ID" />
+          </Key>
+          <Property Name="ROW_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" />
+          <Property Name="LOC" Type="varchar" MaxLength="50" />
+          <Property Name="BU_ID" Type="varchar" MaxLength="50" />
+          <Property Name="ACCNT_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="ACTIVE_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="PAR_ROW_ID" Type="varchar" MaxLength="50" />
+          <Property Name="CUST_END_DT" Type="datetime" />
+          <Property Name="CUST_SINCE_DT" Type="datetime" />
+          <Property Name="PAR_BU_ID" Type="varchar" MaxLength="50" />
+          <Property Name="PARTNER_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="PAR_DIVN_ID" Type="varchar" MaxLength="50" />
+          <Property Name="PR_ADDR_ID" Type="varchar" MaxLength="50" />
+          <Property Name="PR_ADDR_PER_ID" Type="varchar" MaxLength="50" />
+          <Property Name="PR_BL_ADDR_ID" Type="varchar" MaxLength="50" />
+          <Property Name="PR_BL_PER_ID" Type="varchar" MaxLength="50" />
+          <Property Name="PR_CON_ID" Type="varchar" MaxLength="50" />
+          <Property Name="PR_POSTN_ID" Type="varchar" MaxLength="50" />
+          <Property Name="SURVEY_ID" Type="varchar" MaxLength="50" />
+          <Property Name="RATING" Type="varchar" MaxLength="50" />
+          <Property Name="ZIPCODE" Type="varchar" MaxLength="50" />
+          <Property Name="CREATED_DT" Type="datetime" />
+          <Property Name="CREATED_BY" Type="varchar" MaxLength="50" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="M_PARTY">
+          <Key>
+            <PropertyRef Name="PARTY_TYPE_CD" />
+          </Key>
+          <Property Name="PARTY_UID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PARTY_TYPE_CD" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TRANS_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="ACTIVE_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="CREATED_DT" Type="datetime" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="M_POSTN">
+          <Key>
+            <PropertyRef Name="POSTN_TYPE_CD" />
+          </Key>
+          <Property Name="ROW_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BU_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="POSTN_TYPE_CD" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="POSTN_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="CREATED_DT" Type="datetime" />
+          <Property Name="CREATED_BY" Type="varchar" MaxLength="50" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="M_USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LOGIN" Type="varchar" MaxLength="50" />
+          <Property Name="LOGIN_DOMAIN" Type="varchar" MaxLength="50" />
+          <Property Name="PAR_ROW_ID" Type="varchar" MaxLength="50" />
+          <Property Name="USER_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="CHALLENGE_ANSWER" Type="varchar" MaxLength="50" />
+          <Property Name="CHALLENGE_QUESTION" Type="varchar" MaxLength="50" />
+          <Property Name="CTI_ACD_USERID" Type="varchar" MaxLength="50" />
+          <Property Name="CTI_PWD" Type="varchar" MaxLength="50" />
+          <Property Name="EXCHNG_PROF_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="EXCHNG_PROF_PWD" Type="varchar" MaxLength="50" />
+          <Property Name="EXCHNG_STOREID" Type="varchar" MaxLength="50" />
+          <Property Name="EXCHNG_SYNC_TYPE" Type="varchar" MaxLength="50" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" />
+          <Property Name="PW_LAST_UPD" Type="varchar" MaxLength="50" />
+          <Property Name="RPT_SRVR_PWD" Type="varchar" MaxLength="50" />
+          <Property Name="CREATED_DT" Type="datetime" />
+          <Property Name="CREATED_BY" Type="varchar" MaxLength="50" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="50" />
+          <Property Name="PERSON_UID" Type="varchar" MaxLength="50" />
+          <Property Name="BU_ID" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="M_ZIPCODE">
+          <Key>
+            <PropertyRef Name="ZIPCODE" />
+          </Key>
+          <Property Name="ROW_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PAR_ROW_ID" Type="varchar" MaxLength="50" />
+          <Property Name="ZIPCODE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="COUNTRY" Type="varchar" MaxLength="50" />
+          <Property Name="CITY" Type="varchar" MaxLength="50" />
+          <Property Name="CONTINENT" Type="varchar" MaxLength="50" />
+          <Property Name="COUNTY" Type="varchar" MaxLength="50" />
+          <Property Name="LATITUDE" Type="varchar" MaxLength="50" />
+          <Property Name="LONGITUDE" Type="varchar" MaxLength="50" />
+          <Property Name="STATE_PROV" Type="varchar" MaxLength="50" />
+          <Property Name="STREET_ABBREV" Type="varchar" MaxLength="50" />
+          <Property Name="STREET_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="CREATED_DT" Type="datetime" />
+          <Property Name="CREATED_BY" Type="varchar" MaxLength="50" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IIDRS.dbo.Vw_User' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Vw_User">
+          <Key>
+            <PropertyRef Name="LoginID" />
+          </Key>
+          <Property Name="LoginID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LOGIN" Type="varchar" MaxLength="50" />
+          <Property Name="LOGIN_DOMAIN" Type="varchar" MaxLength="50" />
+          <Property Name="USER_FLG" Type="varchar" MaxLength="50" />
+          <Property Name="PERSON_UID" Type="varchar" MaxLength="50" />
+          <Property Name="Contact Person" Type="varchar" MaxLength="101" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="EMP_ID" Type="varchar" MaxLength="50" />
+          <Property Name="PHONE_NO" Type="varchar" MaxLength="50" />
+          <Property Name="BU_ID" Type="varchar" MaxLength="50" />
+          <Property Name="BU_TYPE" Type="varchar" MaxLength="50" />
+          <Property Name="DU" Type="varchar" MaxLength="50" />
+          <Property Name="ProjectID" Type="varchar" MaxLength="50" />
+          <Property Name="ProjectName" Type="varchar" MaxLength="50" />
+          <Property Name="BRAND" Type="varchar" MaxLength="50" />
+          <Property Name="zipcode" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="IIDRSModelStoreContainer">
+          <EntitySet Name="M_ADDR_PER" EntityType="Self.M_ADDR_PER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_BU" EntityType="Self.M_BU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_CONTACT" EntityType="Self.M_CONTACT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_CUST_SURVEY" EntityType="Self.M_CUST_SURVEY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_ORG_EXT" EntityType="Self.M_ORG_EXT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_PARTY" EntityType="Self.M_PARTY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_POSTN" EntityType="Self.M_POSTN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_USER" EntityType="Self.M_USER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_ZIPCODE" EntityType="Self.M_ZIPCODE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vw_User" EntityType="Self.Vw_User" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Vw_User].[LoginID] AS [LoginID], 
+    [Vw_User].[LOGIN] AS [LOGIN], 
+    [Vw_User].[LOGIN_DOMAIN] AS [LOGIN_DOMAIN], 
+    [Vw_User].[USER_FLG] AS [USER_FLG], 
+    [Vw_User].[PERSON_UID] AS [PERSON_UID], 
+    [Vw_User].[Contact Person] AS [Contact Person], 
+    [Vw_User].[Email] AS [Email], 
+    [Vw_User].[EMP_ID] AS [EMP_ID], 
+    [Vw_User].[PHONE_NO] AS [PHONE_NO], 
+    [Vw_User].[BU_ID] AS [BU_ID], 
+    [Vw_User].[BU_TYPE] AS [BU_TYPE], 
+    [Vw_User].[DU] AS [DU], 
+    [Vw_User].[ProjectID] AS [ProjectID], 
+    [Vw_User].[ProjectName] AS [ProjectName], 
+    [Vw_User].[BRAND] AS [BRAND], 
+    [Vw_User].[zipcode] AS [zipcode]
+    FROM [dbo].[Vw_User] AS [Vw_User]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IIDRSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="M_ADDR_PER">
+          <Key>
+            <PropertyRef Name="ROW_ID" />
+          </Key>
+          <Property Name="ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PERSON_UID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ADDR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ADDR_LINE_2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ADDR_LINE_3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ADDR_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="COUNTRY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="STATE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ZIPCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="COMMENTS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_DT" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_UPD_DT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_UPD_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="M_BU">
+          <Key>
+            <PropertyRef Name="BU_ID" />
+          </Key>
+          <Property Name="ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BU_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PAR_BU_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BU_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BU_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BU_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PAR_ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DU_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROJ_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROJ_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_DT" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
+          <Property Name="LAST_UPD_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="M_CONTACT">
+          <Key>
+            <PropertyRef Name="PERSON_UID" />
+          </Key>
+          <Property Name="ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PERSON_UID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BU_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ACTIVE_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PAR_ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMP_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL_ADDR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMP_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PHONE_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_DT" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
+          <Property Name="LAST_UPD_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ZIPCODE_ROWID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="M_CUST_SURVEY">
+          <Key>
+            <PropertyRef Name="SURVEY_ID" />
+          </Key>
+          <Property Name="ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SURVEY_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PAR_ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CUST_SURVEY_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SURVEY_QUESTION_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SURVEY_QUESTION_DESC" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="SURVEY_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_DT" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
+          <Property Name="LAST_UPD_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="M_ORG_EXT">
+          <Key>
+            <PropertyRef Name="ROW_ID" />
+          </Key>
+          <Property Name="ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LOC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BU_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ACCNT_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ACTIVE_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PAR_ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CUST_END_DT" Type="DateTime" Precision="3" />
+          <Property Name="CUST_SINCE_DT" Type="DateTime" Precision="3" />
+          <Property Name="PAR_BU_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PARTNER_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PAR_DIVN_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PR_ADDR_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PR_ADDR_PER_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PR_BL_ADDR_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PR_BL_PER_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PR_CON_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PR_POSTN_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SURVEY_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RATING" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ZIPCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_DT" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
+          <Property Name="LAST_UPD_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="M_PARTY">
+          <Key>
+            <PropertyRef Name="PARTY_TYPE_CD" />
+          </Key>
+          <Property Name="PARTY_UID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PARTY_TYPE_CD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TRANS_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ACTIVE_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_DT" Type="DateTime" Precision="3" />
+          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="M_POSTN">
+          <Key>
+            <PropertyRef Name="POSTN_TYPE_CD" />
+          </Key>
+          <Property Name="ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BU_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="POSTN_TYPE_CD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="POSTN_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_DT" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
+          <Property Name="LAST_UPD_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="M_USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LOGIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LOGIN_DOMAIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PAR_ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USER_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CHALLENGE_ANSWER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CHALLENGE_QUESTION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CTI_ACD_USERID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CTI_PWD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EXCHNG_PROF_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EXCHNG_PROF_PWD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EXCHNG_STOREID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EXCHNG_SYNC_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PW_LAST_UPD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RPT_SRVR_PWD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_DT" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
+          <Property Name="LAST_UPD_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PERSON_UID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BU_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="M_ZIPCODE">
+          <Key>
+            <PropertyRef Name="ZIPCODE" />
+          </Key>
+          <Property Name="ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PAR_ROW_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ZIPCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COUNTRY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CONTINENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="COUNTY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LATITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LONGITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="STATE_PROV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="STREET_ABBREV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="STREET_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CREATED_DT" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
+          <Property Name="LAST_UPD_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Vw_User">
+          <Key>
+            <PropertyRef Name="LoginID" />
+          </Key>
+          <Property Name="LoginID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LOGIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LOGIN_DOMAIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USER_FLG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Contact_Person" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMP_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PHONE_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BU_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BRAND" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BU_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PERSON_UID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zipcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="IIDRSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="M_ADDR_PER" EntityType="Self.M_ADDR_PER" />
+          <EntitySet Name="M_BU" EntityType="Self.M_BU" />
+          <EntitySet Name="M_CONTACT" EntityType="Self.M_CONTACT" />
+          <EntitySet Name="M_CUST_SURVEY" EntityType="Self.M_CUST_SURVEY" />
+          <EntitySet Name="M_ORG_EXT" EntityType="Self.M_ORG_EXT" />
+          <EntitySet Name="M_PARTY" EntityType="Self.M_PARTY" />
+          <EntitySet Name="M_POSTN" EntityType="Self.M_POSTN" />
+          <EntitySet Name="M_USER" EntityType="Self.M_USER" />
+          <EntitySet Name="M_ZIPCODE" EntityType="Self.M_ZIPCODE" />
+          <EntitySet Name="Vw_User" EntityType="Self.Vw_User" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IIDRSModelStoreContainer" CdmEntityContainer="IIDRSEntities">
+          <EntitySetMapping Name="M_ADDR_PER">
+            <EntityTypeMapping TypeName="IIDRSModel.M_ADDR_PER">
+              <MappingFragment StoreEntitySet="M_ADDR_PER">
+                <ScalarProperty Name="ROW_ID" ColumnName="ROW_ID" />
+                <ScalarProperty Name="PERSON_UID" ColumnName="PERSON_UID" />
+                <ScalarProperty Name="ADDR" ColumnName="ADDR" />
+                <ScalarProperty Name="ADDR_LINE_2" ColumnName="ADDR_LINE_2" />
+                <ScalarProperty Name="ADDR_LINE_3" ColumnName="ADDR_LINE_3" />
+                <ScalarProperty Name="ADDR_FLG" ColumnName="ADDR_FLG" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="ZIPCODE" ColumnName="ZIPCODE" />
+                <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />
+                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_BU">
+            <EntityTypeMapping TypeName="IIDRSModel.M_BU">
+              <MappingFragment StoreEntitySet="M_BU">
+                <ScalarProperty Name="ROW_ID" ColumnName="ROW_ID" />
+                <ScalarProperty Name="BU_ID" ColumnName="BU_ID" />
+                <ScalarProperty Name="PAR_BU_ID" ColumnName="PAR_BU_ID" />
+                <ScalarProperty Name="BU_NAME" ColumnName="BU_NAME" />
+                <ScalarProperty Name="BU_FLG" ColumnName="BU_FLG" />
+                <ScalarProperty Name="BU_TYPE" ColumnName="BU_TYPE" />
+                <ScalarProperty Name="PAR_ROW_ID" ColumnName="PAR_ROW_ID" />
+                <ScalarProperty Name="DU_NAME" ColumnName="DU_NAME" />
+                <ScalarProperty Name="PROJ_ID" ColumnName="PROJ_ID" />
+                <ScalarProperty Name="PROJ_NAME" ColumnName="PROJ_NAME" />
+                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_CONTACT">
+            <EntityTypeMapping TypeName="IIDRSModel.M_CONTACT">
+              <MappingFragment StoreEntitySet="M_CONTACT">
+                <ScalarProperty Name="ZIPCODE_ROWID" ColumnName="ZIPCODE_ROWID" />
+                <ScalarProperty Name="ROW_ID" ColumnName="ROW_ID" />
+                <ScalarProperty Name="PERSON_UID" ColumnName="PERSON_UID" />
+                <ScalarProperty Name="BU_ID" ColumnName="BU_ID" />
+                <ScalarProperty Name="ACTIVE_FLG" ColumnName="ACTIVE_FLG" />
+                <ScalarProperty Name="PAR_ROW_ID" ColumnName="PAR_ROW_ID" />
+                <ScalarProperty Name="EMP_FLG" ColumnName="EMP_FLG" />
+                <ScalarProperty Name="FST_NAME" ColumnName="FST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+                <ScalarProperty Name="EMAIL_ADDR" ColumnName="EMAIL_ADDR" />
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="PHONE_NO" ColumnName="PHONE_NO" />
+                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_CUST_SURVEY">
+            <EntityTypeMapping TypeName="IIDRSModel.M_CUST_SURVEY">
+              <MappingFragment StoreEntitySet="M_CUST_SURVEY">
+                <ScalarProperty Name="ROW_ID" ColumnName="ROW_ID" />
+                <ScalarProperty Name="SURVEY_ID" ColumnName="SURVEY_ID" />
+                <ScalarProperty Name="PAR_ROW_ID" ColumnName="PAR_ROW_ID" />
+                <ScalarProperty Name="CUST_SURVEY_NAME" ColumnName="CUST_SURVEY_NAME" />
+                <ScalarProperty Name="SURVEY_QUESTION_NAME" ColumnName="SURVEY_QUESTION_NAME" />
+                <ScalarProperty Name="SURVEY_QUESTION_DESC" ColumnName="SURVEY_QUESTION_DESC" />
+                <ScalarProperty Name="SURVEY_FLG" ColumnName="SURVEY_FLG" />
+                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_ORG_EXT">
+            <EntityTypeMapping TypeName="IIDRSModel.M_ORG_EXT">
+              <MappingFragment StoreEntitySet="M_ORG_EXT">
+                <ScalarProperty Name="ROW_ID" ColumnName="ROW_ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="LOC" ColumnName="LOC" />
+                <ScalarProperty Name="BU_ID" ColumnName="BU_ID" />
+                <ScalarProperty Name="ACCNT_FLG" ColumnName="ACCNT_FLG" />
+                <ScalarProperty Name="ACTIVE_FLG" ColumnName="ACTIVE_FLG" />
+                <ScalarProperty Name="PAR_ROW_ID" ColumnName="PAR_ROW_ID" />
+                <ScalarProperty Name="CUST_END_DT" ColumnName="CUST_END_DT" />
+                <ScalarProperty Name="CUST_SINCE_DT" ColumnName="CUST_SINCE_DT" />
+                <ScalarProperty Name="PAR_BU_ID" ColumnName="PAR_BU_ID" />
+                <ScalarProperty Name="PARTNER_FLG" ColumnName="PARTNER_FLG" />
+                <ScalarProperty Name="PAR_DIVN_ID" ColumnName="PAR_DIVN_ID" />
+                <ScalarProperty Name="PR_ADDR_ID" ColumnName="PR_ADDR_ID" />
+                <ScalarProperty Name="PR_ADDR_PER_ID" ColumnName="PR_ADDR_PER_ID" />
+                <ScalarProperty Name="PR_BL_ADDR_ID" ColumnName="PR_BL_ADDR_ID" />
+                <ScalarProperty Name="PR_BL_PER_ID" ColumnName="PR_BL_PER_ID" />
+                <ScalarProperty Name="PR_CON_ID" ColumnName="PR_CON_ID" />
+                <ScalarProperty Name="PR_POSTN_ID" ColumnName="PR_POSTN_ID" />
+                <ScalarProperty Name="SURVEY_ID" ColumnName="SURVEY_ID" />
+                <ScalarProperty Name="RATING" ColumnName="RATING" />
+                <ScalarProperty Name="ZIPCODE" ColumnName="ZIPCODE" />
+                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_PARTY">
+            <EntityTypeMapping TypeName="IIDRSModel.M_PARTY">
+              <MappingFragment StoreEntitySet="M_PARTY">
+                <ScalarProperty Name="PARTY_UID" ColumnName="PARTY_UID" />
+                <ScalarProperty Name="PARTY_TYPE_CD" ColumnName="PARTY_TYPE_CD" />
+                <ScalarProperty Name="TRANS_FLG" ColumnName="TRANS_FLG" />
+                <ScalarProperty Name="ACTIVE_FLG" ColumnName="ACTIVE_FLG" />
+                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_POSTN">
+            <EntityTypeMapping TypeName="IIDRSModel.M_POSTN">
+              <MappingFragment StoreEntitySet="M_POSTN">
+                <ScalarProperty Name="ROW_ID" ColumnName="ROW_ID" />
+                <ScalarProperty Name="BU_ID" ColumnName="BU_ID" />
+                <ScalarProperty Name="POSTN_TYPE_CD" ColumnName="POSTN_TYPE_CD" />
+                <ScalarProperty Name="POSTN_NAME" ColumnName="POSTN_NAME" />
+                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_USER">
+            <EntityTypeMapping TypeName="IIDRSModel.M_USER">
+              <MappingFragment StoreEntitySet="M_USER">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+                <ScalarProperty Name="LOGIN_DOMAIN" ColumnName="LOGIN_DOMAIN" />
+                <ScalarProperty Name="PAR_ROW_ID" ColumnName="PAR_ROW_ID" />
+                <ScalarProperty Name="USER_FLG" ColumnName="USER_FLG" />
+                <ScalarProperty Name="CHALLENGE_ANSWER" ColumnName="CHALLENGE_ANSWER" />
+                <ScalarProperty Name="CHALLENGE_QUESTION" ColumnName="CHALLENGE_QUESTION" />
+                <ScalarProperty Name="CTI_ACD_USERID" ColumnName="CTI_ACD_USERID" />
+                <ScalarProperty Name="CTI_PWD" ColumnName="CTI_PWD" />
+                <ScalarProperty Name="EXCHNG_PROF_NAME" ColumnName="EXCHNG_PROF_NAME" />
+                <ScalarProperty Name="EXCHNG_PROF_PWD" ColumnName="EXCHNG_PROF_PWD" />
+                <ScalarProperty Name="EXCHNG_STOREID" ColumnName="EXCHNG_STOREID" />
+                <ScalarProperty Name="EXCHNG_SYNC_TYPE" ColumnName="EXCHNG_SYNC_TYPE" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="PW_LAST_UPD" ColumnName="PW_LAST_UPD" />
+                <ScalarProperty Name="RPT_SRVR_PWD" ColumnName="RPT_SRVR_PWD" />
+                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+                <ScalarProperty Name="PERSON_UID" ColumnName="PERSON_UID" />
+                <ScalarProperty Name="BU_ID" ColumnName="BU_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_ZIPCODE">
+            <EntityTypeMapping TypeName="IIDRSModel.M_ZIPCODE">
+              <MappingFragment StoreEntitySet="M_ZIPCODE">
+                <ScalarProperty Name="ROW_ID" ColumnName="ROW_ID" />
+                <ScalarProperty Name="PAR_ROW_ID" ColumnName="PAR_ROW_ID" />
+                <ScalarProperty Name="ZIPCODE" ColumnName="ZIPCODE" />
+                <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="CONTINENT" ColumnName="CONTINENT" />
+                <ScalarProperty Name="COUNTY" ColumnName="COUNTY" />
+                <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
+                <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
+                <ScalarProperty Name="STATE_PROV" ColumnName="STATE_PROV" />
+                <ScalarProperty Name="STREET_ABBREV" ColumnName="STREET_ABBREV" />
+                <ScalarProperty Name="STREET_NAME" ColumnName="STREET_NAME" />
+                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+                <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vw_User">
+            <EntityTypeMapping TypeName="IIDRSModel.Vw_User">
+              <MappingFragment StoreEntitySet="Vw_User">
+                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+                <ScalarProperty Name="PERSON_UID" ColumnName="PERSON_UID" />
+                <ScalarProperty Name="BU_ID" ColumnName="BU_ID" />
+                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
+                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+                <ScalarProperty Name="LOGIN_DOMAIN" ColumnName="LOGIN_DOMAIN" />
+                <ScalarProperty Name="USER_FLG" ColumnName="USER_FLG" />
+                <ScalarProperty Name="Contact_Person" ColumnName="Contact Person" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="PHONE_NO" ColumnName="PHONE_NO" />
+                <ScalarProperty Name="BU_TYPE" ColumnName="BU_TYPE" />
+                <ScalarProperty Name="DU" ColumnName="DU" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="BRAND" ColumnName="BRAND" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
