@@ -30,8 +30,8 @@
 	top: 68px; /* Height of navbar */
 	height: calc(100vh - 388px);
 	padding-top: .5rem;
-	overflow-x: hidden;
-	overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+	/*overflow-x: hidden;
+	overflow-y: auto;*/ /* Scrollable contents if viewport is shorter than content. */
 }
 
 .sidebar .nav-link {
