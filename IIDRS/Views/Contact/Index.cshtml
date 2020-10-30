@@ -55,9 +55,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.EMP_FLG)
             </th>*@
-    <!--<th>
-        Person ID
+
+        @*<th>
+                Person ID
+            </th>*@
+    <th>
+        Id
+
+
     </th>
+    @*<th>
+        Type
+    </th>*@
     <th>
         First Name
     </th>
@@ -67,24 +76,29 @@
     <th>
         Email Address
     </th>
-    <th>
-        Employee Id
-    </th>
+
     <th>
         Phone Number
-    </th>-->
+    </th>
     @*<th>
             BU ID
         </th>*@
+
+    @*<th>
+
     <!--<th>
+
         Created Date
-    </th>
+    </th>*@
     <th>
         Last Updated Date
     </th>
     <th>
-        Active/Deactive
-    </th>-->
+
+        Active
+    </th>
+
+      
 
     <tr style="cursor:pointer">
         <th onclick="sortTable(0)">Person ID</th>
@@ -97,6 +111,7 @@
         <th onclick="sortTable(7)">Last Updated Date</th>
         <th onclick="sortTable(8)">Active/Deactive</th>
     </tr>
+
 
 
     </thead>
@@ -121,16 +136,29 @@
                         @Html.DisplayFor(modelItem => item.ROW_ID)
                     </td>*@
                 @*<td>
+
+            @Html.DisplayFor(modelItem => item.ACTIVE_FLG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMP_FLG)
+        </td>*@
+                @*<td>
+            @Html.DisplayFor(modelItem => item.PERSON_UID)
+        </td>*@
+                @*@Html.HiddenFor(modelItem => item.PERSON_UID)*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.TYPE)
+                </td>*@
+
                         @Html.DisplayFor(modelItem => item.ACTIVE_FLG)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EMP_FLG)
                     </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.PERSON_UID)
-                </td>
-                @*@Html.HiddenFor(modelItem => item.PERSON_UID)*@
 
+                <td>
+                    @Html.DisplayFor(modelItem => item.EMP_ID)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FST_NAME)
                 </td>
@@ -140,18 +168,22 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.EMAIL_ADDR)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EMP_ID)
-                </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.PHONE_NO)
                 </td>
                 @*<td>
+
+            @Html.DisplayFor(modelItem => item.BU_ID)
+        </td>*@
+                @*<td>
+
                         @Html.DisplayFor(modelItem => item.BU_ID)
                     </td>*@
                 <td>
+
                     @Html.DisplayFor(modelItem => item.CREATED_DT)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.LAST_UPD_DT)
                 </td>
@@ -190,7 +222,7 @@
     <script>
         let addedInLast = false;
         $('#DataTable').SetEditable({
-            columnsEd: "1,2,3,4,5",
+            columnsEd: "0,1,2,3,4",
             $addButton: $('#btnAddRow'),
             onAdd: function () {
                 addedInLast = true
@@ -213,7 +245,7 @@
             onDelete: (row) => {
                 $("#btnAddRow").removeAttr("disabled");
                 let data
-                data = getId(row)
+                data = getEId(row)
                 if (data != null) {
                     deleteRequest(data)
                 }
@@ -229,7 +261,9 @@
             console.log(lastRow);
             let totalCols = lastRow[0].cells.length - 1
 
-            let headings = ["FST_NAME", "LAST_NAME", "EMAIL_ADDR", "EMP_ID", "BU_ID", "PHONE_NO", "CREATED_DT", "LAST_UPD_DT", "ACTIVE_FLG"]
+
+            let headings = ["EMP_ID","FST_NAME", "LAST_NAME", "EMAIL_ADDR", "PHONE_NO", "CREATED_DT", "LAST_UPD_DT", "ACTIVE_FLG"]
+
 
             let data = {}
 
@@ -245,7 +279,9 @@
         }
         //for edit of row
         function getEditData(row) {
-            let headings = ["PERSON_UID", "FST_NAME", "LAST_NAME", "EMAIL_ADDR", "EMP_ID", "BU_ID", "PHONE_NO", "CREATED_DT", "LAST_UPD_DT", "ACTIVE_FLG"]
+
+            let headings = ["EMP_ID", "FST_NAME", "LAST_NAME", "EMAIL_ADDR", "PHONE_NO", "CREATED_DT", "LAST_UPD_DT", "ACTIVE_FLG"]
+
 
             let data = {}
             getId(row);
@@ -261,6 +297,18 @@
             addedInLast = false
 
             let headings = ["PERSON_UID"]
+
+            let data = {}
+
+            data[headings[0]] = row.text();
+
+            return data
+        }
+
+        function getEId(row) {
+            addedInLast = false
+
+            let headings = ["EMP_ID"]
 
             let data = {}
 
