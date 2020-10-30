@@ -28,17 +28,24 @@
 
 <table id="DataTable" class="table table-bordered table-striped table-hover ">
     <thead class="thead-dark">
-    <th>
-        Row Id
+        <tr style="cursor:pointer">
+            <th onclick="sortTable(0)">Row Id</th>
+            <th onclick="sortTable(1)">BU Id</th>
+            <th onclick="sortTable(2)">Name</th>
+            <th onclick="sortTable(3)">Location </th>
+            <th onclick="sortTable(4)">Rating</th>
+        </tr>
+            @*<th>
+            Row Id
 
-    </th>
-    <th>
-        BU Id
-    </th>
-    @*<th>
+        </th>
+        <th>
+            BU Id
+        </th>*@
+            @*<th>
             Row Id
         </th>*@
-    @*<th>
+            @*<th>
             @Html.DisplayNameFor(model => model.M_CUST_SURVEY.ROW_ID)
 
         </th>
@@ -48,29 +55,29 @@
         <th>
             @Html.DisplayNameFor(model => model.M_POSTN.ROW_ID)
         </th>*@
-    @*<th>
+            @*<th>
             Log In
         </th>*@
-    @*<th>
+            @*<th>
             @Html.DisplayNameFor(model => model.M_USER1.LOGIN)
         </th>*@
-    @*<th>
+            @*<th>
             @Html.DisplayNameFor(model => model.M_ZIPCODE.ROW_ID)
         </th>*@
-    <th>
-        Name
-    </th>
-    <th>
-        Location
-    </th>
+            @*<th>
+            Name
+        </th>
+        <th>
+            Location
+        </th>*@
 
-    @*<th>
+            @*<th>
             @Html.DisplayNameFor(model => model.ACCNT_FLG)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ACTIVE_FLG)
         </th>*@
-    @*<th>
+            @*<th>
             @Html.DisplayNameFor(model => model.CUST_END_DT)
         </th>
         <th>
@@ -91,20 +98,20 @@
         <th>
             @Html.DisplayNameFor(model => model.PR_BL_PER_ID)
         </th>*@
-    @*<th>
+            @*<th>
             @Html.DisplayNameFor(model => model.PR_CON_ID)
         </th>*@
-    <th>
-        Rating
-        </th>
             @*<th>
-                Created Date
-            </th>
-            <th>
-                Last Updated Date
-            </th>*@
+            Rating
+        </th>*@
+            @*<th>
+            Created Date
+        </th>
+        <th>
+            Last Updated Date
+        </th>*@
 
-        </thead>
+</thead>
 
         @foreach (var item in Model)
         {
@@ -148,35 +155,35 @@
 </script>
 
 <script>
-            //built in methods in bootstable.js script......location of bootstable.js in script folder
-        let addedInLast = false;
-    $('#DataTable').SetEditable({
-        columnsEd: "2,3,4",
-        $addButton: $('#btnAddRow'),
-        onAdd: function () {
-            addedInLast = true
-            $('#btnAddRow').attr("disabled", "disabled");
-        },
-        onEdit: (row) => {
-            let data
-            if (addedInLast) {
-                data = getRowData()
-                makeRequest(data)
-            }
-            else {
-                data = getEditData(row)
-                editRequest(data)
-            }
-        },
-        onDelete: (row) => {
-            $("#btnAddRow").removeAttr("disabled");
-            let data
-            data = getId(row)
-            if (data != null) {
-                deleteRequest(data)
-            }
-        }
-    });
+    //built in methods in bootstable.js script......location of bootstable.js in script folder
+    let addedInLast = false;
+    //$('#DataTable').SetEditable({
+    //    columnsEd: "2,3,4",
+    //    $addButton: $('#btnAddRow'),
+    //    onAdd: function () {
+    //        addedInLast = true
+    //        $('#btnAddRow').attr("disabled", "disabled");
+    //    },
+    //    onEdit: (row) => {
+    //        let data
+    //        if (addedInLast) {
+    //            data = getRowData()
+    //            makeRequest(data)
+    //        }
+    //        else {
+    //            data = getEditData(row)
+    //            editRequest(data)
+    //        }
+    //    },
+    //    onDelete: (row) => {
+    //        $("#btnAddRow").removeAttr("disabled");
+    //        let data
+    //        data = getId(row)
+    //        if (data != null) {
+    //            deleteRequest(data)
+    //        }
+    //    }
+    //});
 
 
     //for addition
@@ -310,21 +317,83 @@
         drawPagination(visibleRows.length);
 
     });
-        //for search
-        function Contains(text_one, text_two) {
-            if (text_one.indexOf(text_two) != -1)
-                return true;
-        }
-        $("#Search").keyup(function () {
-            var searchtext = $("#Search").val().toLowerCase();
-            $(".Search").each(function () {
-                if (!Contains($(this).text().toLowerCase(), searchtext)) {
-                    $(this).hide();
-                }
-                else {
-                    $(this).show();
-                }
-            });
+    //for search
+    function Contains(text_one, text_two) {
+        if (text_one.indexOf(text_two) != -1)
+            return true;
+    }
+    $("#Search").keyup(function () {
+        var searchtext = $("#Search").val().toLowerCase();
+        $(".Search").each(function () {
+            if (!Contains($(this).text().toLowerCase(), searchtext)) {
+                $(this).hide();
+            }
+            else {
+                $(this).show();
+            }
         });
+    });
+    function sortTable(n) {
+        var table,
+            rows,
+            switching,
+            i,
+            x,
+            y,
+            shouldSwitch,
+            dir,
+            switchcount = 0;
+        table = document.getElementById("DataTable");
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc";
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < rows.length - 1; i++) { //Change i=0 if you have the header th a separate table.
+                //start by saying there should be no switching:
+                shouldSwitch = false;
+                /*Get the two elements you want to compare,
+                one from current row and one from the next:*/
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /*check if the two rows should switch place,
+                based on the direction, asc or desc:*/
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        //if so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        //if so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /*If a switch has been marked, make the switch
+                and mark that a switch has been done:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                //Each time a switch is done, increase this count by 1:
+                switchcount++;
+            } else {
+                /*If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again.*/
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
 </script>
 

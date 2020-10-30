@@ -1,64 +1,64 @@
-/*
+﻿/*
 Bootstable
  @description  Javascript library to make HMTL tables editable, using Bootstrap
  @version 1.1
  @autor Tito Hinostroza
 */
-  "use strict";
-  //Global variables
-  var params = null;  		//Parameters
+"use strict";
+//Global variables
+var params = null;  		//Parameters
 var colsEdi = null;
 var flag = true;
-  var newColHtml = '<div class="btn-group pull-right">'+
-'<button id="bEdit" type="button" class="btn btn-sm btn-default"  onclick="rowEdit(this);">' +
-'<i class="fas fa-pencil-alt"></i>'+
-'</button>'+
-'<button id="bElim" type="button" class="btn btn-sm btn-default"  onclick="rowElim(this);">' +
-'<i class="fas fa-trash" aria-hidden="true"></i>'+
-'</button>'+
-'<button id="bAcep" type="button" class="btn btn-sm btn-default"  style="display:none;" onclick="rowAcep(this);">' + 
-'<i class="fas fa-check"></i>'+
-'</button>'+
-'<button id="bCanc" type="button" class="btn btn-sm btn-default" style="display:none;"  onclick="rowCancel(this);">' + 
-'<i class="fas fa-times" aria-hidden="true"></i>'+
-'</button>'+
+var newColHtml = '<div class="btn-group pull-right">' +
+    '<button id="bEdit" type="button" class="btn btn-sm btn-default"  onclick="rowEdit(this);">' +
+    '<i class="fas fa-pencil-alt"></i>' +
+    '</button>' +
+    '<button id="bElim" type="button" class="btn btn-sm btn-default"  onclick="rowElim(this);">' +
+    '<i class="fas fa-trash" aria-hidden="true"></i>' +
+    '</button>' +
+    '<button id="bAcep" type="button" class="btn btn-sm btn-default"  style="display:none;" onclick="rowAcep(this);">' +
+    '<i class="fas fa-check"></i>' +
+    '</button>' +
+    '<button id="bCanc" type="button" class="btn btn-sm btn-default" style="display:none;"  onclick="rowCancel(this);">' +
+    '<i class="fas fa-times" aria-hidden="true"></i>' +
+    '</button>' +
     '</div>';
 
-     var saveColHtml = '<div class="btn-group pull-right">'+
-'<button id="bEdit" type="button" class="btn btn-sm btn-default" style="display:none;" onclick="rowEdit(this);">' +
-'<i class="fas fa-pencil-alt"></i>'+
-'</button>'+
-'<button id="bElim" type="button" class="btn btn-sm btn-default" style="display:none;" onclick="rowElim(this);">' +
-'<i class="fas fa-trash" aria-hidden="true"></i>'+
-'</button>'+
-'<button id="bAcep" type="button" class="btn btn-sm btn-default"   onclick="rowAcep(this);">' + 
-'<i class="fas fa-check"></i>'+
-'</button>'+
-'<button id="bCanc" type="button" class="btn btn-sm btn-default"  onclick="rowCancel(this);">' + 
-'<i class="fas fa-times" aria-hidden="true"></i>'+
-'</button>'+
+var saveColHtml = '<div class="btn-group pull-right">' +
+    '<button id="bEdit" type="button" class="btn btn-sm btn-default" style="display:none;" onclick="rowEdit(this);">' +
+    '<i class="fas fa-pencil-alt"></i>' +
+    '</button>' +
+    '<button id="bElim" type="button" class="btn btn-sm btn-default" style="display:none;" onclick="rowElim(this);">' +
+    '<i class="fas fa-trash" aria-hidden="true"></i>' +
+    '</button>' +
+    '<button id="bAcep" type="button" class="btn btn-sm btn-default"   onclick="rowAcep(this);">' +
+    '<i class="fas fa-check"></i>' +
+    '</button>' +
+    '<button id="bCanc" type="button" class="btn btn-sm btn-default"  onclick="rowCancel(this);">' +
+    '<i class="fas fa-times" aria-hidden="true"></i>' +
+    '</button>' +
     '</div>';
-  var colEdicHtml = '<td name="buttons">'+newColHtml+'</td>'; 
-var colSaveHtml = '<td name="buttons">'+saveColHtml+'</td>';
-    
-  $.fn.SetEditable = function (options) {
+var colEdicHtml = '<td name="buttons">' + newColHtml + '</td>';
+var colSaveHtml = '<td name="buttons">' + saveColHtml + '</td>';
+
+$.fn.SetEditable = function (options) {
     var defaults = {
         columnsEd: null,         //Index to editable columns. If null all td editables. Ex.: "1,2,3,4,5"
         $addButton: null,        //Jquery object of "Add" button
-        onEdit: function(row) {},   //Called after edition
-		onBeforeDelete: function() {}, //Called before deletion
-        onDelete: function(row) {}, //Called after deletion
-        onAdd: function() {}     //Called when added a new row
+        onEdit: function (row) { },   //Called after edition
+        onBeforeDelete: function () { }, //Called before deletion
+        onDelete: function (row) { }, //Called after deletion
+        onAdd: function () { }     //Called when added a new row
     };
     params = $.extend(defaults, options);
-      this.find('thead tr').append('<th name="buttons">Actions</th>');  //empty header
+    this.find('thead tr').append('<th name="buttons">Actions</th>');  //empty header
     this.find('tbody tr').append(colEdicHtml);
-	var $tabedi = this;   //Read reference to the current table, to resolve "this" here.
+    var $tabedi = this;   //Read reference to the current table, to resolve "this" here.
     //Process "addButton" parameter
     if (params.$addButton != null) {
         //Parameter was provided
         params.$addButton.click(function () {
-            
+
             rowAddNew($tabedi.attr("id"));
             flag = false;
         });
@@ -68,25 +68,25 @@ var colSaveHtml = '<td name="buttons">'+saveColHtml+'</td>';
         //Extract felds
         colsEdi = params.columnsEd.split(',');
     }
-  };
+};
 function IterarCamposEdit($cols, tarea) {
-//Iterate through editable fields in a row
+    //Iterate through editable fields in a row
     var n = 0;
-    $cols.each(function() {
+    $cols.each(function () {
         n++;
         if ($(this).attr('name') == 'buttons') return;  //exclude button column
         if (!EsEditable(n - 1)) return;   //editable field notes
         tarea($(this));
     });
-    
+
     function EsEditable(idx) {
-    // Indicates if the passed column is configured to be editable
-        if (colsEdi==null) {  //no se definió
+        // Indicates if the passed column is configured to be editable
+        if (colsEdi == null) {  //no se definió
             return true;  //todas son editable
         } else {  //hay filtro de campos
-//alert('verificando: ' + idx);
+            //alert('verificando: ' + idx);
             for (var i = 0; i < colsEdi.length; i++) {
-              if (idx == colsEdi[i]) return true;
+                if (idx == colsEdi[i]) return true;
             }
             return false;  //no se encontró
         }
@@ -110,49 +110,49 @@ function FijModoEdit(but) {
     $row.attr('id', 'editing');  //indica que está en edición
 }
 function ModoEdicion($row) {
-    if ($row.attr('id')=='editing') {
+    if ($row.attr('id') == 'editing') {
         return true;
     } else {
         return false;
     }
 }
 function rowAcep(but) {
-//Acepta los cambios de la edición
+    //Acepta los cambios de la edición
 
     var $row = $(but).parents('tr');  //accede a la fila
     var $cols = $row.find('td');  //lee campos
     if (!ModoEdicion($row)) return;  //Ya está en edición
     //Está en edición. Hay que finalizar la edición
-    IterarCamposEdit($cols, function($td) {  //itera por la columnas
-      var cont = $td.find('input').val(); //lee contenido del input
-      $td.html(cont);  //fija contenido y elimina controles
+    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
+        var cont = $td.find('input').val(); //lee contenido del input
+        $td.html(cont);  //fija contenido y elimina controles
     });
     FijModoNormal(but);
     //params.onEdit($row);
     params.onEdit($cols);
     flag = true;
-    
+
 }
 function rowCancel(but) {
-//Rechaza los cambios de la edición
+    //Rechaza los cambios de la edición
     var $row = $(but).parents('tr');  //accede a la fila
     var $cols = $row.find('td');  //lee campos
     if (!ModoEdicion($row)) return;  //Ya está en edición
     //Está en edición. Hay que finalizar la edición
-    IterarCamposEdit($cols, function($td) {  //itera por la columnas
+    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
         var cont = $td.find('div').html(); //lee contenido del div
         $td.html(cont);  //fija contenido y elimina controles
     });
     FijModoNormal(but);
 }
-function rowEdit(but) {  
+function rowEdit(but) {
     var $td = $("tr[id='editing'] td");
     rowAcep($td)
-    var $row = $(but).parents('tr');  
-    var $cols = $row.find('td');  
+    var $row = $(but).parents('tr');
+    var $cols = $row.find('td');
     if (ModoEdicion($row)) return;  //Ya está en edición
     //Pone en modo de edición
-    IterarCamposEdit($cols, function($td) {  //itera por la columnas
+    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
         var cont = $td.html(); //lee contenido
         var div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
         var input = '<input class="form-control input-sm"  value="' + cont.trim() + '">';
@@ -181,18 +181,19 @@ function rowAddNew(tabId) {  //Add row to indicated table.
         var $row = $tab_en_edic.find('thead tr');  //header
         var $cols = $row.find('th');  // read fields
         //build html
-        
+
         var htmlDat = '';
         $cols.each(function () {
-            
+
             if ($(this).attr('name') == 'buttons') {
                 //It's column of buttons
-                
+
                 htmlDat = htmlDat + colEdicHtml;  // add buttons
-            } else {
-                
+            }
+            else {
                 htmlDat = htmlDat + '<td></td>';
             }
+
         });
         $tab_en_edic.find('tbody').append('<tr>' + htmlDat + '</tr>');
     }
@@ -205,42 +206,53 @@ function rowAddNew(tabId) {  //Add row to indicated table.
         var $cols = $ultFila.find('td');  // read fields
         for (let col = 0; col < 9; col++) {
             $('#editing').find('td').eq(col).text("");
+            if (col == 6) {
+                $('#editing').find('td').eq(col).append("dropdown");
+            }
+            else if (col == 7) {
+                $('#editing').find('td').eq(col).append("email");
+            }
+            else if (col == 8) {
+                $('#editing').find('td').eq(col).append("phoneno");
+            }
         }
         var $td = $("tr[id='editing'] td");
         IterarCamposEdit($cols, function ($td) {
-        //$cols.each(function () {
-            //if ($(this).attr('name') == 'buttons') {
-            //    //It's column of buttons
-            //} else {
-                var div = '<div style="display: none;"></div>';  // save content
-                var input = '<input class="form-control input-sm"  value="">';
-                $td.html(div + input);//$(this).html(div + input);  //clean content
-            //}
+
+            var div = '<div style="display: none;"></div>';
+            var input = '<input class="form-control input-sm"  value="">';
+            $td.html(div + input);
+
+            //Set dropdown for new row contact column
+            var dropdown = "<select id='ddlContacts' class='form-control' style='width: fit-content;'><option></option></select>";
+            if ($cols[6].textContent != "dropdown") {
+                $td.html(div + dropdown);
+            }
         });
         $ultFila.find('td:last').html(saveColHtml);
-    } 
+    }
     params.onAdd();
 }
 function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
     var datFil = '';
     var tmp = '';
-	var $tab_en_edic = $("#" + tabId);  //Table source
-    $tab_en_edic.find('tbody tr').each(function() {
+    var $tab_en_edic = $("#" + tabId);  //Table source
+    $tab_en_edic.find('tbody tr').each(function () {
         //Termina la edición si es que existe
         if (ModoEdicion($(this))) {
             $(this).find('#bAcep').click();  //acepta edición
         }
         var $cols = $(this).find('td');  //lee campos
         datFil = '';
-        $cols.each(function() {
-            if ($(this).attr('name')=='buttons') {
+        $cols.each(function () {
+            if ($(this).attr('name') == 'buttons') {
                 //Es columna de botones
             } else {
                 datFil = datFil + $(this).html() + separator;
             }
         });
-        if (datFil!='') {
-            datFil = datFil.substr(0, datFil.length-separator.length); 
+        if (datFil != '') {
+            datFil = datFil.substr(0, datFil.length - separator.length);
         }
         tmp = tmp + datFil + '\n';
     });
