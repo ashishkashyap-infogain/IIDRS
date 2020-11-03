@@ -12,7 +12,7 @@ namespace IIDRS
         public string ROW_ID { get; set; }
 
         [StringLength(50)]
-        [DisplayName("Name")]
+        [DisplayName("Brand Name")]
         public string NAME { get; set; }
 
         [StringLength(50)]
