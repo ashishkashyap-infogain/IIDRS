@@ -51,16 +51,17 @@ $.fn.SetEditable = function (options) {
         onAdd: function () { }     //Called when added a new row
     };
     params = $.extend(defaults, options);
-    this.find('thead tr').append('<th name="buttons">Actions</th>');  //empty header
+    this.find('thead tr').append('<th name="buttons" id="actionHeader">Actions</th>');  //empty header
     this.find('tbody tr').append(colEdicHtml);
     var $tabedi = this;   //Read reference to the current table, to resolve "this" here.
     //Process "addButton" parameter
     if (params.$addButton != null) {
         //Parameter was provided
         params.$addButton.click(function () {
-
-            rowAddNew($tabedi.attr("id"));
-            flag = false;
+            if (flag == true) {
+                rowAddNew($tabedi.attr("id"));
+                flag = false;
+            }
         });
     }
     //Process "columnsEd" parameter
@@ -101,7 +102,6 @@ function FijModoNormal(but) {
     $row.attr('id', '');  //quita marca
 }
 function FijModoEdit(but) {
-
     $(but).parent().find('#bAcep').show();
     $(but).parent().find('#bCanc').show();
     $(but).parent().find('#bEdit').hide();
@@ -128,20 +128,17 @@ function rowAcep(but) {
         $td.html(cont);  //fija contenido y elimina controles
     });
     FijModoNormal(but);
-    //params.onEdit($row);
     params.onEdit($cols);
     flag = true;
 
 }
 function rowCancel(but) {
-    //Rechaza los cambios de la edición
     var $row = $(but).parents('tr');  //accede a la fila
     var $cols = $row.find('td');  //lee campos
     if (!ModoEdicion($row)) return;  //Ya está en edición
-    //Está en edición. Hay que finalizar la edición
     IterarCamposEdit($cols, function ($td) {  //itera por la columnas
         var cont = $td.find('div').html(); //lee contenido del div
-        $td.html(cont);  //fija contenido y elimina controles
+        $row.remove(cont);
     });
     FijModoNormal(but);
 }
@@ -151,7 +148,6 @@ function rowEdit(but) {
     var $row = $(but).parents('tr');
     var $cols = $row.find('td');
     if (ModoEdicion($row)) return;  //Ya está en edición
-    //Pone en modo de edición
     IterarCamposEdit($cols, function ($td) {  //itera por la columnas
         var cont = $td.html(); //lee contenido
         var div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
@@ -160,7 +156,7 @@ function rowEdit(but) {
     });
     FijModoEdit(but);
 }
-function rowElim(but) {  //Elimina la fila actual
+function rowElim(but) {  
     var $row1 = $(but).parents('tr');
     var $row = $(but).parents('tr').find('td').eq(0);  //accede a la fila
     params.onBeforeDelete($row1);
