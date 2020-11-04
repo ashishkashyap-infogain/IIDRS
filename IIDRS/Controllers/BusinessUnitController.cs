@@ -13,19 +13,27 @@ namespace IIDRS.Controllers
     {
         private DataModel db = new DataModel();
         // GET: BusinessUnit
-        public ActionResult GetAllBU()
+        public ActionResult GetAllBU(string getBUListByCondition = "1")
         {
             List<BUViewModel> list = new List<BUViewModel>();
             GetAction();
             if (Session["Admin"] != null)
             {
-
+               
                 var BU_User_Details = from bu in db.M_BU
                                       join contact in db.M_CONTACT on bu.BU_ID equals contact.BU_ID
-                                      where bu.BU_FLG == "1"
                                       orderby bu.CREATED_DT descending
                                       select new { contact.FST_NAME, contact.LAST_NAME, contact.EMAIL_ADDR, contact.PHONE_NO, bu.BU_NAME, bu.BU_ID, bu.BU_TYPE, bu.DU_NAME, bu.PROJ_ID, bu.PROJ_NAME, bu.BU_FLG };
-            
+
+                switch (getBUListByCondition)
+                {
+                    case "1":
+                        BU_User_Details = BU_User_Details.Where(s=>s.BU_FLG == "1");
+                        break;
+                    case "0":
+                        BU_User_Details = BU_User_Details.Where(s => s.BU_FLG == "0");
+                        break;
+                }
                 foreach (var item in BU_User_Details)
                 {
                     var model = new BUViewModel()
@@ -43,7 +51,14 @@ namespace IIDRS.Controllers
                     };
                     list.Add(model);
                 }
-                return View("GetAllBU", list);
+                if (Request.IsAjaxRequest())
+                {
+                    return Json(list, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return View("GetAllBU", list);
+                }
             }
             return RedirectToAction("Login2", "Home");
         }
@@ -297,12 +312,30 @@ namespace IIDRS.Controllers
         {
             var ActionList = new SelectList(new[]
             {
-                new { ID = "1", Name = "Both" },
-                new { ID = "2", Name = "Active" },
-                new { ID = "3", Name = "Deactive" },
+                new { ID = "-1", Name = "All" },
+                new { ID = "1", Name = "Active" },
+                new { ID = "0", Name = "Inactive" },
             },
             "ID", "Name", 1);
             ViewBag.ActionList = ActionList;
+        }
+
+        [HttpPost]
+        public ActionResult DeleteBusinessUnit(BUViewModel id)
+        {
+            if (Session["Admin"] != null)
+            {
+
+                if (id.BUId != null)
+                {
+                    id.BUId = id.BUId.Trim();
+                    M_BU bu = db.M_BU.Find(id.BUId);
+                    bu.BU_FLG = "0";
+                    db.SaveChanges();
+                }
+                return RedirectToAction("GetAllBU");
+            }
+            return RedirectToAction("Login2", "Home");
         }
     }
 }
