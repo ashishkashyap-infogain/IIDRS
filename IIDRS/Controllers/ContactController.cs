@@ -84,7 +84,7 @@ namespace IIDRS.Controllers
                 M_PARTY m_PARTY = new M_PARTY();
 
                 //for alphanumeric PARTY_TYPE_CD
-                var checks = db.M_PARTY.Where(x => x.PARTY_TYPE_CD.Contains("CONTACT")).ToList();
+                var checks = db.M_PARTY.Where(x => x.PARTY_TYPE_CD.Contains("KCONTACT")).ToList();
                 m_PARTY.PARTY_TYPE_CD = checks.Max(x => x.PARTY_TYPE_CD);
 
                 if (m_PARTY.PARTY_TYPE_CD == "0" || m_PARTY.PARTY_TYPE_CD == null)
@@ -94,11 +94,11 @@ namespace IIDRS.Controllers
                 else
                 {
                     StringBuilder sb1 = new StringBuilder();
-                    var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"CONTACT");
+                    var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"KCONTACT");
                     var chng1 = res1[0].ToString().Split('-');
                     var inc1 = ((Convert.ToInt32(chng1[1])) + 1).ToString();
 
-                    sb1.Append("1-" + inc1 + "CONTACT");
+                    sb1.Append("1-" + inc1 + "KCONTACT");
                     m_PARTY.PARTY_TYPE_CD = sb1.ToString();
 
                 }
@@ -125,8 +125,9 @@ namespace IIDRS.Controllers
                 m_PARTY.ACTIVE_FLG = "1";
 
                 //for alphanumeric BU_ID
-                M_BU m_bu = new M_BU();
-                
+                //M_BU m_bu = new M_BU();
+                //m_bu.BU_ID
+
                 //Contact page properties
                 contact.ROW_ID = contact.PERSON_UID;
                 contact.FST_NAME = contact.FST_NAME;
@@ -138,10 +139,7 @@ namespace IIDRS.Controllers
                 contact.CREATED_BY = sess;
                 contact.LAST_UPD_BY = sess;
                 
-                //contact.BU_ID = "1-11BU";
-                //m_USER.PW_LAST_UPD = System.DateTime.Now.ToString();
-                //m_USER.CREATED_BY = sess;
-                //m_USER.LAST_UPD_BY = sess;
+               
                 contact.ACTIVE_FLG = "1";
                 //contact.BU_ID = m_bu.BU_ID;
                 contact.BU_ID = "1-13BU";
@@ -166,12 +164,12 @@ namespace IIDRS.Controllers
             if (Session["Admin"] != null)
             {
                 var sess = Session["Admin"].ToString();
-                //parrowID= db.M_BU.pa
                 
-                if (contact.PERSON_UID != null)
+                
+                if (contact.EMP_ID != null)
                 {
-                    contact.PERSON_UID = contact.PERSON_UID.Trim();
-                    var personId = db.M_CONTACT.Where(x => x.PERSON_UID == contact.PERSON_UID).FirstOrDefault();
+                    contact.EMP_ID = contact.EMP_ID.Trim();
+                    var personId = db.M_CONTACT.Where(x => x.EMP_ID == contact.EMP_ID).FirstOrDefault();
 
                     if (personId != null)
                     {
@@ -183,16 +181,16 @@ namespace IIDRS.Controllers
                         contact.FST_NAME = contact.FST_NAME.Trim();
                         contact.LAST_NAME = contact.LAST_NAME.Trim(); 
                         contact.EMAIL_ADDR = contact.EMAIL_ADDR.Trim(); 
-                        contact.EMP_ID = contact.EMP_ID.Trim();
+                        //contact.EMP_ID = contact.EMP_ID.Trim();
                         contact.PHONE_NO = contact.PHONE_NO.Trim();
 
-                        personId.PERSON_UID = contact.PERSON_UID;
+                        //personId.PERSON_UID = contact.PERSON_UID;
                         personId.FST_NAME = contact.FST_NAME;
                         personId.LAST_NAME = contact.LAST_NAME;
                         personId.EMAIL_ADDR = contact.EMAIL_ADDR ;
                         personId.EMP_ID = contact.EMP_ID;
                         personId.PHONE_NO = contact.PHONE_NO;
-                        personId.BU_ID = contact.BU_ID;
+                        //personId.BU_ID = contact.BU_ID;
                         personId.LAST_UPD_DT = System.DateTime.Now;
 
                         //personId.CREATED_DT = contact.CREATED_DT;
@@ -203,9 +201,6 @@ namespace IIDRS.Controllers
                         //personId.PAR_ROW_ID = contact.PAR_ROW_ID;
                         //personId.EMP_FLG = contact.EMP_FLG;
 
-                        
-
-                        //db.Entry(contact).State = EntityState.Modified;
                         db.SaveChanges();
                     }
                 }
@@ -221,11 +216,13 @@ namespace IIDRS.Controllers
             if (Session["Admin"] != null)
             {
 
-                if (id.PERSON_UID != null)
+                if (id.EMP_ID != null)
                 {
-                    id.PERSON_UID = id.PERSON_UID.Trim();
-                    M_CONTACT contact = db.M_CONTACT.Find(id.PERSON_UID);
-                    contact.ACTIVE_FLG = "0";
+                    id.EMP_ID = id.EMP_ID.Trim();
+                    //M_CONTACT contact = db.M_CONTACT.Find(id.PERSON_UID);
+
+                    var personData = db.M_CONTACT.Where(x => x.EMP_ID == id.EMP_ID).FirstOrDefault();
+                    personData.ACTIVE_FLG = "0";
 
                     db.SaveChanges();
                     //TempData["successmsg"] = "Deleted successfully";
