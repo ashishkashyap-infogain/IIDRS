@@ -117,15 +117,15 @@ function ModoEdicion($row) {
     }
 }
 function rowAcep(but) {
-    //Acepta los cambios de la edición
+    //Accept the changes to the edition
 
-    var $row = $(but).parents('tr');  //accede a la fila
-    var $cols = $row.find('td');  //lee campos
-    if (!ModoEdicion($row)) return;  //Ya está en edición
-    //Está en edición. Hay que finalizar la edición
-    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
-        var cont = $td.find('input').val(); //lee contenido del input
-        $td.html(cont);  //fija contenido y elimina controles
+    var $row = $(but).parents('tr');  //access the row
+    var $cols = $row.find('td');  //read fields
+    if (!ModoEdicion($row)) return;  //It is already in editing
+    //It is in edit. Editing has to be finished
+    IterarCamposEdit($cols, function ($td) {  //iterate through columns
+        var cont = $td.find('input').val(); //read input content
+        $td.html(cont);  //pin content and remove controls
     });
     FijModoNormal(but);
     params.onEdit($cols);
@@ -138,7 +138,14 @@ function rowCancel(but) {
     if (!ModoEdicion($row)) return;  //Ya está en edición
     IterarCamposEdit($cols, function ($td) {  //itera por la columnas
         var cont = $td.find('div').html(); //lee contenido del div
-        $row.remove(cont);
+        var cont1 = $td.find('input').val();
+        if (cont1 == "") {
+            $row.remove(cont);
+            window.location.reload();
+        }
+        else {
+            $td.html(cont);
+        }
     });
     FijModoNormal(but);
 }
@@ -147,12 +154,19 @@ function rowEdit(but) {
     rowAcep($td)
     var $row = $(but).parents('tr');
     var $cols = $row.find('td');
-    if (ModoEdicion($row)) return;  //Ya está en edición
-    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
-        var cont = $td.html(); //lee contenido
-        var div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
+
+    if (ModoEdicion($row)) return;  //It is already in editing
+    IterarCamposEdit($cols, function ($td) {  //iterate through columnas
+        var cont = $td.html(); //read the content
+        var div = '<div style="display: none;">' + cont + '</div>';  //save content
         var input = '<input class="form-control input-sm"  value="' + cont.trim() + '">';
-        $td.html(div + input);  //fija contenido
+        $td.html(div + input);  //fix content
+       
+        //Set dropdown for new row contact column
+        var dropdown = "<select id='ddlContacts' class='form-control' style='width: fit-content;'><option> "+cont +" </option></select>";
+        if ($td.hasClass('getId')) {
+            $td.html(div + dropdown);
+        }
     });
     FijModoEdit(but);
 }
