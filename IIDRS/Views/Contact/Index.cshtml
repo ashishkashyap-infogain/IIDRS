@@ -14,7 +14,7 @@
 <script src="~/Scripts/Contact.js"></script>
 
 <div style="float:right">
-    <button style="float:right" class="btn btn-sm btn-primary rounded-0" id="btnAddRow"><i class="fa fa-address-book"></i>Add</button>
+    <button style="float:right" class="btn btn-sm btn-primary rounded-0" id="btnAddRow"><i class="fa fa-address-book"></i>&nbsp;Add</button>
     <button style="float:right" class="btn btn-sm btn-default rounded-0" id="btnExport"><i class="fa fa-download" style=" height: 25px !important; width: 25px !important;"></i></button>
 
     @*<a href="/Customer/Edit" class="btn btn-sm btn-primary rounded-0"><i class="fa fa-edit"></i>Edit</a>
@@ -55,13 +55,13 @@
             <th onclick="sortTable(5)">
                 @Html.DisplayNameFor(model => model.BU_NAME)
             </th>
-            @*<th onclick="sortTable(6)">
+            <th onclick="sortTable(6)">
                 @Html.DisplayNameFor(model => model.DU_NAME)
             </th>
             <th onclick="sortTable(7)">
                 @Html.DisplayNameFor(model => model.PROJ_NAME)
-            </th>*@
-            <th onclick="sortTable(6)">
+            </th>
+            <th onclick="sortTable(8)">
                 @Html.DisplayNameFor(model => model.LAST_UPD_DT)
             </th>
             <th class="text-center">
@@ -98,12 +98,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.BU_NAME)
                 </td>
-                @*<td id="du">
+                <td id="du">
                     @Html.DisplayFor(modelItem => item.DU_NAME)
                 </td>
                 <td id="proj">
                     @Html.DisplayFor(modelItem => item.PROJ_NAME)
-                </td>*@
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LAST_UPD_DT)
                 </td>
@@ -182,6 +182,7 @@
                 $("#ddlBU").html(items);
 
                 var buId = $('#ddlBU').val();
+                //GetBUById(buId);
                 GetDU(buId);;
                 
             },
@@ -190,25 +191,36 @@
             }
         });
     }
-
- 
     $(document).on('change', '#ddlBU', function () {
         var buId = $(this).val();
         GetDU(buId);
     });
+    //$(document).on('change', '#ddlBU', function () {
+    //    var buId = $(this).val();
+    //    GetDU(buId);
+    //});
+
+    //function GetBUById(buId) {
+    //    $.ajax({
+    //        type: "GET",
+    //        url: '/Contact/GetBuDetailsbyId',
+    //        data: { buId: buId },
+    //        success: function (data) {
+    //            $("#du").text(data.duName);
+    //            $("#proj").text(data.projectName);
+
+    //        },
+    //        error: function () {
+    //            $('#dllBU').html('No DU details found');
+    //        }
+    //    });
+    //}
+
 
     function GetDU(buId) {
         $.ajax({
             type: "GET",
-            url: '/Contact/GetDU',
-            //success: function (data) {
-            //    var items = "";
-            //    $.each(data, function (i, item) {
-            //        items += "<option value=" + item.buId + ">" + item.duName + "</option>";
-            //    });
-            //    $("#du").empty();
-            //    $("#du").html(items);
-
+            url: '/Contact/GetDUbyId',           
             data: { buId: buId },
             success: function (data) {
                 $("#du").text(data.duName);
@@ -216,7 +228,7 @@
                 
             },
             error: function () {
-                $('#du').html('No DU details found');
+                $('#dllBU').html('No DU details found');
             }
         });
     }

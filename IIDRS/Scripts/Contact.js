@@ -141,7 +141,15 @@ function rowCancel(but) {
     //Está en edición. Hay que finalizar la edición
     IterarCamposEdit($cols, function ($td) {  //itera por la columnas
         var cont = $td.find('div').html(); //lee contenido del div
-        $td.html(cont);  //fija contenido y elimina controles
+                                            //fija contenido y elimina controles
+        var cont1 = $td.find('input').val();
+        if (cont1 == "") {
+            $row.remove(cont);
+            window.location.reload();
+        }
+        else {
+            $td.html(cont);
+        }
     });
     FijModoNormal(but);
 }
@@ -209,12 +217,12 @@ function rowAddNew(tabId) {  //Add row to indicated table.
             if (col == 5) {
                 $('#editing').find('td').eq(col).append("dropdown");
             }
-            //else if (col == 6) {
-            //    $('#editing').find('td').eq(col).append("du");
-            //}
-            //else if (col == 7) {
-            //    $('#editing').find('td').eq(col).append("proj");
-            //}
+            else if (col == 6) {
+                $('#editing').find('td').eq(col).append("du");
+            }
+            else if (col == 7) {
+                $('#editing').find('td').eq(col).append("proj");
+            }
         }
         var $td = $("tr[id='editing'] td");
         IterarCamposEdit($cols, function ($td) {
