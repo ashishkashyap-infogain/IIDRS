@@ -15,8 +15,14 @@
     @*<a href="/Customer/Edit" class="btn btn-sm btn-primary rounded-0"><i class="fa fa-edit"></i>Edit</a>
         <a href="/Customer/Delete" class="btn btn-sm btn-danger rounded-0" onclick="return confirm('Are you sure?') "><i class="fa fa-trash"></i>Delete</a>
         <a href="/Customer/Save" class="btn btn-sm btn-success rounded-0"><i class="fa fa-save"></i>Save</a>*@
+    <button style="float:right" class="btn btn-sm btn-default rounded-0" id="btnExport"><i class="fa fa-download" style=" height: 25px !important; width: 25px !important;"></i></button>
+
     <br /><br />
 </div>
+<div style="float: right;padding-bottom: 10px;">
+    @Html.DropDownList("selectedAction", (IEnumerable<SelectListItem>)ViewBag.ActionList, new { @class = "form-control btn-sm btn-primary rounded-0", @id = "ddSelect" })
+</div>
+
 
 <div class="flexbox">
     <div class="search">
@@ -36,86 +42,86 @@
             <th onclick="sortTable(3)">Location </th>
             <th onclick="sortTable(4)">Rating</th>
         </tr>
-            @*<th>
-            Row Id
+        @*<th>
+                Row Id
 
-        </th>
-        <th>
-            BU Id
-        </th>*@
-            @*<th>
-            Row Id
-        </th>*@
-            @*<th>
-            @Html.DisplayNameFor(model => model.M_CUST_SURVEY.ROW_ID)
+            </th>
+            <th>
+                BU Id
+            </th>*@
+        @*<th>
+                Row Id
+            </th>*@
+        @*<th>
+                @Html.DisplayNameFor(model => model.M_CUST_SURVEY.ROW_ID)
 
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.M_PARTY.PARTY_UID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.M_POSTN.ROW_ID)
-        </th>*@
-            @*<th>
-            Log In
-        </th>*@
-            @*<th>
-            @Html.DisplayNameFor(model => model.M_USER1.LOGIN)
-        </th>*@
-            @*<th>
-            @Html.DisplayNameFor(model => model.M_ZIPCODE.ROW_ID)
-        </th>*@
-            @*<th>
-            Name
-        </th>
-        <th>
-            Location
-        </th>*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.M_PARTY.PARTY_UID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.M_POSTN.ROW_ID)
+            </th>*@
+        @*<th>
+                Log In
+            </th>*@
+        @*<th>
+                @Html.DisplayNameFor(model => model.M_USER1.LOGIN)
+            </th>*@
+        @*<th>
+                @Html.DisplayNameFor(model => model.M_ZIPCODE.ROW_ID)
+            </th>*@
+        @*<th>
+                Name
+            </th>
+            <th>
+                Location
+            </th>*@
 
-            @*<th>
-            @Html.DisplayNameFor(model => model.ACCNT_FLG)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ACTIVE_FLG)
-        </th>*@
-            @*<th>
-            @Html.DisplayNameFor(model => model.CUST_END_DT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CUST_SINCE_DT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PARTNER_FLG)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PAR_DIVN_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PR_ADDR_PER_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PR_BL_ADDR_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PR_BL_PER_ID)
-        </th>*@
-            @*<th>
-            @Html.DisplayNameFor(model => model.PR_CON_ID)
-        </th>*@
-            @*<th>
-            Rating
-        </th>*@
-            @*<th>
-            Created Date
-        </th>
-        <th>
-            Last Updated Date
-        </th>*@
+        @*<th>
+                @Html.DisplayNameFor(model => model.ACCNT_FLG)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ACTIVE_FLG)
+            </th>*@
+        @*<th>
+                @Html.DisplayNameFor(model => model.CUST_END_DT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CUST_SINCE_DT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PARTNER_FLG)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PAR_DIVN_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PR_ADDR_PER_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PR_BL_ADDR_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PR_BL_PER_ID)
+            </th>*@
+        @*<th>
+                @Html.DisplayNameFor(model => model.PR_CON_ID)
+            </th>*@
+        @*<th>
+                Rating
+            </th>*@
+        @*<th>
+                Created Date
+            </th>
+            <th>
+                Last Updated Date
+            </th>*@
 
-</thead>
+    </thead>
 
-        @foreach (var item in Model)
-        {
+    @foreach (var item in Model)
+    {
         <tbody>
             <tr class="Search">
                 <td>
@@ -145,7 +151,7 @@
         </tbody>
     }
 
-    </table>
+</table>
 
 
 <div class="container">
@@ -161,36 +167,8 @@
 <script>
     //built in methods in bootstable.js script......location of bootstable.js in script folder
     let addedInLast = false;
-    //$('#DataTable').SetEditable({
-    //    columnsEd: "2,3,4",
-    //    $addButton: $('#btnAddRow'),
-    //    onAdd: function () {
-    //        addedInLast = true
-    //        $('#btnAddRow').attr("disabled", "disabled");
-    //    },
-    //    onEdit: (row) => {
-    //        let data
-    //        if (addedInLast) {
-    //            data = getRowData()
-    //            makeRequest(data)
-    //        }
-    //        else {
-    //            data = getEditData(row)
-    //            editRequest(data)
-    //        }
-    //    },
-    //    onDelete: (row) => {
-    //        $("#btnAddRow").removeAttr("disabled");
-    //        let data
-    //        data = getId(row)
-    //        if (data != null) {
-    //            deleteRequest(data)
-    //        }
-    //    }
-    //});
-
-
-    //for addition
+  {
+    
     function getRowData(row = null) //default null #TODO incase for edit we have to send row number to get data of specific row
     {
         addedInLast = false
@@ -200,7 +178,7 @@
         console.log(lastRow);
         let totalCols = lastRow[0].cells.length - 1
 
-        let headings = ["ROW_ID", "BU_ID", "NAME", "LOC", "RATING"]
+        let headings = ["PROJ_ID", "BU_ID", "PROJ_NAME", "NAME", "LOC", "RATING"]
 
         let data = {}
 
@@ -209,19 +187,6 @@
             data[headings[col]] = colData
         }
         return data
-    }
-
-    //for edit of row
-    function getEditData(row) {
-        let headings = ["ROW_ID", "BU_ID", "NAME", "LOC", "RATING"]
-        let data = {}
-
-        for (let col = 0; col < headings.length - 1; col++) {
-            let colData = row.eq(col).text();
-            data[headings[col]] = colData
-        }
-
-        return data;
     }
 
     function getId(row) {
@@ -236,54 +201,10 @@
         return data
     }
 
-    // ajax for add
-    function makeRequest(dataToBeSent) {
+   
 
-        $.ajax({
-            type: "POST",
-            url: "https://localhost:44350/Customer/Create",
-            data: dataToBeSent,
-            success: function () {
-                $("#btnAddRow").removeAttr("disabled");
-                window.location.reload();
-            }
-        });
-    }
-
-
-    //ajax for edit
-    function editRequest(dataToBeSent) {
-
-        $.ajax({
-            type: "POST",
-            url: "https://localhost:44350/Customer/Edit",
-            data: dataToBeSent,
-            success: function () {
-                window.location.reload();
-            },
-            error: function () {
-                window.location.reload();
-
-            }
-        });
-    }
-    //ajax post request for delete
-    function deleteRequest(dataToBeSent) {
-
-        $.ajax({
-            type: "POST",
-            url: 'https://localhost:44350/Customer/Delete',
-            data: dataToBeSent,
-            success: function () {
-
-                window.location.reload();
-            },
-            error: function () {
-                window.location.reload();
-            }
-        });
-    }
-
+   
+   
     //for pagination
     $(document).ready(function () {
         let pageSize = 7;
@@ -337,6 +258,42 @@
             }
         });
     });
+    $(function () {
+        $("#btnExport").click(function () {
+            $("#DataTable").table2excel({
+                filename: "Survey_Summary.xls",
+                name: "BU Sheet",
+            });
+        });
+    });
+
+    $(document).on('change', '#ddSelect', function () {
+        var getBUType = $(this).val();
+        GetContactDetailsByType(getBUType);
+    });
+
+    function GetContactDetailsByType(getBUType) {
+        $.ajax({
+            type: "GET",
+            url: '/Customer/OrgEdit',
+            data: { getBUListByCondition: getBUType },
+            success: function (data) {
+                $('#DataTable tbody').html('');
+                $.each(data, function (k, v) {
+                    var x = v.BU_Flag;
+                    var rows = "<tr " + (x == '0' ? "style='pointer-events: none'" : "") + ">"
+                        + "<td>" + v.PROJ_ID + "</td>"
+                        + "<td>" + v.BU_ID + "</td>"
+                        + "<td>" + v.PROJ_NAME + "</td>"
+                        + "<td>" + v.NAME + "</td>"
+                        + "<td>" + v.LOC + "</td>"
+                        + "<td>" + v.RATING + "</td>"
+                        
+                        + "<td  style='pointer-events: none' class='text-center' style='pointer-events:none'> <input type='checkbox' id='enableDisablecbx' name='custom-switch-checkbox class='custom-switch-input' checked ='" + x + "' " + (x == '0' ? "disabled" : "") + "></td>"
+                        + "</tr>";
+                    $('#DataTable').append(rows);
+                    $('#actionHeader').detach();
+                });
     function sortTable(n) {
         var table,
             rows,
