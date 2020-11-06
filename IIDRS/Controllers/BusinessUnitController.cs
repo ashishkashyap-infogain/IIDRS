@@ -188,54 +188,7 @@ namespace IIDRS.Controllers
             }
         }
 
-        public M_CONTACT GetContactDetails(string contactId)
-        {
-            try
-            {
-                var contactDetails = db.M_CONTACT.FirstOrDefault(m => m.PERSON_UID == contactId);
-                return contactDetails;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public JsonResult PopulateContactDetails()
-        {
-            try
-            {
-                var list = db.M_CONTACT.ToList().Select(m => new
-                {
-                    contactId = m.PERSON_UID,
-                    contactDesc = m.FST_NAME + " " + m.LAST_NAME,
-
-                }).ToList();
-                ViewBag.ContactDetails = list;
-                return Json(list, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public JsonResult GetContactDetailsById(string contactId)
-        {
-            try
-            {
-                var contact = GetContactDetails(contactId);
-                var details = new
-                {
-                    contact.EMAIL_ADDR,
-                    contact.PHONE_NO
-                };
-                return Json(details, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
 
         private void AddContactDetails(M_CONTACT contactDetails, string personId, string rowId, string createdBy, string buId)
         {
@@ -307,19 +260,41 @@ namespace IIDRS.Controllers
                 throw ex;
             }
         }
-
-        private void GetAction()
+       
+        [HttpPost]
+        public ActionResult EditBusinessUnit(BUViewModel bUViewModel)
         {
-            var ActionList = new SelectList(new[]
+            if (Session["Admin"] != null)
             {
-                new { ID = "-1", Name = "All" },
-                new { ID = "1", Name = "Active" },
-                new { ID = "0", Name = "Inactive" },
-            },
-            "ID", "Name", 1);
-            ViewBag.ActionList = ActionList;
+                var sess = Session["Admin"].ToString();
+                if (bUViewModel.BUId != null)
+                {
+                    bUViewModel.BUId = bUViewModel.BUId.Trim();
+                    var buId = db.M_BU.Where(x => x.BU_ID == bUViewModel.BUId).FirstOrDefault();
+                    if (buId != null)
+                    {
+                        buId.BU_NAME = bUViewModel.BUName.Trim();
+                        buId.BU_TYPE = bUViewModel.BUType.Trim();
+                        buId.DU_NAME = bUViewModel.DUName.Trim();
+                        buId.PROJ_ID = bUViewModel.ProjectId;
+                        buId.PROJ_NAME = bUViewModel.ProjectName;
+                        buId.LAST_UPD_DT = System.DateTime.Now;
+                        buId.LAST_UPD_BY = sess;
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+            return RedirectToAction("Login2", "Home");
         }
-
+        
         [HttpPost]
         public ActionResult DeleteBusinessUnit(BUViewModel id)
         {
@@ -336,6 +311,66 @@ namespace IIDRS.Controllers
                 return RedirectToAction("GetAllBU");
             }
             return RedirectToAction("Login2", "Home");
+        }
+
+        public M_CONTACT GetContactDetails(string contactId)
+        {
+            try
+            {
+                var contactDetails = db.M_CONTACT.FirstOrDefault(m => m.PERSON_UID == contactId);
+                return contactDetails;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public JsonResult PopulateContactDetails()
+        {
+            try
+            {
+                var list = db.M_CONTACT.ToList().Select(m => new
+                {
+                    contactId = m.PERSON_UID,
+                    contactDesc = m.FST_NAME + " " + m.LAST_NAME,
+
+                }).ToList();
+                ViewBag.ContactDetails = list;
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public JsonResult GetContactDetailsById(string contactId)
+        {
+            try
+            {
+                var contact = GetContactDetails(contactId);
+                var details = new
+                {
+                    contact.EMAIL_ADDR,
+                    contact.PHONE_NO
+                };
+                return Json(details, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void GetAction()
+        {
+            var ActionList = new SelectList(new[]
+            {
+                new { ID = "-1", Name = "All" },
+                new { ID = "1", Name = "Active" },
+                new { ID = "0", Name = "Inactive" },
+            },
+            "ID", "Name", 1);
+            ViewBag.ActionList = ActionList;
         }
     }
 }
