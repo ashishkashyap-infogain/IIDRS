@@ -37,6 +37,12 @@ namespace IIDRS.ViewModel
         public string EMP_FLG { get; set; }
         public string ROW_ID { get; set; }
 
+        public string BU_TYPE { get; set; }
+
+        public string PROJ_ID { get; set; }
+
+        public string PAR_BU_ID { get; set; }
+
     }
 }
 

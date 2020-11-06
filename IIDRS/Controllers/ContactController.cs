@@ -191,7 +191,7 @@ namespace IIDRS.Controllers
                 AddContactDetails(contactViewModel, session);
 
                 //BU Details 
-                var buDetails = GetBUDetails(contactViewModel.BU_ID);
+                var buDetails = GetBUDetails(contactViewModel);
 
                 //create personId
                 var res0 = Regex.Split(contactViewModel.BU_ID, @"\D+");
@@ -205,20 +205,27 @@ namespace IIDRS.Controllers
                 var inc01 = (Convert.ToInt32(chng01) + 1).ToString();
                 sbRowId.Append("2-" + inc01 + randomChar + "BBU");
 
-                //Create rowId
+                //Create parrowId
                 StringBuilder sbParRowId = new StringBuilder();
                 var chng02 = res0[1].ToString();
                 Random rnd1 = new Random();
-                char randomChar1 = (char)rnd.Next('A', 'Z');
-                var inc02 = (Convert.ToInt32(chng01) + 1).ToString();
+                char randomChar1 = (char)rnd1.Next('A', 'Z');
+                var inc02 = (Convert.ToInt32(chng02) + 1).ToString();
                 sbParRowId.Append("2-" + inc02 + randomChar1 + "BUPARBU");
 
-                
+                //Create parbuId
+                StringBuilder sbParbuId = new StringBuilder();
+                var chng03 = res0[1].ToString();
+                Random rnd2 = new Random();
+                char randomChar2 = (char)rnd2.Next('A', 'Z');
+                var inc03 = (Convert.ToInt32(chng03) + 1).ToString();
+                sbParbuId.Append("2-" + inc03 + randomChar2 + "BUPARBU");
+
 
                 //db.M_BU.Add(m_BU);
                 db.M_PARTY.Add(m_PARTY);
                 // db.M_CONTACT.Add(contact);
-                AddBUDetails(buDetails, sbRowId.ToString(), session, sbParRowId.ToString(),contactViewModel.BU_ID);
+                AddBUDetails(buDetails, sbRowId.ToString(), session, sbParRowId.ToString(),contactViewModel.BU_ID, sbParbuId.ToString());
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -292,7 +299,22 @@ namespace IIDRS.Controllers
             return RedirectToAction("Index", "Contact");
         }
 
-        public M_BU GetBUDetails(string buId)
+        public ContactViewModel GetBUDetails(ContactViewModel contactViewModel)
+        {
+            try
+            {
+                //var buDetails = db.M_BU.FirstOrDefault(m => m.BU_ID == buId);
+                var buDetails = contactViewModel;
+
+                return buDetails;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public M_BU GetBUDetailsById(string buId)
         {
             try
             {
@@ -304,6 +326,7 @@ namespace IIDRS.Controllers
                 throw ex;
             }
         }
+
         public JsonResult BUDetails()
         {
             try
@@ -325,11 +348,11 @@ namespace IIDRS.Controllers
             }
         }
 
-        public JsonResult GetDU(string buId)
+        public JsonResult GetDUbyId(string buId)
         {
             try
             {
-                var bu = GetBUDetails(buId);
+                var bu = GetBUDetailsById(buId);
                 var details = new
                 {
                     //bu.BU_NAME,
@@ -346,18 +369,18 @@ namespace IIDRS.Controllers
             }
         }
 
-        public M_BU GetBUtDetails(string buId)
-        {
-            try
-            {
-                var buDetails = db.M_BU.FirstOrDefault(m => m.BU_ID == buId);
-                return buDetails;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //public M_BU GetBUtDetails(string buId)
+        //{
+        //    try
+        //    {
+        //        var buDetails = db.M_BU.FirstOrDefault(m => m.BU_ID == buId);
+        //        return buDetails;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
         //public JsonResult DUDetails()
         //{
         //    try
@@ -379,7 +402,7 @@ namespace IIDRS.Controllers
 
 
 
-        private void AddBUDetails(M_BU buDetails, string rowId, string createdBy,string parRowId,string buid)
+        private void AddBUDetails(ContactViewModel buDetails, string rowId, string createdBy,string parRowId,string buid,string parBuId)
         {
             try
             {
@@ -396,7 +419,7 @@ namespace IIDRS.Controllers
                 m_BU.PROJ_ID = buDetails.PROJ_ID;
                 m_BU.PROJ_NAME = buDetails.PROJ_NAME;
                 m_BU.BU_FLG = "1";
-                m_BU.PAR_BU_ID = buDetails.PAR_BU_ID;
+                m_BU.PAR_BU_ID = parBuId;
                 m_BU.PAR_ROW_ID = parRowId;
                 db.M_BU.Add(m_BU);
                 try
