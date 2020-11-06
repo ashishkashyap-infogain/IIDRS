@@ -29,9 +29,10 @@
 <table id="DataTable" class="table table-bordered table-striped table-hover ">
     <thead class="thead-dark">
         <tr style="cursor:pointer">
-            <th onclick="sortTable(0)">Row Id</th>
+            <th onclick="sortTable(0)">Project Id</th>
             <th onclick="sortTable(1)">BU Id</th>
-            <th onclick="sortTable(2)">Name</th>
+            <th onclick="sortTable(2)">Project Name</th>
+            <th onclick="sortTable(2)">Brand Name</th>
             <th onclick="sortTable(3)">Location </th>
             <th onclick="sortTable(4)">Rating</th>
         </tr>
@@ -118,13 +119,16 @@
         <tbody>
             <tr class="Search">
                 <td>
-                    @Html.DisplayFor(modelItem => item.ROW_ID)
+                    @Html.DisplayFor(modelItem => item.M_BU.PROJ_ID)
                 </td>
-             
+
                 <td>
                     @Html.DisplayFor(modelItem => item.BU_ID)
                 </td>
-              
+                <td>
+                    @Html.DisplayFor(modelItem => item.M_BU.PROJ_NAME)
+                </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.NAME)
                 </td>
@@ -132,11 +136,11 @@
                     @Html.DisplayFor(modelItem => item.LOC)
                 </td>
 
-                
+
                 <td>
                     @Html.DisplayFor(modelItem => item.RATING)
                 </td>
-              
+
             </tr>
         </tbody>
     }
