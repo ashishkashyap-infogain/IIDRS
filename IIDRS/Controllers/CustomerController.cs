@@ -239,31 +239,40 @@ namespace IIDRS.Controllers
         //List of Customer 
         public ActionResult OrgEdit(string getBUListByCondition = "1")
         {
-            List<M_ORG_EXT> list = new List<M_ORG_EXT>();
             GetAction();
+            List<M_ORG_EXT> list = new List<M_ORG_EXT>();
             if (Session["Admin"] != null)
             {
-
-                var Survey_Details = from bu in db.M_ORG_EXT
-                                     join contact in db.M_CONTACT on bu.BU_ID equals contact.BU_ID
-                                     orderby bu.CREATED_DT descending
-                                     select new { contact.FST_NAME, contact.LAST_NAME, contact.EMAIL_ADDR, contact.PHONE_NO, bu.BU_ID, bu.NAME, bu.LOC, bu.RATING, bu.M_BU.PROJ_NAME, bu.M_BU.PROJ_ID, bu.ACTIVE_FLG };
-
+               var  list2 = from s in db.M_ORG_EXT select s;
                 switch (getBUListByCondition)
                 {
                     case "1":
-                        Survey_Details = Survey_Details.Where(s => s.ACTIVE_FLG == "1");
+                        list2 = list2.Where(s => s.ACTIVE_FLG == "1");
                         break;
                     case "0":
-                        Survey_Details = Survey_Details.Where(s => s.ACTIVE_FLG == "0");
+                        list2 = list2.Where(s => s.ACTIVE_FLG == "0");
                         break;
+                   
                 }
-
-                var res = db.M_ORG_EXT.ToList();
-             
-
-                return View(res);
+                foreach (var item in list2)
+                {
+                    var model = new M_ORG_EXT()
+                    {
+                        BU_ID = item.BU_ID,
+                        RATING = item.RATING,
+                        LOC = item.LOC,
+                        NAME = item.NAME,
+                        //ProjectId = item.PROJ_ID,
+                        //ProjectName = item.PROJ_NAME,
+                        //ContactName = item.FST_NAME + " " + item.LAST_NAME,
+                        //EMAIL_ADDR = item.EMAIL_ADDR,
+                        //PHONE_NO = item.PHONE_NO,
+                       // ACTIVE_FLG = item.ACTIVE_FLG
+                    };
+                    list.Add(model);
                 }
+               
+
                 if (Request.IsAjaxRequest())
                 {
                     return Json(list, JsonRequestBehavior.AllowGet);
@@ -272,7 +281,8 @@ namespace IIDRS.Controllers
                 {
                     return View("OrgEdit", list);
                 }
-        
+            }
+            return RedirectToAction("Login2", "Home");
         }
 
        
