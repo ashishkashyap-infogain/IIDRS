@@ -34,9 +34,9 @@
 @*<p>
         @Html.ActionLink("Create New", "Create")
     </p>*@
-<table style="white-space: nowrap" class="table table-bordered table-striped table-hover " id="DataTable">
+<table class="table table-bordered table-striped table-hover " id="DataTable">
     <thead class="thead-dark">
-        <tr>
+        <tr style="cursor:pointer ;white-space: nowrap">
             <th onclick="sortTable(0)">
                 @Html.DisplayNameFor(model => model.EMP_ID)
             </th>
