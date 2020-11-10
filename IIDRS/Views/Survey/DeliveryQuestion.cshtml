@@ -1,0 +1,53 @@
+﻿@model IIDRS.ViewModel.SurveyQuestionViewModel
+@{
+    ViewBag.Title = "DeliveryQuestion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Delivery Survey Question</h2>
+
+
+@*@using (Html.BeginForm())*@
+@using (Html.BeginForm("CreateDeliveryQuestion", "Survey", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SURVEY_QUESTION_NAME, "SURVEY_QUESTION_NAME", htmlAttributes: new { @class = "control-label " })
+                    <div class="">
+                        @Html.DropDownListFor(m => m.SURVEY_QUESTION_NAME, ViewBag.SurveyQuestionCategory as SelectList, htmlAttributes: new { @class = "form-control " })
+                        @Html.ValidationMessageFor(model => model.SURVEY_QUESTION_NAME, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SURVEY_QUESTION_DESC, htmlAttributes: new { @class = "control-label " }) *
+                    <div class="">
+                        @Html.EditorFor(model => model.SURVEY_QUESTION_DESC, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SURVEY_QUESTION_DESC, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>       
+        <div class="row" style="padding-top:25px;">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <input type="submit" value="Create" class="btn btn-sm btn-primary rounded-0" style="width:100%" />
+            </div>
+        </div>
+        <div class="row" style="padding-top:25px;">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                @Html.ActionLink("Back to Survey", "SurveyManage")
+            </div>
+        </div>
+    </div>
+}
+
