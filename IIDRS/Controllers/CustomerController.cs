@@ -85,7 +85,7 @@ namespace IIDRS.Controllers
         //            m_org_ext.ROW_ID = sb.ToString();
         //        }
         //        //for bu id
-                  
+
         //        //var buId = Regex.Split(m_org_ext.BU_ID, @"\D+");
 
         //        //if (m_org_ext.BU_ID == "0" || m_org_ext.BU_ID == null)
@@ -144,7 +144,7 @@ namespace IIDRS.Controllers
         //[HttpPost]
         //public ActionResult Edit(M_ORG_EXT m_org_ext)
         //{
-            
+
         //    if (Session["Admin"] != null)
         //    {
         //        var sess = Session["Admin"].ToString();
@@ -162,7 +162,7 @@ namespace IIDRS.Controllers
         //                rowId.NAME = m_org_ext.NAME;
         //                rowId.LOC = m_org_ext.LOC;
         //                rowId.RATING = m_org_ext.RATING;
-                      
+
 
         //                rowId.LAST_UPD_DT = System.DateTime.Now;
         //                rowId.LAST_UPD_BY = sess;
@@ -175,18 +175,117 @@ namespace IIDRS.Controllers
 
         //}
 
-        //List of Customer 
-        public ActionResult OrgEdit()
+        //public ActionResult GetAllBU(string getBUListByCondition = "1")
+        //{
+        //    List<BUViewModel> list = new List<BUViewModel>();
+        //    GetAction();
+        //    if (Session["Admin"] != null)
+        //    {
+
+        //        var BU_User_Details = from bu in db.M_BU
+        //                              join contact in db.M_CONTACT on bu.BU_ID equals contact.BU_ID
+        //                              orderby bu.CREATED_DT descending
+        //                              select new { contact.FST_NAME, contact.LAST_NAME, contact.EMAIL_ADDR, contact.PHONE_NO, bu.BU_NAME, bu.BU_ID, bu.BU_TYPE, bu.DU_NAME, bu.PROJ_ID, bu.PROJ_NAME, bu.BU_FLG };
+
+        //        switch (getBUListByCondition)
+        //        {
+        //            case "1":
+        //                BU_User_Details = BU_User_Details.Where(s => s.BU_FLG == "1");
+        //                break;
+        //            case "0":
+        //                BU_User_Details = BU_User_Details.Where(s => s.BU_FLG == "0");
+        //                break;
+        //        }
+        //        foreach (var item in BU_User_Details)
+        //        {
+        //            var model = new BUViewModel()
+        //            {
+        //                BUId = item.BU_ID,
+        //                BUName = item.BU_NAME,
+        //                BUType = item.BU_TYPE,
+        //                DUName = item.DU_NAME,
+        //                ProjectId = item.PROJ_ID,
+        //                ProjectName = item.PROJ_NAME,
+        //                ContactName = item.FST_NAME + " " + item.LAST_NAME,
+        //                EMAIL_ADDR = item.EMAIL_ADDR,
+        //                PHONE_NO = item.PHONE_NO,
+        //                BU_Flag = item.BU_FLG
+        //            };
+        //            list.Add(model);
+        //        }
+        //        if (Request.IsAjaxRequest())
+        //        {
+        //            return Json(list, JsonRequestBehavior.AllowGet);
+        //        }
+        //        else
+        //        {
+        //            return View("GetAllBU", list);
+        //        }
+        //    }
+        //    return RedirectToAction("Login2", "Home");
+        //}
+        private void GetAction()
         {
+            var ActionList = new SelectList(new[]
+            {
+                new { ID = "-1", Name = "All" },
+                new { ID = "1", Name = "Active" },
+                new { ID = "0", Name = "Inactive" },
+            },
+            "ID", "Name", 1);
+            ViewBag.ActionList = ActionList;
+        }
+
+        //List of Customer 
+        public ActionResult OrgEdit(string getBUListByCondition = "1")
+        {
+            GetAction();
+            List<M_ORG_EXT> list = new List<M_ORG_EXT>();
             if (Session["Admin"] != null)
             {
+               var  list2 = from s in db.M_ORG_EXT select s;
+                switch (getBUListByCondition)
+                {
+                    case "1":
+                        list2 = list2.Where(s => s.ACTIVE_FLG == "1");
+                        break;
+                    case "0":
+                        list2 = list2.Where(s => s.ACTIVE_FLG == "0");
+                        break;
+                   
+                }
+                foreach (var item in list2)
+                {
+                    var model = new M_ORG_EXT()
+                    {
+                        BU_ID = item.BU_ID,
+                        RATING = item.RATING,
+                        LOC = item.LOC,
+                        NAME = item.NAME,
+                        //ProjectId = item.PROJ_ID,
+                        //ProjectName = item.PROJ_NAME,
+                        //ContactName = item.FST_NAME + " " + item.LAST_NAME,
+                        //EMAIL_ADDR = item.EMAIL_ADDR,
+                        //PHONE_NO = item.PHONE_NO,
+                       // ACTIVE_FLG = item.ACTIVE_FLG
+                    };
+                    list.Add(model);
+                }
                
-                var res = db.M_ORG_EXT.ToList();
-                
-                return View(res);
+
+                if (Request.IsAjaxRequest())
+                {
+                    return Json(list, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return View("OrgEdit", list);
+                }
             }
             return RedirectToAction("Login2", "Home");
         }
+
+       
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -89,7 +89,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ProjectName)
                 </td>
-                <td>
+                <td class="getId">
                     @Html.DisplayFor(modelItem => item.ContactName)
                 </td>
                 <td id="txtEmail">
@@ -125,141 +125,174 @@
 
 <script>
 
-//for pagination
-$(document).ready(function () {
-        $('#DataTable').SetEditable({
-            columnsEd: "1,2,3,4,5,6",
-            $addButton: $('#btnAddRow'),
-            onAdd: function () {
-                addedInLast = true
-                // $('#btnAddRow').attr("disabled", "disabled");
-                GetContacts();
+
+    let addedInLast = false;
+    $('#DataTable').SetEditable({
+        columnsEd: "1,2,3,4,5,6",
+        $addButton: $('#btnAddRow'),
+        onAdd: function () {
+            addedInLast = true
+            // $('#btnAddRow').attr("disabled", "disabled");
+            GetContacts();
+        },
+        onEdit: (row) => {
+            let data
+            if (addedInLast) {
+                data = getRowData()
+                makeRequest(data)
+            }
+            else {
+                data = getEditData(row)
+                editRequest(data)
+            }
+        },
+        onDelete: (row) => {
+            $("#btnAddRow").removeAttr("disabled");
+            let data
+            data = getId(row)
+            if (data != null) {
+                deleteRequest(data)
+            }
+        }
+    });
+
+    function GetContacts() {
+        $.ajax({
+            type: "GET",
+            url: '/BusinessUnit/PopulateContactDetails',
+            success: function (data) {
+                var items = "";
+                $.each(data, function (i, item) {
+                    items += "<option value=" + item.contactId + ">" + item.contactDesc + "</option>";
+                });
+                $("#ddlContacts").empty();
+                $("#ddlContacts").html(items);
+                var contactId = $('#ddlContacts').val();
+                GetContactDetailsById(contactId);
             },
-            onEdit: (row) => {
-                let data
-                if (addedInLast) {
-                    data = getRowData()
-                    makeRequest(data)
-                }
-                else {
-                    data = getEditData(row)
-                    editRequest(data)
-                }
-            },
-            onDelete: (row) => {
-                $("#btnAddRow").removeAttr("disabled");
-                let data
-                data = getId(row)
-                if (data != null) {
-                    deleteRequest(data)
-                }
+            error: function () {
+                $('#ddlContacts').html('No contact details found');
             }
         });
+    }
 
-        function GetContacts() {
-            $.ajax({
-                type: "GET",
-                url: '/BusinessUnit/PopulateContactDetails',
-                success: function (data) {
-                    var items = "";
-                    $.each(data, function (i, item) {
-                        items += "<option value=" + item.contactId + ">" + item.contactDesc + "</option>";
-                    });
-                    $("#ddlContacts").empty();
-                    $("#ddlContacts").html(items);
-                    var contactId = $('#ddlContacts').val();
-                    GetContactDetailsById(contactId);
-                },
-                error: function () {
-                    $('#ddlContacts').html('No contact details found');
-                }
-            });
-        }
+    $(document).on('change', '#ddlContacts', function () {
+        var contactId = $(this).val();
+        GetContactDetailsById(contactId);
+    });
+    $(document).on('change', '#ddlBUType', function () {
+        var getBUType = $(this).val();
+        GetContactDetailsByType(getBUType);
+    });
 
-        $(document).on('change', '#ddlContacts', function () {
-            var contactId = $(this).val();
-            GetContactDetailsById(contactId);
-        });
-        $(document).on('change', '#ddlBUType', function () {
-            var getBUType = $(this).val();
-            GetContactDetailsByType(getBUType);
-        });
-
-        function GetContactDetailsByType(getBUType) {
-            $.ajax({
-                type: "GET",
-                url: '/BusinessUnit/GetAllBU',
-                data: { getBUListByCondition: getBUType },
-                success: function (data) {
-                    $('#DataTable tbody').html('');
-                    $.each(data, function (k, v) {
-                        var x = v.BU_Flag;
-                        var rows = "<tr " + (x == '0' ? "style='pointer-events: none'" : "") +">"
-                            + "<td>" + v.BUId + "</td>"
-                            + "<td>" + v.BUName + "</td>"
-                            + "<td>" + v.BUType + "</td>"
-                            + "<td>" + v.DUName + "</td>"
-                            + "<td>" + v.ProjectId + "</td>"
-                            + "<td>" + v.ProjectName + "</td>"
-                            + "<td>" + v.ContactName + "</td>"
-                            + "<td id='txtEmail'>" + v.EMAIL_ADDR + "</td>"
-                            + "<td id='txtPhoneNo'>" + v.PHONE_NO + "</td>"
-                            + "<td  style='pointer-events: none' class='text-center' style='pointer-events:none'> <input type='checkbox' id='enableDisablecbx' name='custom-switch-checkbox class='custom-switch-input' checked ='" + x + "' " + (x == '0' ? "disabled" : "") + "></td>"
-                            + "</tr>";
-                        $('#DataTable').append(rows);
-                        $('#actionHeader').detach();
-                    });
-                    $('#DataTable').SetEditable({
-                        columnsEd: "1,2,3,4,5,6",
-                        $addButton: $('#btnAddRow'),
-                        onAdd: function () {
-                            addedInLast = true
-                            $('#btnAddRow').attr("disabled", "disabled");
-                            GetContacts();
-                        },
-                        onEdit: (row) => {
-                            let data
-                            if (addedInLast) {
-                                data = getRowData()
-                                makeRequest(data)
-                            }
-                            else {
-                                data = getEditData(row)
-                                editRequest(data)
-                            }
-                        },
-                        onDelete: (row) => {
-                            $("#btnAddRow").removeAttr("disabled");
-                            let data
-                            data = getId(row)
-                            if (data != null) {
-                                deleteRequest(data)
-                            }
+    function GetContactDetailsByType(getBUType) {
+        $.ajax({
+            type: "GET",
+            url: '/BusinessUnit/GetAllBU',
+            data: { getBUListByCondition: getBUType },
+            success: function (data) {
+                $('#DataTable tbody').html('');
+                $.each(data, function (k, v) {
+                    var x = v.BU_Flag;
+                    var rows = "<tr " + (x == '0' ? "style='pointer-events: none'" : "") +">"
+                        + "<td>" + v.BUId + "</td>"
+                        + "<td>" + v.BUName + "</td>"
+                        + "<td>" + v.BUType + "</td>"
+                        + "<td>" + v.DUName + "</td>"
+                        + "<td>" + v.ProjectId + "</td>"
+                        + "<td>" + v.ProjectName + "</td>"
+                        + "<td class='getId'>" + v.ContactName + "</td>"
+                        + "<td id='txtEmail'>" + v.EMAIL_ADDR + "</td>"
+                        + "<td id='txtPhoneNo'>" + v.PHONE_NO + "</td>"
+                        + "<td class='text-center' style='pointer-events:none'> <input type='checkbox' name='custom-switch-checkbox class='custom-switch-input' checked ='" + x + "' " + (x == '0' ? "disabled" : "") + "></td>"
+                        + "</tr>";
+                    $('#DataTable').append(rows);
+                    $('#actionHeader').detach();
+                });
+                $('#DataTable').SetEditable({
+                    columnsEd: "1,2,3,4,5,6",
+                    $addButton: $('#btnAddRow'),
+                    onAdd: function () {
+                        addedInLast = true
+                        $('#btnAddRow').attr("disabled", "disabled");
+                        GetContacts();
+                    },
+                    onEdit: (row) => {
+                        let data
+                        if (addedInLast) {
+                            data = getRowData()
+                            makeRequest(data)
                         }
-                    });
-                },
-                error: function () {
-                    $('#ddlBUType').html('No contact details found');
+                        else {
+                            data = getEditData(row)
+                            editRequest(data)
+                        }
+                    },
+                    onDelete: (row) => {
+                        $("#btnAddRow").removeAttr("disabled");
+                        let data
+                        data = getId(row)
+                        if (data != null) {
+                            deleteRequest(data)
+                        }
+                    }
+                });
+                let pageSize = 7;
+                var visibleRows = $('table#DataTable tbody tr:visible');
+                function drawPagination(totalitems) {
+                    var $pagination = $('#pagination');
+                    var totalValue = totalitems;
+                    var toShow = 7;
+                    var numOfPage = Math.ceil(totalValue / toShow);
+                    if (numOfPage > 1) {
+                        var totalPages = numOfPage;
+                        var currentPage = $pagination.twbsPagination('getCurrentPage');
+                        $pagination.twbsPagination('destroy');
+                        $pagination.twbsPagination($.extend({}, {
+                            startPage: currentPage,
+                            totalPages: totalPages,
+                            visiblePages: 7,
+                            onPageClick: function (event, page) {
+                                refreshPage(event, page);
+                            }
+                        }));
+                    } else {
+                        $pagination.twbsPagination('destroy');
+                    }
                 }
-            });
-        }
-        function GetContactDetailsById(contactId) {
-            $.ajax({
-                type: "GET",
-                url: '/BusinessUnit/GetContactDetailsById',
-                data: { contactId: contactId },
-                success: function (data) {
-                    $("#txtEmail").text(data.EMAIL_ADDR);
-                    $("#txtPhoneNo").text(data.PHONE_NO);
-                },
-                error: function () {
-                    $('#ddlContacts').html('No contact details found');
+                function refreshPage(event, page) {
+                    var pageStart = (pageSize * page) - pageSize;
+                    var pageLast = pageSize * page;
+                    $(visibleRows).hide();
+                    var currentRows = $(visibleRows).slice(pageStart, pageLast);
+                    $(currentRows).show();
                 }
-            });
-        }
+                drawPagination(visibleRows.length);
+            },
+            error: function () {
+                $('#ddlBUType').html('No contact details found');
+            }
+        });
+ }
+    function GetContactDetailsById(contactId) {
+        $.ajax({
+            type: "GET",
+            url: '/BusinessUnit/GetContactDetailsById',
+            data: { contactId: contactId },
+            success: function (data) {
+                $("#txtEmail").text(data.EMAIL_ADDR);
+                $("#txtPhoneNo").text(data.PHONE_NO);
+            },
+            error: function () {
+                $('#ddlContacts').html('No contact details found');
+            }
+        });
+    }
 
+    //for pagination
+    $(document).ready(function () {
         let pageSize = 7;
-        var visibleRows = $('table#DataTable tbody tr:visible');
+        var visibleRows = $("table#DataTable tbody tr:visible ");
 
         function drawPagination(totalitems) {
             var $pagination = $('#pagination');
@@ -338,6 +371,17 @@ $(document).ready(function () {
         }
         return data
     }
+    //for edit of row
+    function getEditData(row) {
+        let headings = ["BUId", "BUName", "BUType", "DUName", "ProjectId", "ProjectName", "ContactName", "EMAIL_ADDR", "PHONE_NO"]
+        let data = {}
+        for (let col = 0; col < headings.length - 1; col++) {
+            let colData = row.eq(col).text();
+            data[headings[col]] = colData
+        }
+        return data;
+    }
+    //for delete row
     function getId(row) {
         addedInLast = false
         let headings = ["BUId"]
@@ -359,6 +403,21 @@ $(document).ready(function () {
             error: function () {
                 $("#btnAddRow").removeAttr("disabled");
                 window.location.reload();
+            }
+        });
+    }
+    function editRequest(dataToBeSent) {
+
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44350/BusinessUnit/EditBusinessUnit",
+            data: dataToBeSent,
+            success: function () {
+                window.location.reload();
+            },
+            error: function () {
+                window.location.reload();
+
             }
         });
     }
