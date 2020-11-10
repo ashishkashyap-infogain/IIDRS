@@ -254,7 +254,7 @@ namespace IIDRS.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(surveyQuestionViewModel.SURVEY_QUESTION_DESC))
+                if (!string.IsNullOrEmpty(surveyQuestionViewModel.SURVEY_QUESTION_DESC))
                 {
                     var sess = Session["Admin"].ToString();
                     M_PARTY m_PARTY = new M_PARTY();
