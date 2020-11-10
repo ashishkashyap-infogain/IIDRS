@@ -92,7 +92,6 @@
 					</tbody>
 				}
 			}
-
 		}
 	}
 	<tr>
@@ -113,6 +112,14 @@
                 var surveyId = id.split('_')[1];
                 surveyIds.push(surveyId);
                 selectedrating.push($(this).val());
+			});
+			$.each($('[id^="Comment_"]'), function (i, val) {
+				if ($(this).val().trim() != "") {
+					var id = $(this).attr('id');
+					var surveyId = id.split('_')[1];
+					surveyIds.push(surveyId);
+					selectedrating.push($(this).val());
+				}
             });
             jQuery.ajax({
                 url: "/Survey/Save",

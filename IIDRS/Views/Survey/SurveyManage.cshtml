@@ -4,8 +4,13 @@
     ViewBag.Title = "Admin - Survey";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <h2 style="text-align:center">@ViewBag.Del</h2>
+<div style="float:right">
+    <button style="float:right" class="btn btn-sm btn-primary rounded-0" id="btnAddQuestion"><i class="fa fa-address-book"></i>Add Question</button>
+    <br />
+    <br />
+</div>
 
 @if (Session["Admin"] != null)
 {
@@ -78,3 +83,15 @@
     }
 
 </table>
+<script type="text/javascript">
+    $('#btnAddQuestion').click(function () {
+        var type = '@ViewBag.Del';
+        if (type == "Questionnaire - Delivery Management") {
+            document.location = '@Url.Action("DeliveryQuestion", "Survey")';
+        }
+        else if (type == "Questionnaire - Executive Management") {
+            document.location = '@Url.Action("ExectiveQuestion", "Survey")';
+        }
+
+    });
+</script>

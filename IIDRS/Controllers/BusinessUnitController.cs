@@ -70,7 +70,7 @@ namespace IIDRS.Controllers
             {
                 if (Session["Admin"] != null)
                 {
-                    var session = Session["Admin"].ToString();
+                    var session = Session["LogedUser"].ToString();
 
                     M_PARTY m_PARTY = new M_PARTY();
 
@@ -85,11 +85,11 @@ namespace IIDRS.Controllers
                     else
                     {
                         StringBuilder sb1 = new StringBuilder();
-                        var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"BU");
+                        var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"BBU");
                         var chng1 = res1[0].ToString().Split('-');
                         var inc1 = ((Convert.ToInt32(chng1[1])) + 1).ToString();
 
-                        sb1.Append("1-" + inc1 + "BU");
+                        sb1.Append("1-" + inc1 + "BBU");
                         m_PARTY.PARTY_TYPE_CD = sb1.ToString();
 
                     }
@@ -115,39 +115,39 @@ namespace IIDRS.Controllers
                     m_PARTY.ACTIVE_FLG = "1";
                     db.M_PARTY.Add(m_PARTY);
 
-
-                    bUViewModel.BUId = db.M_BU.Max(x => x.BU_ID);
+                    var checks2 = db.M_BU.Where(x => x.BU_ID.Contains("BBU")).ToList();
+                    bUViewModel.BUId = checks2.Max(x => x.BU_ID);
                     //for alphanumeric user id   
-                    var res = Regex.Split(bUViewModel.BUId, @"\D+");
+                    var res = Regex.Split(bUViewModel.BUId, @"-");
 
                     if (bUViewModel.BUId == "0" || bUViewModel.BUId == null)
                     {
-                        bUViewModel.BUId = "1-1BU";
+                        bUViewModel.BUId = "1-1BBU";
                     }
                     else
                     {
                         StringBuilder sb = new StringBuilder("2-");
-                        var chng = res[1].ToString();
-                        var inc = (Convert.ToInt32(chng) + 1).ToString();
-                        sb.Append(inc + "BU");
+                        var chng = res[0].ToString().Split('B');
+                        var inc = (Convert.ToInt32(chng[0]) + 1).ToString();
+                        sb.Append(inc + "BBU");
                         bUViewModel.BUId = sb.ToString();
                         //For RowId
-                        StringBuilder sbrowid = new StringBuilder("1-");
-                        var chng1 = res[1].ToString();
-                        var inc1 = (Convert.ToInt32(chng1) + 1).ToString();
-                        sbrowid.Append(inc + "BBU");
+                        StringBuilder sbrowid = new StringBuilder("2-");
+                        var chng1 = res[0].ToString().Split('B');
+                        var inc1 = (Convert.ToInt32(chng1[0]) + 1).ToString();
+                        sbrowid.Append(inc1 + "BBU");
                         bUViewModel.ROW_ID = sbrowid.ToString();
                         //For PAR_Row_ID
-                        StringBuilder sbparrowid = new StringBuilder("1-");
-                        var chng2 = res[1].ToString();
-                        var inc2 = (Convert.ToInt32(chng2) + 1).ToString();
-                        sbparrowid.Append(inc + "BU");
+                        StringBuilder sbparrowid = new StringBuilder("2-");
+                        var chng2 = res[0].ToString().Split('B');
+                        var inc2 = (Convert.ToInt32(chng2[0]) + 1).ToString();
+                        sbparrowid.Append(inc2 + "BBU");
                         bUViewModel.PAR_ROW_ID = sbparrowid.ToString();
                         // for PAR_Bu_Id
-                        StringBuilder sbparbuid = new StringBuilder("1-");
-                        var chng3 = res[1].ToString();
-                        var inc3 = (Convert.ToInt32(chng3) + 1).ToString();
-                        sbparbuid.Append(inc + "BUPARBU");
+                        StringBuilder sbparbuid = new StringBuilder("2-");
+                        var chng3 = res[0].ToString().Split('B');
+                        var inc3 = (Convert.ToInt32(chng3[0]) + 1).ToString();
+                        sbparbuid.Append(inc3 + "BBU");
                         bUViewModel.PAR_BU_ID = sbparbuid.ToString();
                     }
 
