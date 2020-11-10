@@ -11,7 +11,7 @@ namespace IIDRS.ViewModel
         public string SURVEY_QUESTION_NAME { get; set; }
 
         [Display(Name = "Question")]
-        [Required(ErrorMessage = "required")]
+        [Required(ErrorMessage = "Please enter Question")]
         public string SURVEY_QUESTION_DESC { get; set; }
     }
 }

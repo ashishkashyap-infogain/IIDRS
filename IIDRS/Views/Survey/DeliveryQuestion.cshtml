@@ -3,7 +3,8 @@
     ViewBag.Title = "DeliveryQuestion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
 <h2>Create Delivery Survey Question</h2>
 
 
@@ -21,7 +22,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.SURVEY_QUESTION_NAME, "SURVEY_QUESTION_NAME", htmlAttributes: new { @class = "control-label " })
+                    @Html.LabelFor(model => model.SURVEY_QUESTION_NAME, htmlAttributes: new { @class = "control-label " })
                     <div class="">
                         @Html.DropDownListFor(m => m.SURVEY_QUESTION_NAME, ViewBag.SurveyQuestionCategory as SelectList, htmlAttributes: new { @class = "form-control " })
                         @Html.ValidationMessageFor(model => model.SURVEY_QUESTION_NAME, "", new { @class = "text-danger" })
@@ -33,7 +34,7 @@
                     @Html.LabelFor(model => model.SURVEY_QUESTION_DESC, htmlAttributes: new { @class = "control-label " }) *
                     <div class="">
                         @Html.EditorFor(model => model.SURVEY_QUESTION_DESC, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.SURVEY_QUESTION_DESC, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.SURVEY_QUESTION_DESC, "", new { @class = "text-danger, error" })
                     </div>
                 </div>
             </div>
