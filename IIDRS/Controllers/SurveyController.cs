@@ -1,4 +1,5 @@
 ﻿using IIDRS.Models;
+using IIDRS.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -103,7 +104,7 @@ namespace IIDRS.Controllers
                         m_ORG_EXT.PAR_ROW_ID = m_PARTY.PARTY_UID;
                         m_ORG_EXT.SURVEY_ID = surveyIds[item];
                         m_ORG_EXT.RATING = selectedrating[item];
-                        m_ORG_EXT.NAME = user.BRAND;                        
+                        m_ORG_EXT.NAME = user.BRAND;
 
                         //m_ORG_EXT.NAME = user.Contact_Person;
                         m_ORG_EXT.LOC = user.Country;
@@ -165,18 +166,195 @@ namespace IIDRS.Controllers
             }
             return RedirectToAction("Login2", "Home");
         }
+
         public ActionResult SurveyExec()
         {
             if (Session["Admin"] != null)
             {
 
                 ViewBag.Del = "Questionnaire - Executive Management";
-
                 var res = db.M_CUST_SURVEY
                 .Where(x => x.CUST_SURVEY_NAME == "EXECUTIVE MANAGEMENT").ToList();
                 return View("SurveyManage", res);
             }
             return RedirectToAction("Login2", "Home");
         }
+        public ActionResult DeliveryQuestion()
+        {
+            if (Session["Admin"] != null)
+            {
+
+                ViewBag.Del = "Questionnaire - Delivery Management";
+
+                var res = db.M_CUST_SURVEY
+                .Where(x => x.CUST_SURVEY_NAME == "DELIVERY MANAGEMENT")
+                .AsEnumerable()
+                .Select(x =>
+                {
+                    return new SurveyQuestionCategoryViewModel()
+                    {
+                        ROW_ID = x.ROW_ID,
+                        SURVEY_QUESTION_NAME = x.SURVEY_QUESTION_NAME
+                    };
+                })
+                .Distinct()
+                .ToList();
+                ViewBag.SurveyQuestionCategory = new SelectList(res, "SURVEY_QUESTION_NAME", "SURVEY_QUESTION_NAME");
+                return View();
+            }
+            return RedirectToAction("Login2", "Home");
+        }
+        public ActionResult ExectiveQuestion()
+        {
+            if (Session["Admin"] != null)
+            {
+
+                ViewBag.Del = "Questionnaire - Executive Management";
+                var res = db.M_CUST_SURVEY
+                .Where(x => x.CUST_SURVEY_NAME == "EXECUTIVE MANAGEMENT")
+                .AsEnumerable()
+                .Select(x =>
+                {
+                    return new SurveyQuestionCategoryViewModel()
+                    {
+                        ROW_ID = x.ROW_ID,
+                        SURVEY_QUESTION_NAME = x.SURVEY_QUESTION_NAME
+                    };
+                })
+                .Distinct()
+                .ToList();
+                ViewBag.SurveyQuestionCategory = new SelectList(res, "SURVEY_QUESTION_NAME", "SURVEY_QUESTION_NAME");
+                return View();
+            }
+            return RedirectToAction("Login2", "Home");
+        }
+        [HttpPost]
+        public ActionResult CreateExecQuestion(SurveyQuestionViewModel surveyQuestionViewModel)
+        {
+            if (Session["Admin"] != null)
+            {
+                CreateSurveyQuestion(surveyQuestionViewModel, "EXECUTIVE MANAGEMENT");
+                return RedirectToAction("SurveyManage");
+            }
+            return RedirectToAction("Login2", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult CreateDeliveryQuestion(SurveyQuestionViewModel surveyQuestionViewModel)
+        {
+            if (Session["Admin"] != null)
+            {
+                CreateSurveyQuestion(surveyQuestionViewModel, "DELIVERY MANAGEMENT");
+                return RedirectToAction("SurveyManage");
+            }
+            return RedirectToAction("Login2", "Home");
+        }
+
+        private bool CreateSurveyQuestion(SurveyQuestionViewModel surveyQuestionViewModel, string type)
+        {
+            try
+            {
+                var sess = Session["Admin"].ToString();
+                M_PARTY m_PARTY = new M_PARTY();
+                //for alphanumeric PARTY_TYPE_CD
+                var checks = db.M_PARTY.Where(x => x.PARTY_TYPE_CD.Contains("@ QSURVEY")).ToList();
+                m_PARTY.PARTY_TYPE_CD = checks.Max(x => x.PARTY_TYPE_CD);
+
+                if (m_PARTY.PARTY_TYPE_CD == "0" || m_PARTY.PARTY_TYPE_CD == null)
+                {
+                    m_PARTY.PARTY_TYPE_CD = "1-1QSURVEY";
+                }
+                else
+                {
+                    StringBuilder sb1 = new StringBuilder();
+                    var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"QSURVEY");
+                    var chng1 = res1[0].ToString().Split('-');
+                    var inc1 = ((Convert.ToInt32(chng1[1])) + 1).ToString();
+
+                    sb1.Append("1-" + inc1 + "QSURVEY");
+                    m_PARTY.PARTY_TYPE_CD = sb1.ToString();
+
+                }
+                //for alphanumeric PARTY_UID
+
+                var checks1 = db.M_PARTY.Where(x => x.PARTY_UID.Contains("S")).ToList();
+                m_PARTY.PARTY_UID = checks1.Max(x => x.PARTY_UID);
+                if (m_PARTY.PARTY_UID == "0" || m_PARTY.PARTY_UID == null)
+                {
+                    m_PARTY.PARTY_UID = "1-1S";
+                }
+                else
+                {
+                    StringBuilder sb2 = new StringBuilder();
+                    var res2 = Regex.Split(m_PARTY.PARTY_UID, @"S");
+                    var chng2 = res2[0].ToString().Split('-');
+                    var inc2 = (Convert.ToInt32(chng2[1]) + 1).ToString();
+                    sb2.Append("1-" + inc2 + "S");
+                    m_PARTY.PARTY_UID = sb2.ToString();
+                }
+                m_PARTY.TRANS_FLG = "1";
+                m_PARTY.CREATED_DT = System.DateTime.Now;
+                m_PARTY.LAST_UPD_DT = System.DateTime.Now;
+                m_PARTY.ACTIVE_FLG = "1";
+
+
+                M_CUST_SURVEY m_CUST_SURVEY = new M_CUST_SURVEY();
+                m_CUST_SURVEY.SURVEY_QUESTION_NAME = surveyQuestionViewModel.SURVEY_QUESTION_NAME;
+                m_CUST_SURVEY.SURVEY_QUESTION_DESC = surveyQuestionViewModel.SURVEY_QUESTION_DESC;
+                m_CUST_SURVEY.ROW_ID = db.M_CUST_SURVEY.Max(x => x.ROW_ID);
+
+                //for alphanumeric user id   
+                var res = Regex.Split(m_CUST_SURVEY.ROW_ID, @"\D+");
+
+                if (m_CUST_SURVEY.ROW_ID == "0" || m_CUST_SURVEY.ROW_ID == null)
+                {
+                    m_CUST_SURVEY.ROW_ID = "1-1D";
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder("1-");
+                    var chng = res[1].ToString();
+                    var inc = (Convert.ToInt32(chng) + 1).ToString();
+                    sb.Append(inc + "D");
+                    m_CUST_SURVEY.ROW_ID = sb.ToString();
+                }
+
+                var checksPersonUID = db.M_CUST_SURVEY.Where(x => x.SURVEY_ID.Contains("SU")).ToList();
+                m_CUST_SURVEY.SURVEY_ID = checksPersonUID.Max(x => x.SURVEY_ID);
+
+                res = Regex.Split(m_CUST_SURVEY.SURVEY_ID, @"\SU+");
+
+                if (m_CUST_SURVEY.SURVEY_ID == "0" || m_CUST_SURVEY.SURVEY_ID == null)
+                {
+                    m_CUST_SURVEY.SURVEY_ID = "1-1SU1";
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder("1-");
+                    var chng = res[1].ToString();
+                    var inc = (Convert.ToInt32(chng) + 1).ToString();
+                    sb.Append(inc + "SU");
+                    m_CUST_SURVEY.SURVEY_ID = sb.ToString();
+                }
+                m_CUST_SURVEY.CUST_SURVEY_NAME = type;
+                m_CUST_SURVEY.SURVEY_FLG = "1";
+
+                m_CUST_SURVEY.CREATED_DT = System.DateTime.Now;
+                m_CUST_SURVEY.LAST_UPD_DT = System.DateTime.Now;
+                m_CUST_SURVEY.CREATED_BY = sess;
+                m_CUST_SURVEY.LAST_UPD_BY = sess;
+                m_CUST_SURVEY.PAR_ROW_ID = m_PARTY.PARTY_TYPE_CD;
+                db.M_PARTY.Add(m_PARTY);
+                db.M_CUST_SURVEY.Add(m_CUST_SURVEY);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return true;
+        }
+
     }
 }
