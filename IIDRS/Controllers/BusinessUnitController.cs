@@ -70,7 +70,7 @@ namespace IIDRS.Controllers
             {
                 if (Session["Admin"] != null)
                 {
-                    var session = Session["Admin"].ToString();
+                    var session = Session["LogedUser"].ToString();
 
                     M_PARTY m_PARTY = new M_PARTY();
 
