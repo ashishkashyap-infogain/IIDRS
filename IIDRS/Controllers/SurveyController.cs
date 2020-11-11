@@ -233,8 +233,10 @@ namespace IIDRS.Controllers
         {
             if (Session["Admin"] != null)
             {
-                CreateSurveyQuestion(surveyQuestionViewModel, "EXECUTIVE MANAGEMENT");
-                return RedirectToAction("SurveyManage");
+                if (CreateSurveyQuestion(surveyQuestionViewModel, "EXECUTIVE MANAGEMENT"))
+                    return RedirectToAction("SurveyManage");
+                else
+                    return RedirectToAction("ExectiveQuestion");
             }
             return RedirectToAction("Login2", "Home");
         }
@@ -244,8 +246,10 @@ namespace IIDRS.Controllers
         {
             if (Session["Admin"] != null)
             {
-                CreateSurveyQuestion(surveyQuestionViewModel, "DELIVERY MANAGEMENT");
-                return RedirectToAction("SurveyManage");
+                if (CreateSurveyQuestion(surveyQuestionViewModel, "DELIVERY MANAGEMENT"))
+                    return RedirectToAction("SurveyManage");
+                else
+                    return RedirectToAction("DeliveryQuestion");
             }
             return RedirectToAction("Login2", "Home");
         }
@@ -254,7 +258,7 @@ namespace IIDRS.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(surveyQuestionViewModel.SURVEY_QUESTION_DESC))
+                if (!string.IsNullOrEmpty(surveyQuestionViewModel.SURVEY_QUESTION_DESC))
                 {
                     var sess = Session["Admin"].ToString();
                     M_PARTY m_PARTY = new M_PARTY();
@@ -349,10 +353,11 @@ namespace IIDRS.Controllers
                     db.M_PARTY.Add(m_PARTY);
                     db.M_CUST_SURVEY.Add(m_CUST_SURVEY);
                     db.SaveChanges();
+                    return true;
                 }
                 else
                 {
-                    RedirectToAction("SurveyManage");
+                    return false;
                 }
             }
             catch (Exception)
@@ -360,7 +365,6 @@ namespace IIDRS.Controllers
 
                 throw;
             }
-            return true;
         }
 
     }
