@@ -64,7 +64,7 @@ namespace IIDRS.Controllers
 
                 //for alphanumeric PERSON_UID
 
-                var checksPersonUID = db.M_CONTACT.Where(x => x.PERSON_UID.Contains("KCONTACT")).ToList();
+                var checksPersonUID = db.M_CONTACT.Where(x => x.PERSON_UID.Contains("CONTACT")).ToList();
                 contactViewModel.PERSON_UID = checksPersonUID.Max(x => x.PERSON_UID);
 
                 var res = Regex.Split(contactViewModel.PERSON_UID, @"\D+");
@@ -78,7 +78,9 @@ namespace IIDRS.Controllers
                     StringBuilder sb = new StringBuilder("1-");
                     var chng = res[1].ToString();
                     var inc = (Convert.ToInt32(chng) + 1).ToString();
-                    sb.Append(inc + "KCONTACT");
+                    sb.Append("2-" + inc + "CONTACT");
+
+                    //sb.Append(inc + "CONTACT");
                     contactViewModel.PERSON_UID = sb.ToString();
                 }
 
@@ -98,13 +100,13 @@ namespace IIDRS.Controllers
                     StringBuilder sb = new StringBuilder("1-");
                     var chng = respar[1].ToString();
                     var inc = (Convert.ToInt32(chng) + 1).ToString();
-                    sb.Append(inc + "KCONTACT");
+                    sb.Append(inc + "CONTACT");
                     contactViewModel.PAR_ROW_ID = sb.ToString();
                 }
 
                 //for alphanumeric ROW_ID
 
-                var checksRowID = db.M_CONTACT.Where(x => x.ROW_ID.Contains("KCONTACT")).ToList();
+                var checksRowID = db.M_CONTACT.Where(x => x.ROW_ID.Contains("CONTACT")).ToList();
                 contactViewModel.ROW_ID = checksPersonUID.Max(x => x.ROW_ID);
 
                 var resrow = Regex.Split(contactViewModel.ROW_ID, @"\D+");
@@ -118,7 +120,7 @@ namespace IIDRS.Controllers
                     StringBuilder sb = new StringBuilder("1-");
                     var chng = resrow[1].ToString();
                     var inc = (Convert.ToInt32(chng) + 1).ToString();
-                    sb.Append(inc + "KCONTACT");
+                    sb.Append(inc + "CONTACT");
                     contactViewModel.ROW_ID = sb.ToString();
                 }
 
@@ -180,7 +182,7 @@ namespace IIDRS.Controllers
                 //BU Details 
                 var buDetails = GetBUDetails(contactViewModel.BU_ID);
 
-                //create personId
+                //create buId
                 var res0 = Regex.Split(contactViewModel.BU_ID, @"\D+");
                 
                 var resbuid = Regex.Split(contactViewModel.BU_ID, @"\D+");
@@ -188,7 +190,7 @@ namespace IIDRS.Controllers
                   StringBuilder sb10 = new StringBuilder("2-");
                     var chng10 = resbuid[1].ToString();
                     var inc10 = (Convert.ToInt32(chng10) + 1).ToString();
-                    sb10.Append(inc10 + "BU");
+                    sb10.Append(inc10 + "BBU");
                    
                 
                 //Create rowId
@@ -205,7 +207,7 @@ namespace IIDRS.Controllers
                 Random rnd1 = new Random();
                 char randomChar1 = (char)rnd1.Next('A', 'Z');
                 var inc02 = (Convert.ToInt32(chng02) + 1).ToString();
-                sbParRowId.Append("2-" + inc02 + randomChar1 + "BUPARBU");
+                sbParRowId.Append("1-" + inc02 + randomChar1 + "BBU");
 
                 //Create parbuId
                 StringBuilder sbParbuId = new StringBuilder();
@@ -213,7 +215,7 @@ namespace IIDRS.Controllers
                 Random rnd2 = new Random();
                 char randomChar2 = (char)rnd2.Next('A', 'Z');
                 var inc03 = (Convert.ToInt32(chng03) + 1).ToString();
-                sbParbuId.Append("2-" + inc03 + randomChar2 + "BUPARBU");
+                sbParbuId.Append("1-" + inc03 + randomChar2 + "BBU");
 
 
                 //db.M_BU.Add(m_BU);
