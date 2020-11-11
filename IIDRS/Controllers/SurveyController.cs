@@ -236,7 +236,7 @@ namespace IIDRS.Controllers
                 if (CreateSurveyQuestion(surveyQuestionViewModel, "EXECUTIVE MANAGEMENT"))
                     return RedirectToAction("SurveyManage");
                 else
-                    return RedirectToAction("CreateExecQuestion");
+                    return RedirectToAction("ExectiveQuestion");
             }
             return RedirectToAction("Login2", "Home");
         }
@@ -249,7 +249,7 @@ namespace IIDRS.Controllers
                 if (CreateSurveyQuestion(surveyQuestionViewModel, "DELIVERY MANAGEMENT"))
                     return RedirectToAction("SurveyManage");
                 else
-                    return RedirectToAction("CreateDeliveryQuestion");
+                    return RedirectToAction("DeliveryQuestion");
             }
             return RedirectToAction("Login2", "Home");
         }
@@ -358,7 +358,6 @@ namespace IIDRS.Controllers
                 else
                 {
                     return false;
-                    RedirectToAction("SurveyManage");
                 }
             }
             catch (Exception)
@@ -366,7 +365,6 @@ namespace IIDRS.Controllers
 
                 throw;
             }
-            return true;
         }
 
     }
