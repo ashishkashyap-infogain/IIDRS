@@ -75,12 +75,10 @@ namespace IIDRS.Controllers
                 }
                 else
                 {
-                    StringBuilder sb = new StringBuilder("1-");
+                    StringBuilder sb = new StringBuilder("2-");
                     var chng = res[1].ToString();
-                    var inc = (Convert.ToInt32(chng) + 1).ToString();
-                    sb.Append("2-" + inc + "CONTACT");
-
-                    //sb.Append(inc + "CONTACT");
+                    var inc = (Convert.ToInt32(chng) + 1).ToString();            
+                    sb.Append(inc + "CONTACT");
                     contactViewModel.PERSON_UID = sb.ToString();
                 }
 
