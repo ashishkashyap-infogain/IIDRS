@@ -262,12 +262,11 @@ namespace IIDRS.Controllers
                         RATING = item.RATING,
                         LOC = item.LOC,
                         NAME = item.NAME,
-                        //ProjectId = item.PROJ_ID,
-                        //ProjectName = item.PROJ_NAME,
+                        Survey_Period = item.Survey_Period,                      
                         //ContactName = item.FST_NAME + " " + item.LAST_NAME,
                         //EMAIL_ADDR = item.EMAIL_ADDR,
                         //PHONE_NO = item.PHONE_NO,
-                       // ACTIVE_FLG = item.ACTIVE_FLG
+                        ACTIVE_FLG = item.ACTIVE_FLG
                     };
                     list.Add(model);
                 }
