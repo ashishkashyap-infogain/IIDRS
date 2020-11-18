@@ -12,6 +12,13 @@
 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 		crossorigin="anonymous"></script>
 @*<form method="post" action="/Survey/Save">*@
+
+<div style="float: right;padding-bottom: 10px;">
+    Select Quarter (*)
+    @Html.DropDownList("selectedQuarter", (IEnumerable<SelectListItem>)ViewBag.Quarter, new { @class = "btn-sm btn-primary rounded-0", id = "ddQuarter" })
+</div>
+
+
 <table class="table table-striped table-bordered">
 
 	@{
@@ -103,8 +110,15 @@
 </table>
 @*</form>*@
 <script>
-    $(document).ready(function () {
-        $('#btnSave').on('click', function () {
+	$(document).ready(function () {
+        
+		$('#btnSave').on('click', function () {
+            var quarter = $('#ddQuarter').val();
+            if (quarter == "-1") {
+                alert("Please select quarter.");
+                $(window).scrollTop(0);
+                return false;
+            }
             var selectedrating = [];
             var surveyIds = [];
             $.each($('[id^="rating_"]:checked'), function (i, val) {
@@ -124,7 +138,7 @@
             jQuery.ajax({
                 url: "/Survey/Save",
                 type: "POST",
-                data: { "surveyIds": surveyIds, "selectedrating": selectedrating },
+                data: { "surveyIds": surveyIds, "selectedrating": selectedrating, "quarter": quarter },
                 dataType: "json",
                 success: function (result) {
 					alert("Thanks for the feedback");
