@@ -230,8 +230,11 @@
         if (text_one.indexOf(text_two) != -1)
             return true;
     }
-    $("#Search").keyup(function () {
-        var searchtext = $("#Search").val().toLowerCase();
+    $("#Search").keyup(
+        
+        function () {
+            var searchtext = $("#Search").val().toLowerCase();
+            debugger;
         $(".Search").each(function () {
             if (!Contains($(this).text().toLowerCase(), searchtext)) {
                 $(this).hide();
@@ -264,7 +267,7 @@
                 $('#DataTable tbody').html('');
                 $.each(data, function (k, v) {
                     var x = v.BU_Flag;
-                    var rows = "<tr " + (x == '0' ? "style='pointer-events: none'" : "") + ">"
+                    var rows = "<tr class ='Search'" + (x == '0' ? "style='pointer-events: none'" : "") + ">"
                         + "<td>" + v.BU_ID + "</td>"
                         + "<td>" + v.NAME + "</td>"
                         + "<td>" + v.LOC + "</td>"
