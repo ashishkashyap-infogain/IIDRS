@@ -73,6 +73,12 @@ namespace IIDRS
 
         public string RATING { get; set; }
 
+
+        [StringLength(50)]
+        [DisplayName("Survey Period")]
+
+        public string Survey_Period { get; set; }
+
         [StringLength(50)]
         public string ZIPCODE { get; set; }
 

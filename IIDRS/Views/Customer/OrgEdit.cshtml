@@ -46,6 +46,8 @@
             <th onclick="sortTable(2)">Brand Name</th>
             <th onclick="sortTable(3)">Location </th>
             <th onclick="sortTable(4)">Rating</th>
+            <th onclick="sortTable(5)">Survey Period</th>
+            <th class="text-center">Active/Inactive</th>
         </tr>
         @*<th>
                 Row Id
@@ -130,15 +132,15 @@
         <tbody>
             <tr class="Search">
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.M_BU.PROJ_ID)
-                </td>*@
+            @Html.DisplayFor(modelItem => item.M_BU.PROJ_ID)
+        </td>*@
 
                 <td>
                     @Html.DisplayFor(modelItem => item.BU_ID)
                 </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.M_BU.PROJ_NAME)
-                </td>*@
+            @Html.DisplayFor(modelItem => item.M_BU.PROJ_NAME)
+        </td>*@
 
                 <td>
                     @Html.DisplayFor(modelItem => item.NAME)
@@ -150,6 +152,24 @@
 
                 <td>
                     @Html.DisplayFor(modelItem => item.RATING)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Survey_Period)
+                </td>
+
+
+                <td class="text-center" style="pointer-events: none">
+                    <label class="custom-switch">
+                        @if (item.ACTIVE_FLG == "1")
+                        {
+                            <input type="checkbox" name="custom-switch-checkbox" checked="@item.ACTIVE_FLG" class="custom-switch-input">
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="custom-switch-checkbox" checked="@item.ACTIVE_FLG" disabled class="custom-switch-input">
+                        }
+                        <span class="custom-switch-indicator"></span>
+                    </label>
                 </td>
 
             </tr>
@@ -210,8 +230,11 @@
         if (text_one.indexOf(text_two) != -1)
             return true;
     }
-    $("#Search").keyup(function () {
-        var searchtext = $("#Search").val().toLowerCase();
+    $("#Search").keyup(
+        
+        function () {
+            var searchtext = $("#Search").val().toLowerCase();
+            debugger;
         $(".Search").each(function () {
             if (!Contains($(this).text().toLowerCase(), searchtext)) {
                 $(this).hide();
@@ -244,14 +267,13 @@
                 $('#DataTable tbody').html('');
                 $.each(data, function (k, v) {
                     var x = v.BU_Flag;
-                    var rows = "<tr " + (x == '0' ? "style='pointer-events: none'" : "") + ">"
-                        //+ "<td>" + v.PROJ_ID + "</td>"
+                    var rows = "<tr class ='Search'" + (x == '0' ? "style='pointer-events: none'" : "") + ">"
                         + "<td>" + v.BU_ID + "</td>"
-                        //+ "<td>" + v.PROJ_NAME + "</td>"
                         + "<td>" + v.NAME + "</td>"
                         + "<td>" + v.LOC + "</td>"
                         + "<td>" + v.RATING + "</td>"
-                        //+ "<td  style='pointer-events: none' class='text-center' style='pointer-events:none'> <input type='checkbox' id='enableDisablecbx' name='custom-switch-checkbox class='custom-switch-input' checked ='" + x + "' " + (x == '0' ? "disabled" : "") + "></td>"
+                        + "<td>" + v.Survey_Period + "</td>"
+                        + "<td  style='pointer-events: none' class='text-center' style='pointer-events:none'> <input type='checkbox' id='enableDisablecbx' name='custom-switch-checkbox class='custom-switch-input' checked ='" + x + "' " + (x == '0' ? "disabled" : "") + "></td>"
                         + "</tr>";
                     $('#DataTable').append(rows);
                     $('#actionHeader').detach();

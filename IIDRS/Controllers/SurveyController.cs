@@ -19,11 +19,26 @@ namespace IIDRS.Controllers
         private DataModel db = new DataModel();
         //private IIDRSEntities db = new IIDRSEntities();
 
+
+        private void GetQuarter()
+        {
+            var quarters = new SelectList(new[]
+            {
+                new { ID = "-1", Name = "Select" },
+                new { ID = "Q1", Name = "Quarter 1" },
+                new { ID = "Q2", Name = "Quarter 2" },
+                new { ID = "Q3", Name = "Quarter 3" },
+                new { ID = "Q4", Name = "Quarter 4" }
+            },
+            "ID", "Name", 1);
+            ViewBag.Quarter = quarters;
+        }
         // GET: Survey
         public ActionResult Index()
         {
             if (Session["CustId"] != null)
             {
+                GetQuarter();
                 Session["DS"] = "active";
                 Session["ES"] = null;
                 var res = db.M_CUST_SURVEY
@@ -34,7 +49,7 @@ namespace IIDRS.Controllers
         }
 
         [HttpPost]
-        public void Save(List<string> surveyIds, List<string> selectedrating)//FormCollection form)
+        public void Save(List<string> surveyIds, List<string> selectedrating, string quarter)//FormCollection form)
         {
             if (Session["CustId"] != null)
             {
@@ -105,6 +120,7 @@ namespace IIDRS.Controllers
                         m_ORG_EXT.SURVEY_ID = surveyIds[item];
                         m_ORG_EXT.RATING = selectedrating[item];
                         m_ORG_EXT.NAME = user.BRAND;
+                        m_ORG_EXT.Survey_Period = quarter;
 
                         //m_ORG_EXT.NAME = user.Contact_Person;
                         m_ORG_EXT.LOC = user.Country;
@@ -144,6 +160,7 @@ namespace IIDRS.Controllers
         {
             if (Session["CustId"] != null)
             {
+                GetQuarter();
                 Session["DS"] = null;
                 Session["ES"] = "active";
                 var res = db.M_CUST_SURVEY
@@ -157,9 +174,7 @@ namespace IIDRS.Controllers
         {
             if (Session["Admin"] != null)
             {
-
                 ViewBag.Del = "Questionnaire - Delivery Management";
-
                 var res = db.M_CUST_SURVEY
                 .Where(x => x.CUST_SURVEY_NAME == "DELIVERY MANAGEMENT").ToList();
                 return View(res);
@@ -171,7 +186,6 @@ namespace IIDRS.Controllers
         {
             if (Session["Admin"] != null)
             {
-
                 ViewBag.Del = "Questionnaire - Executive Management";
                 var res = db.M_CUST_SURVEY
                 .Where(x => x.CUST_SURVEY_NAME == "EXECUTIVE MANAGEMENT").ToList();
