@@ -6,6 +6,13 @@
 }
 <br />
 <br />
+<style>
+
+    .important {
+        background-color: gray;
+        opacity: 0.62;
+    }
+</style>
 <link href="~/Content/Search.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -32,7 +39,7 @@
 </div>
 
 
-<table id="DataTable" class="table table-bordered table-striped table-hover">
+<table id="DataTable" class="table table-bordered table-hover">
 
     <thead class="thead-dark">
         <tr style="cursor:pointer ;white-space: nowrap">
@@ -98,15 +105,17 @@
                 <td id="txtPhoneNo">
                     @Html.DisplayFor(modelItem => item.PHONE_NO)
                 </td>
-                <td class="text-center" style="pointer-events: none">
+                <td class="text-center">
                     <label class="custom-switch">
                         @if (item.BU_Flag == "1")
                         {
-                            <input type="checkbox" name="custom-switch-checkbox" checked="@item.BU_Flag" class="custom-switch-input">
+                            <input type="checkbox" id="@item.BUId" name="custom-switch-checkbox" checked="@item.BU_Flag" class="custom-switch-input"
+                                   data-toggle="modal" data-target="#activeDeactiveUser">
                         }
                         else
                         {
-                            <input type="checkbox" name="custom-switch-checkbox" checked="@item.BU_Flag" disabled class="custom-switch-input">
+                            <input type="checkbox" id="@item.BUId" name="custom-switch-checkbox" checked="@item.BU_Flag" disabled class="custom-switch-input"
+                                   data-toggle="modal" data-target="#activeDeactiveUser">
                         }
                         <span class="custom-switch-indicator"></span>
                     </label>
@@ -122,6 +131,30 @@
     </nav>
 </div>
 
+<div class="modal fade " tabindex="-1" role="dialog" id="activeDeactiveUser" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title">Activate/Deactivate User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="refreashPage">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body border-bottom">
+                <div class="form-group">
+                    <div class="d-block">
+                        <label class="control-label" id="changeStatus"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button id="activateDeactivateUser" type="button" class="btn btn-primary blue-gradient-btn rounded-btn" data-dismiss="modal">Confirm</button>
+                <button type="button" class="btn btn-outline-primary rounded-btn mr-2 " data-backdrop="static" data-dismiss="modal" id="clearToggle">Cancel</button>
+                @*<button type="button" class="btn btn-outline-primary rounded-btn mr-2 " data-backdrop="static" data-dismiss="modal" id="btnOk">Cancel</button>*@
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
 
@@ -155,7 +188,7 @@
             }
         }
     });
-
+   
     function GetContacts() {
         $.ajax({
             type: "GET",
@@ -163,12 +196,19 @@
             success: function (data) {
                 var items = "";
                 $.each(data, function (i, item) {
-                    items += "<option value=" + item.contactId + ">" + item.contactDesc + "</option>";
+                    items += "<option data-value=" + item.contactId + ">" + item.contactDesc + "</option>";
+                    y = item.contactId;
                 });
                 $("#ddlContacts").empty();
-                $("#ddlContacts").html(items);
-                var contactId = $('#ddlContacts').val();
-                GetContactDetailsById(contactId);
+                $("#ddlContacts1").html(items);
+                var proName = $("#ddlContacts").val();
+                var value = $('#ddlContacts1 option').filter(function () {
+                    return this.value == proName;
+                }).data('value');
+                var contactId = value ? value : ''; 
+                if (contactId != "") {
+                    GetContactDetailsById(contactId);
+                }
             },
             error: function () {
                 $('#ddlContacts').html('No contact details found');
@@ -176,8 +216,18 @@
         });
     }
 
-    $(document).on('change', '#ddlContacts', function () {
-        var contactId = $(this).val();
+    //$(document).on('change', '#ddlContacts', function () {
+    //    var contactId = $(this).val();
+    //    GetContactDetailsById(contactId);
+    //});
+    var valOfconatact;
+    jQuery('body').on('change', 'input.listclass', function () {
+        var proName = $("#ddlContacts").val();
+        var value = $('#ddlContacts1 option').filter(function () {
+            return this.value == proName;
+        }).data('value');
+        var contactId = value ? value : '';
+        valOfconatact = contactId;
         GetContactDetailsById(contactId);
     });
     $(document).on('change', '#ddlBUType', function () {
@@ -194,7 +244,7 @@
                 $('#DataTable tbody').html('');
                 $.each(data, function (k, v) {
                     var x = v.BU_Flag;
-                    var rows = "<tr " + (x == '0' ? "style='pointer-events: none'" : "") +">"
+                    var rows = "<tr >"
                         + "<td>" + v.BUId + "</td>"
                         + "<td>" + v.BUName + "</td>"
                         + "<td>" + v.BUType + "</td>"
@@ -204,10 +254,38 @@
                         + "<td class='getId'>" + v.ContactName + "</td>"
                         + "<td id='txtEmail'>" + v.EMAIL_ADDR + "</td>"
                         + "<td id='txtPhoneNo'>" + v.PHONE_NO + "</td>"
-                        + "<td class='text-center' style='pointer-events:none'> <input type='checkbox' name='custom-switch-checkbox class='custom-switch-input' checked ='" + x + "' " + (x == '0' ? "disabled" : "") + "></td>"
+                        + "<td class='text-center'><label class='switch'>"
+                        + "<input type='checkbox' name='custom-switch-checkbox class='custom-switch-input disabledClick' data-toggle='modal'  data-target=" + ' #activeDeactiveUser' + " id='" + v.BUId + "' checked ='" + x + "' " + (x == '0' ? $(':checkbox').wrap('<span class="important"/>') : "") + ">"
+                        + "<span class='slider round'></span></label></td>"
                         + "</tr>";
                     $('#DataTable').append(rows);
                     $('#actionHeader').detach();
+
+                    $("input[type=checkbox]").click(function () {
+                        isActive = x;
+                        userId = this.id;
+                        if (isActive == '0') {
+                            $('#changeStatus').text("Are you sure you want to Activate this Business Unit?");
+                            isActive = true;
+                        }
+                        else {
+                            $('#changeStatus').text("Are you sure you want to Deactivate this Business Unit?");
+                        }
+                    });
+
+                    $('#activateDeactivateUser').click(function () {
+                        $.ajax({
+                            type: "POST",
+                            url: '/BusinessUnit/ActivateDeactivateUserBU',
+                            data: { id: userId, isActive: isActive },
+                            success: function () {
+                                location.href = location.href;
+                            },
+                            error: function () {
+                                location.href = location.href;
+                            }
+                        });
+                    });
                 });
                 $('#DataTable').SetEditable({
                     columnsEd: "1,2,3,4,5,6",
@@ -273,7 +351,7 @@
                 $('#ddlBUType').html('No contact details found');
             }
         });
- }
+    }
     function GetContactDetailsById(contactId) {
         $.ajax({
             type: "GET",
@@ -346,6 +424,7 @@
     $(function () {
         $("#btnExport").click(function () {
             $("#DataTable").table2excel({
+                exclude: "#actionHeader",
                 filename: "BU_Contacts_Details.xls",
                 name: "BU Sheet",
             });
@@ -390,8 +469,7 @@
         return data
     }
     function makeRequest(dataToBeSent) {
-        var selectedContactId = $('#ddlContacts').val();
-        dataToBeSent.PERSON_UID = selectedContactId;
+        dataToBeSent.PERSON_UID = valOfconatact;
         $.ajax({
             type: "POST",
             url: "https://localhost:44350/BusinessUnit/CreateBusinessUnit",
@@ -498,4 +576,36 @@
             }
         }
     }
+
+    var userId = '';
+    var isActive = '0';
+    $("input[type=checkbox]").click(function () {
+        isActive = this.checked;
+        userId = this.id;
+        if (isActive == '1') {
+            $('#changeStatus').text("Are you sure you want to Activate this Business Unit?");
+        }
+        else {
+            $('#changeStatus').text("Are you sure you want to Deactivate this Business Unit?");
+        }
+    });
+
+    $('#activateDeactivateUser').click(function () {
+        $.ajax({
+            type: "POST",
+            url: '/BusinessUnit/ActivateDeactivateUserBU',
+            data: { id: userId, isActive: isActive },
+            success: function () {
+                location.href = location.href;
+            },
+            error: function () {
+                location.href = location.href;
+            }
+        });
+    });
+    $('#clearToggle').click(function () { location.href = location.href; });
+
+    //function disabledfunc() {
+    //    $(':checkbox').wrap('<span class="important"/>');
+    //}
 </script>
