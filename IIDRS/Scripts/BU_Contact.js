@@ -234,7 +234,8 @@ function rowAddNew(tabId) {  //Add row to indicated table.
             $td.html(div + input);
 
             //Set dropdown for new row contact column
-            var dropdown = "<select id='ddlContacts' class='form-control' style='width: fit-content;'><option></option></select>";
+            //var dropdown = "<select id='ddlContacts' class='form-control' style='width: fit-content;'><option></option></select>";
+            var dropdown = "<input list='ddlContacts1' id='ddlContacts' class='form-control listclass'  placeholder='Select' style='width: fit-content;'>" + "<datalist  id='ddlContacts1'></datalist >";
             if ($cols[6].textContent != "dropdown") {
                 $td.html(div + dropdown);
             }
