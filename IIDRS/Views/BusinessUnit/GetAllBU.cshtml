@@ -70,7 +70,7 @@
             <th onclick="sortTable(8)">
                 @Html.DisplayNameFor(model => model.PHONE_NO)
             </th>
-            <th class="text-center">Active/Inactive</th>
+            <th class="text-center excludecol">Active/Inactive</th>
         </tr>
     </thead>
 
@@ -230,8 +230,10 @@
         valOfconatact = contactId;
         GetContactDetailsById(contactId);
     });
+
+    var getBUType;
     $(document).on('change', '#ddlBUType', function () {
-        var getBUType = $(this).val();
+        getBUType = $(this).val();
         GetContactDetailsByType(getBUType);
     });
 
@@ -255,7 +257,7 @@
                         + "<td id='txtEmail'>" + v.EMAIL_ADDR + "</td>"
                         + "<td id='txtPhoneNo'>" + v.PHONE_NO + "</td>"
                         + "<td class='text-center'><label class='switch'>"
-                        + "<input type='checkbox' name='custom-switch-checkbox class='custom-switch-input disabledClick' data-toggle='modal'  data-target=" + ' #activeDeactiveUser' + " id='" + v.BUId + "' checked ='" + x + "' " + (x == '0' ? $(':checkbox').wrap('<span class="important"/>') : "") + ">"
+                        + "<input type='checkbox' name='custom-switch-checkbox class='custom-switch-input disabledClick' data-toggle='modal'  data-target=" + ' #activeDeactiveUser' + " id='" + v.BUId + "' checked ='" + x + "' " + (x == '0' ? disabledfunc() : "") + ">"
                         + "<span class='slider round'></span></label></td>"
                         + "</tr>";
                     $('#DataTable').append(rows);
@@ -423,9 +425,19 @@
 
     $(function () {
         $("#btnExport").click(function () {
+            var y;
+            if (getBUType == '0') {
+                y = "Inactive"
+            }
+            else if (getBUType == '-1') {
+                y = "Active and Inactive"
+            }
+            else {
+                y = "Active";
+            }
             $("#DataTable").table2excel({
-                exclude: "#actionHeader",
-                filename: "BU_Contacts_Details.xls",
+                exclude: ".excludecol,#actionHeader",
+                filename: "BusinessUnit_Contact(" + y +" Records).xls",
                 name: "BU Sheet",
             });
         });
@@ -605,7 +617,7 @@
     });
     $('#clearToggle').click(function () { location.href = location.href; });
 
-    //function disabledfunc() {
-    //    $(':checkbox').wrap('<span class="important"/>');
-    //}
+    function disabledfunc() {
+        $(':checkbox').wrap('<span class="important"/>');
+    }
 </script>
