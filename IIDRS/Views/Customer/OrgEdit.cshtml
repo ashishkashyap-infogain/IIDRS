@@ -55,7 +55,7 @@
             <th onclick="sortTable(3)">Location </th>
             <th onclick="sortTable(4)">Rating</th>
             <th onclick="sortTable(5)">Survey Period</th>
-            <th class="text-center">Active/Inactive</th>
+            <th class="text-center excludecol" >Active/Inactive</th>
         </tr>
         @*<th>
                 Row Id
@@ -166,7 +166,7 @@
                 </td>
 
 
-                <td class="text-center" style="pointer-events: none">
+                <td class="text-center" style="pointer-events: none" >
                     <label class="custom-switch">
                         @if (item.ACTIVE_FLG == "1")
                         {
@@ -253,14 +253,34 @@
         });
     });
 
-    $("#btnExport").click(function () {
-        $("#DataTable").table2excel({
-            filename: "Survey_Summary.xls",
-            name: "BU Sheet",
+    //$("#btnExport").click(function () {
+    //    $("#DataTable").table2excel({
+    //        filename: "x.xls",
+    //        name: "BU Sheet",
+    //    });
+    //});
+    $(function () {
+        $("#btnExport").click(function () {
+            var y;
+            if (getBUType == '0') {
+                y = "Inactive"
+            }
+            else if (getBUType == '-1') {
+                y = "Active and Inactive"
+            }
+            else {
+                y = "Active";
+            }
+            $("#DataTable").table2excel({
+                exclude: ".excludecol",
+
+                filename: "Survey_Summary(" + y + " Records).xls",
+                name: "BU Sheet",
+            });
         });
     });
 
-
+    var getBUType;
     $(document).on('change', '#ddSelect', function () {
         var getBUType = $(this).val();
         GetContactDetailsByType(getBUType);
