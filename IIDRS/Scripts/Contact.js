@@ -81,14 +81,14 @@ function IterarCamposEdit($cols, tarea) {
 
     function EsEditable(idx) {
         // Indicates if the passed column is configured to be editable
-        if (colsEdi == null) {  //no se definió
-            return true;  //todas son editable
-        } else {  //hay filtro de campos
+        if (colsEdi == null) {  //was not defined
+            return true;  //all are editable
+        } else {  //there is field filter
             //alert('verificando: ' + idx);
             for (var i = 0; i < colsEdi.length; i++) {
                 if (idx == colsEdi[i]) return true;
             }
-            return false;  //no se encontró
+            return false;  //It was not found
         }
     }
 }
@@ -97,8 +97,8 @@ function FijModoNormal(but) {
     $(but).parent().find('#bCanc').hide();
     $(but).parent().find('#bEdit').show();
     $(but).parent().find('#bElim').show();
-    var $row = $(but).parents('tr');  //accede a la fila
-    $row.attr('id', '');  //quita marca
+    var $row = $(but).parents('tr');  //access the row
+    $row.attr('id', '');  //remove brand
 }
 function FijModoEdit(but) {
 
@@ -106,8 +106,8 @@ function FijModoEdit(but) {
     $(but).parent().find('#bCanc').show();
     $(but).parent().find('#bEdit').hide();
     $(but).parent().find('#bElim').hide();
-    var $row = $(but).parents('tr');  //accede a la fila
-    $row.attr('id', 'editing');  //indica que está en edición
+    var $row = $(but).parents('tr');  //access the row
+    $row.attr('id', 'editing');  //indicates that it is in edit
 }
 function ModoEdicion($row) {
     if ($row.attr('id') == 'editing') {
@@ -116,32 +116,74 @@ function ModoEdicion($row) {
         return false;
     }
 }
-function rowAcep(but) {
-    //Acepta los cambios de la edición
+//function rowAcep(but) {
+//    //Accept the changes to the edition
+//    //  return false;
+//    validateRow();
+//    var $row = $(but).parents('tr');  //access the row
+//    var $cols = $row.find('td');  //read fields
+//    if (!ModoEdicion($row)) return;  //It is already in editing
+//    //It is in edit.Editing has to be finished
+//    IterarCamposEdit($cols, function ($td) {  //iterate through columns
+//        var cont = $td.find('input').val(); //read input content 
+       
+//            $td.html(cont)
+//          //pin content and remove controls
+//    });
+//    FijModoNormal(but);
+//    //params.onEdit($row);
+//    params.onEdit($cols);
+//    flag = true;
 
+//}
+
+function rowAcep(but) {
+     //Accept the changes to the edition
     var $row = $(but).parents('tr');  //accede a la fila
     var $cols = $row.find('td');  //lee campos
-    if (!ModoEdicion($row)) return;  //Ya está en edición
-    //Está en edición. Hay que finalizar la edición
-    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
-        var cont = $td.find('input').val(); //lee contenido del input
-        $td.html(cont);  //fija contenido y elimina controles
-    });
-    FijModoNormal(but);
-    //params.onEdit($row);
-    params.onEdit($cols);
-    flag = true;
+    if (validateData(but)) {
+        if (!ModoEdicion($row)) return;  //Ya está en edición
+        //Está en edición. Hay que finalizar la edición
+        IterarCamposEdit($cols, function ($td) {  //itera por la columnas
+            var cont = $td.find('input').val(); //lee contenido del input
+            $td.html(cont);  //fija contenido y elimina controles
+        });
+        FijModoNormal(but);
+        //params.onEdit($row);
+        params.onEdit($cols);
+        flag = true;
+    }
 
 }
+function validateData(but) {
+    var $row = $(but).parents('tr');
+    var $cols = $row.find('td');
+    var status = true;
+    var i = 0
+    var requiredCols = [0, 1, 2, 3]
+    IterarCamposEdit($cols, function ($td) {
+        var text = $td.find('input').val();
+        if (requiredCols.indexOf(i) != -1 && text === "") {
+            $td.find('input').addClass('required');
+            status = false;
+        }
+        else {
+            $td.find('input').removeClass('required');
+        }
+        i++;
+    });
+    return status;
+}
+
 function rowCancel(but) {
-    //Rechaza los cambios de la edición
-    var $row = $(but).parents('tr');  //accede a la fila
-    var $cols = $row.find('td');  //lee campos
-    if (!ModoEdicion($row)) return;  //Ya está en edición
-    //Está en edición. Hay que finalizar la edición
-    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
-        var cont = $td.find('div').html(); //lee contenido del div
-                                            //fija contenido y elimina controles
+    //Reject edit changes
+    var $row = $(but).parents('tr');  //access the row
+    var $cols = $row.find('td');  //read fields
+    if (!ModoEdicion($row)) return;  //It is already in editing
+    //It is in edit.Editing has to be finished
+    IterarCamposEdit($cols, function ($td) {  //iterate through columns
+        var cont = $td.find('div').html(); //read content from div
+                                            //pin content and remove controls
         var cont1 = $td.find('input').val();
         if (cont1 == "") {
             $row.remove(cont);
@@ -158,19 +200,19 @@ function rowEdit(but) {
     rowAcep($td)
     var $row = $(but).parents('tr');
     var $cols = $row.find('td');
-    if (ModoEdicion($row)) return;  //Ya está en edición
-    //Pone en modo de edición
-    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
-        var cont = $td.html(); //lee contenido
-        var div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
+    if (ModoEdicion($row)) return;  //It is already in editing
+    //Puts into edit mode
+    IterarCamposEdit($cols, function ($td) {  //iterate through columns
+        var cont = $td.html(); //read content
+        var div = '<div style="display: none;">' + cont + '</div>';  //save content
         var input = '<input class="form-control input-sm"  value="' + cont.trim() + '">';
-        $td.html(div + input);  //fija contenido
+        $td.html(div + input);  //fix content
     });
     FijModoEdit(but);
 }
-function rowElim(but) {  //Elimina la fila actual
+function rowElim(but) {  //Delete current row
     var $row1 = $(but).parents('tr');
-    var $row = $(but).parents('tr').find('td').eq(0);  //accede a la fila
+    var $row = $(but).parents('tr').find('td').eq(0);  //access the row
     params.onBeforeDelete($row1);
     $row1.remove();
     var res = confirm("Are you sure you want to delete?");
@@ -214,6 +256,18 @@ function rowAddNew(tabId) {  //Add row to indicated table.
         var $cols = $ultFila.find('td');  // read fields
         for (let col = 0; col < 11; col++) {
             $('#editing').find('td').eq(col).text("");
+            if (col == 1) {
+                $('#editing').find('td').eq(col).append("fname");
+            }
+            if (col == 2) {
+                $('#editing').find('td').eq(col).append("lname");
+            }
+            if (col == 3) {
+                $('#editing').find('td').eq(col).append("email");
+            }
+            if (col == 4) {
+                $('#editing').find('td').eq(col).append("phone");
+            }
             if (col == 5) {
                 $('#editing').find('td').eq(col).append("dropdown");
             }
@@ -231,42 +285,35 @@ function rowAddNew(tabId) {  //Add row to indicated table.
             var input = '<input class="form-control input-sm"  value="">';
             $td.html(div + input);
 
+            //var fname = $cols[1].textContent;
+            //var lname = $cols[2].textContent;
+
             //Set dropdown for new row contact column
-            var dropdown = "<select id='ddlBU' class='form-control' style='width: fit-content;'><option></option></select>";
+            //var dropdown = "<select id='ddlBU' class='form-control' style='width: fit-content;'><option></option></select>";
+            var dropdown = "<input list='ddlBUs1' id='ddlBUs' class='form-control listclass'  placeholder='Select' style='width: fit-content;'>" + "<datalist  id='ddlBUs1'></datalist >";
             if ($cols[5].textContent != "dropdown") {
                 $td.html(div + dropdown);
             }
-
-
-            //var du = "<select id='du' class='form-control' style='width: fit-content;'><option></option></select>";
-            //    if ($cols[6].textContent != "du") {
-            //        $td.html(div + du);
-            //    }
-
-            //var proj = "<select id='proj' class='form-control' style='width: fit-content;'><option></option></select>";
-            //        if ($cols[7].textContent != "proj") {
-            //            $td.html(div + proj);
-            //        }
-              
+            
         });
         $ultFila.find('td:last').html(saveColHtml);
     }
     params.onAdd();
 }
-function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
+function TableToCSV(tabId, separator) {  //Convert table to CSV
     var datFil = '';
     var tmp = '';
     var $tab_en_edic = $("#" + tabId);  //Table source
     $tab_en_edic.find('tbody tr').each(function () {
-        //Termina la edición si es que existe
+        //Finish the edit if it exists
         if (ModoEdicion($(this))) {
-            $(this).find('#bAcep').click();  //acepta edición
+            $(this).find('#bAcep').click();  // accept edition
         }
-        var $cols = $(this).find('td');  //lee campos
+        var $cols = $(this).find('td');  //read fields
         datFil = '';
         $cols.each(function () {
             if ($(this).attr('name') == 'buttons') {
-                //Es columna de botones
+                //It's column of buttons
             } else {
                 datFil = datFil + $(this).html() + separator;
             }

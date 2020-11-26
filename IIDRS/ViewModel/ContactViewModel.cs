@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,12 +12,20 @@ namespace IIDRS.ViewModel
         [DisplayName("ID")]
         public string EMP_ID { get; set; }
 
+        [Required]
         [DisplayName("First Name")]
         public string FST_NAME { get; set; }
+
+        [Required]
         [DisplayName("Last Name")]
         public string LAST_NAME { get; set; }
+
+        [Required]
         [DisplayName("Email")]
         public string EMAIL_ADDR { get; set; }
+
+        [Required]
+        [Phone]
         [DisplayName("Phone no.")]
         public string PHONE_NO { get; set; }
         [DisplayName("BU ID")]

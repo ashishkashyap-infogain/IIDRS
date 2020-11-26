@@ -51,180 +51,187 @@ namespace IIDRS.Controllers
         [HttpPost]
         public ActionResult Create(ContactViewModel contactViewModel)
         {
-            if (Session["Admin"] != null)
+            if (ModelState.IsValid)
             {
-
-                var session = Session["Admin"].ToString();
-
-                //for alphanumeric Employee iD
-                var checksEmpID = db.M_CONTACT.Where(x => x.EMP_ID.Contains("1")).ToList();
-                contactViewModel.EMP_ID = checksEmpID.Max(x => x.EMP_ID);
-                var emp = (Convert.ToInt32(contactViewModel.EMP_ID) + 1).ToString();
-                contactViewModel.EMP_ID = emp.ToString();
-
-                //for alphanumeric PERSON_UID
-
-                var checksPersonUID = db.M_CONTACT.Where(x => x.PERSON_UID.Contains("CONTACT")).ToList();
-                contactViewModel.PERSON_UID = checksPersonUID.Max(x => x.PERSON_UID);
-
-                var res = Regex.Split(contactViewModel.PERSON_UID, @"\D+");
-
-                if (contactViewModel.PERSON_UID == "0" || contactViewModel.PERSON_UID == null)
+                if (Session["Admin"] != null)
                 {
-                    contactViewModel.PERSON_UID = "2-1CONTACT";
-                }
-                else
-                {
-                    StringBuilder sb = new StringBuilder("2-");
-                    var chng = res[1].ToString();
-                    var inc = (Convert.ToInt32(chng) + 1).ToString();            
-                    sb.Append(inc + "CONTACT");
-                    contactViewModel.PERSON_UID = sb.ToString();
-                }
 
-                //for alphanumeric PAR_ROW_ID
+                    var session = Session["Admin"].ToString();
 
-                var checksParID = db.M_CONTACT.Where(x => x.PAR_ROW_ID.Contains("CONTACT")).ToList();
-                contactViewModel.PAR_ROW_ID = checksPersonUID.Max(x => x.PAR_ROW_ID);
+                    //for alphanumeric Employee iD
+                    var checksEmpID = db.M_CONTACT.Where(x => x.EMP_ID.Contains("1")).ToList();
+                    contactViewModel.EMP_ID = checksEmpID.Max(x => x.EMP_ID);
+                    var emp = (Convert.ToInt32(contactViewModel.EMP_ID) + 1).ToString();
+                    contactViewModel.EMP_ID = emp.ToString();
 
-                var respar = Regex.Split(contactViewModel.PAR_ROW_ID, @"\D+");
+                    //for alphanumeric PERSON_UID
 
-                if (contactViewModel.PAR_ROW_ID == "0" || contactViewModel.PAR_ROW_ID == null)
-                {
-                    contactViewModel.PAR_ROW_ID = "2-1CONTACT";
-                }
-                else
-                {
-                    StringBuilder sb = new StringBuilder("1-");
-                    var chng = respar[1].ToString();
-                    var inc = (Convert.ToInt32(chng) + 1).ToString();
-                    sb.Append(inc + "CONTACT");
-                    contactViewModel.PAR_ROW_ID = sb.ToString();
-                }
+                    var checksPersonUID = db.M_CONTACT.Where(x => x.PERSON_UID.Contains("CONTACT")).ToList();
+                    contactViewModel.PERSON_UID = checksPersonUID.Max(x => x.PERSON_UID);
 
-                //for alphanumeric ROW_ID
+                    var res = Regex.Split(contactViewModel.PERSON_UID, @"\D+");
 
-                var checksRowID = db.M_CONTACT.Where(x => x.ROW_ID.Contains("CONTACT")).ToList();
-                contactViewModel.ROW_ID = checksPersonUID.Max(x => x.ROW_ID);
+                    if (contactViewModel.PERSON_UID == "0" || contactViewModel.PERSON_UID == null)
+                    {
+                        contactViewModel.PERSON_UID = "2-1CONTACT";
+                    }
+                    else
+                    {
+                        StringBuilder sb = new StringBuilder("3-");
+                        var chng = res[1].ToString();
+                        var inc = (Convert.ToInt32(chng) + 1).ToString();
+                        sb.Append(inc + "CONTACT");
+                        contactViewModel.PERSON_UID = sb.ToString();
+                    }
 
-                var resrow = Regex.Split(contactViewModel.ROW_ID, @"\D+");
+                    //for alphanumeric PAR_ROW_ID
 
-                if (contactViewModel.ROW_ID == "0" || contactViewModel.ROW_ID == null)
-                {
-                    contactViewModel.ROW_ID = "2-1CONTACT";
-                }
-                else
-                {
-                    StringBuilder sb = new StringBuilder("1-");
-                    var chng = resrow[1].ToString();
-                    var inc = (Convert.ToInt32(chng) + 1).ToString();
-                    sb.Append(inc + "CONTACT");
-                    contactViewModel.ROW_ID = sb.ToString();
-                }
+                    var checksParID = db.M_CONTACT.Where(x => x.PAR_ROW_ID.Contains("CONTACT")).ToList();
+                    contactViewModel.PAR_ROW_ID = checksPersonUID.Max(x => x.PAR_ROW_ID);
 
-                //for alphanumeric BU_ID
+                    var respar = Regex.Split(contactViewModel.PAR_ROW_ID, @"\D+");
 
-                //var checksbuID = db.M_CONTACT.Where(x => x.BU_ID.Contains("1BU")).ToList();
-                //contactViewModel.BU_ID = checksPersonUID.Max(x => x.BU_ID);
+                    if (contactViewModel.PAR_ROW_ID == "0" || contactViewModel.PAR_ROW_ID == null)
+                    {
+                        contactViewModel.PAR_ROW_ID = "2-1CONTACT";
+                    }
+                    else
+                    {
+                        StringBuilder sb = new StringBuilder("1-");
+                        var chng = respar[1].ToString();
+                        var inc = (Convert.ToInt32(chng) + 1).ToString();
+                        sb.Append(inc + "CONTACT");
+                        contactViewModel.PAR_ROW_ID = sb.ToString();
+                    }
 
-                
-                //contact.PERSON_UID = "1-22JCONTACT";
-                M_PARTY m_PARTY = new M_PARTY();
+                    //for alphanumeric ROW_ID
 
-                //for alphanumeric PARTY_TYPE_CD
-                var checks = db.M_PARTY.Where(x => x.PARTY_TYPE_CD.Contains("KCONTACT")).ToList();
-                m_PARTY.PARTY_TYPE_CD = checks.Max(x => x.PARTY_TYPE_CD);
+                    var checksRowID = db.M_CONTACT.Where(x => x.ROW_ID.Contains("CONTACT")).ToList();
+                    contactViewModel.ROW_ID = checksPersonUID.Max(x => x.ROW_ID);
 
-                if (m_PARTY.PARTY_TYPE_CD == "0" || m_PARTY.PARTY_TYPE_CD == null)
-                {
-                    m_PARTY.PARTY_TYPE_CD = "1-1CONTACT";
-                }
-                else
-                {
-                    StringBuilder sb1 = new StringBuilder();
-                    var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"KCONTACT");
-                    var chng1 = res1[0].ToString().Split('-');
-                    var inc1 = ((Convert.ToInt32(chng1[1])) + 1).ToString();
+                    var resrow = Regex.Split(contactViewModel.ROW_ID, @"\D+");
 
-                    sb1.Append("2-" + inc1 + "KCONTACT");
-                    m_PARTY.PARTY_TYPE_CD = sb1.ToString();
+                    if (contactViewModel.ROW_ID == "0" || contactViewModel.ROW_ID == null)
+                    {
+                        contactViewModel.ROW_ID = "2-1CONTACT";
+                    }
+                    else
+                    {
+                        StringBuilder sb = new StringBuilder("1-");
+                        var chng = resrow[1].ToString();
+                        var inc = (Convert.ToInt32(chng) + 1).ToString();
+                        sb.Append(inc + "CONTACT");
+                        contactViewModel.ROW_ID = sb.ToString();
+                    }
 
-                }
-                //for alphanumeric PARTY_UID
+                    //for alphanumeric BU_ID
 
-                var checks1 = db.M_PARTY.Where(x => x.PARTY_UID.Contains("C")).ToList();
-                m_PARTY.PARTY_UID = checks1.Max(x => x.PARTY_UID);
-                if (m_PARTY.PARTY_UID == "0" || m_PARTY.PARTY_UID == null)
-                {
-                    m_PARTY.PARTY_UID = "1-1C";
-                }
-                else
-                {
-                    StringBuilder sb2 = new StringBuilder();
-                    var res2 = Regex.Split(m_PARTY.PARTY_UID, @"C");
-                    var chng2 = res2[0].ToString().Split('-');
-                    var inc2 = (Convert.ToInt32(chng2[1]) + 1).ToString();
-                    sb2.Append("2-" + inc2 + "C");
-                    m_PARTY.PARTY_UID = sb2.ToString();
-                }
-                m_PARTY.TRANS_FLG = "1";
-                m_PARTY.CREATED_DT = System.DateTime.Now;
-                m_PARTY.LAST_UPD_DT = System.DateTime.Now;
-                m_PARTY.ACTIVE_FLG = "1";
+                    //var checksbuID = db.M_CONTACT.Where(x => x.BU_ID.Contains("1BU")).ToList();
+                    //contactViewModel.BU_ID = checksPersonUID.Max(x => x.BU_ID);
 
-                  
-                
-                //Start contact Details
-                AddContactDetails(contactViewModel, session);
 
-                //BU Details 
-                var buDetails = GetBUDetails(contactViewModel.BU_ID);
+                    //contact.PERSON_UID = "1-22JCONTACT";
+                    M_PARTY m_PARTY = new M_PARTY();
 
-                //create buId
-                var res0 = Regex.Split(contactViewModel.BU_ID, @"\D+");
-                
-                var resbuid = Regex.Split(contactViewModel.BU_ID, @"\D+");
+                    //for alphanumeric PARTY_TYPE_CD
+                    var checks = db.M_PARTY.Where(x => x.PARTY_TYPE_CD.Contains("KCONTACT")).ToList();
+                    m_PARTY.PARTY_TYPE_CD = checks.Max(x => x.PARTY_TYPE_CD);
 
-                  StringBuilder sb10 = new StringBuilder("2-");
+                    if (m_PARTY.PARTY_TYPE_CD == "0" || m_PARTY.PARTY_TYPE_CD == null)
+                    {
+                        m_PARTY.PARTY_TYPE_CD = "1-1CONTACT";
+                    }
+                    else
+                    {
+                        StringBuilder sb1 = new StringBuilder();
+                        var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"KCONTACT");
+                        var chng1 = res1[0].ToString().Split('-');
+                        var inc1 = ((Convert.ToInt32(chng1[1])) + 1).ToString();
+
+                        sb1.Append("2-" + inc1 + "KCONTACT");
+                        m_PARTY.PARTY_TYPE_CD = sb1.ToString();
+
+                    }
+                    //for alphanumeric PARTY_UID
+
+                    var checks1 = db.M_PARTY.Where(x => x.PARTY_UID.Contains("C")).ToList();
+                    m_PARTY.PARTY_UID = checks1.Max(x => x.PARTY_UID);
+                    if (m_PARTY.PARTY_UID == "0" || m_PARTY.PARTY_UID == null)
+                    {
+                        m_PARTY.PARTY_UID = "1-1C";
+                    }
+                    else
+                    {
+                        StringBuilder sb2 = new StringBuilder();
+                        var res2 = Regex.Split(m_PARTY.PARTY_UID, @"C");
+                        var chng2 = res2[0].ToString().Split('-');
+                        var inc2 = (Convert.ToInt32(chng2[1]) + 1).ToString();
+                        sb2.Append("2-" + inc2 + "C");
+                        m_PARTY.PARTY_UID = sb2.ToString();
+                    }
+                    m_PARTY.TRANS_FLG = "1";
+                    m_PARTY.CREATED_DT = System.DateTime.Now;
+                    m_PARTY.LAST_UPD_DT = System.DateTime.Now;
+                    m_PARTY.ACTIVE_FLG = "1";
+
+
+
+                    //Start contact Details
+                    AddContactDetails(contactViewModel, session);
+
+                    //BU Details 
+                    var buDetails = GetBUDetails(contactViewModel.BU_ID);
+
+                    //create buId
+                    var res0 = Regex.Split(contactViewModel.BU_ID, @"\D+");
+
+                    var resbuid = Regex.Split(contactViewModel.BU_ID, @"\D+");
+
+                    StringBuilder sb10 = new StringBuilder("3-");
                     var chng10 = resbuid[1].ToString();
                     var inc10 = (Convert.ToInt32(chng10) + 1).ToString();
                     sb10.Append(inc10 + "BBU");
-                   
-                
-                //Create rowId
-                StringBuilder sbRowId = new StringBuilder();
-                var chng01 = res0[1].ToString();
-                Random rnd = new Random();
-                char randomChar = (char)rnd.Next('A', 'Z');
-                var inc01 = (Convert.ToInt32(chng01) + 1).ToString();
-                sbRowId.Append("2-" + inc01 + randomChar + "BBU");
-
-                //Create parrowId
-                StringBuilder sbParRowId = new StringBuilder();
-                var chng02 = res0[1].ToString();
-                Random rnd1 = new Random();
-                char randomChar1 = (char)rnd1.Next('A', 'Z');
-                var inc02 = (Convert.ToInt32(chng02) + 1).ToString();
-                sbParRowId.Append("1-" + inc02 + randomChar1 + "BBU");
-
-                //Create parbuId
-                StringBuilder sbParbuId = new StringBuilder();
-                var chng03 = res0[1].ToString();
-                Random rnd2 = new Random();
-                char randomChar2 = (char)rnd2.Next('A', 'Z');
-                var inc03 = (Convert.ToInt32(chng03) + 1).ToString();
-                sbParbuId.Append("1-" + inc03 + randomChar2 + "BBU");
 
 
-                //db.M_BU.Add(m_BU);
-                db.M_PARTY.Add(m_PARTY);
-                // db.M_CONTACT.Add(contact);
-                AddBUDetails(buDetails, session,sb10.ToString());
-                db.SaveChanges();
+                    //Create rowId
+                    StringBuilder sbRowId = new StringBuilder();
+                    var chng01 = res0[1].ToString();
+                    Random rnd = new Random();
+                    char randomChar = (char)rnd.Next('A', 'Z');
+                    var inc01 = (Convert.ToInt32(chng01) + 1).ToString();
+                    sbRowId.Append("2-" + inc01 + randomChar + "BBU");
+
+                    //Create parrowId
+                    StringBuilder sbParRowId = new StringBuilder();
+                    var chng02 = res0[1].ToString();
+                    Random rnd1 = new Random();
+                    char randomChar1 = (char)rnd1.Next('A', 'Z');
+                    var inc02 = (Convert.ToInt32(chng02) + 1).ToString();
+                    sbParRowId.Append("1-" + inc02 + randomChar1 + "BBU");
+
+                    //Create parbuId
+                    StringBuilder sbParbuId = new StringBuilder();
+                    var chng03 = res0[1].ToString();
+                    Random rnd2 = new Random();
+                    char randomChar2 = (char)rnd2.Next('A', 'Z');
+                    var inc03 = (Convert.ToInt32(chng03) + 1).ToString();
+                    sbParbuId.Append("1-" + inc03 + randomChar2 + "BBU");
+
+
+                    //db.M_BU.Add(m_BU);
+                    db.M_PARTY.Add(m_PARTY);
+                    // db.M_CONTACT.Add(contact);
+                    AddBUDetails(buDetails, session, sb10.ToString());
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("Index", "Contact");
+            }
+            else
+            {
+                //ViewBag.
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Index", "Contact");
-
         }
 
         [HttpPost]
@@ -333,16 +340,20 @@ namespace IIDRS.Controllers
         {
             try
             {
-                var bu = GetBUDetailsById(buId);
-                var details = new
+                if (!string.IsNullOrEmpty(buId))
                 {
-                    //bu.BU_NAME,
-                    bu.DU_NAME,
-                    bu.PROJ_NAME
+                    var bu = GetBUDetailsById(buId);
+                    var details = new
+                    {
+                        //bu.BU_NAME,
+                        bu.DU_NAME,
+                        bu.PROJ_NAME
 
-                };
-                ViewBag.DuDetailList = details;
-                return Json(details, JsonRequestBehavior.AllowGet);
+                    };
+                    ViewBag.DuDetailList = details;
+                    return Json(details, JsonRequestBehavior.AllowGet);
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
