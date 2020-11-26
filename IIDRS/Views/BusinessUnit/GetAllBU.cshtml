@@ -8,9 +8,13 @@
 <br />
 <style>
 
-    .important {
-        background-color: gray;
-        opacity: 0.62;
+    .opacityblur {
+        opacity: .3;
+        outline: 3px solid #000000;
+    }
+    .opacityok {
+        opacity: 1.0;
+        outline: 2px solid blue;
     }
     .required {
         border-color: red;
@@ -25,7 +29,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 
-<div style="float:right">
+<div style="float:right;margin-right: -14px;">
 
     <button style="float:right" class="btn btn-sm btn-primary rounded-0" id="btnAddRow"><i class="fa fa-address-book"></i>&nbsp;Add</button>
     <button style="float:right" class="btn btn-sm btn-default rounded-0" id="btnExport"><i class="fa fa-download" style=" height: 25px !important; width: 25px !important;"></i></button>
@@ -43,93 +47,93 @@
     </div>
 </div>
 
+<div style="margin-left:-140px">
+    <table id="DataTable" class="table table-bordered table-hover" style="margin-right:20px">
 
-<table id="DataTable" class="table table-bordered table-hover">
-
-    <thead class="thead-dark">
-        <tr style="cursor:pointer ;white-space: nowrap">
-            <th onclick="sortTable(0)">
-                @Html.DisplayNameFor(model => model.BUId)
-            </th>
-            <th onclick="sortTable(1)">
-                @Html.DisplayNameFor(model => model.BUName)
-            </th>
-            <th onclick="sortTable(2)">
-                @Html.DisplayNameFor(model => model.BUType)
-            </th>
-            <th onclick="sortTable(3)">
-                @Html.DisplayNameFor(model => model.DUName)
-            </th>
-            <th onclick="sortTable(4)">
-                @Html.DisplayNameFor(model => model.ProjectId)
-            </th>
-            <th onclick="sortTable(5)">
-                @Html.DisplayNameFor(model => model.ProjectName)
-            </th>
-            <th onclick="sortTable(6)">
-                @Html.DisplayNameFor(model => model.ContactName)
-            </th>
-            <th onclick="sortTable(7)">
-                @Html.DisplayNameFor(model => model.EMAIL_ADDR)
-            </th>
-            <th onclick="sortTable(8)">
-                @Html.DisplayNameFor(model => model.PHONE_NO)
-            </th>
-            <th class="text-center excludecol">Active/Inactive</th>
-        </tr>
-    </thead>
-
-    @foreach (var item in Model)
-    {
-        <tbody>
-            <tr class="Search">
-                <td>
-                    @Html.DisplayFor(modelItem => item.BUId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BUName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BUType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DUName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
-                </td>
-                <td class="getId">
-                    @Html.DisplayFor(modelItem => item.ContactName)
-                </td>
-                <td id="txtEmail">
-                    @Html.DisplayFor(modelItem => item.EMAIL_ADDR)
-                </td>
-                <td id="txtPhoneNo">
-                    @Html.DisplayFor(modelItem => item.PHONE_NO)
-                </td>
-                <td class="text-center">
-                    <label class="custom-switch">
-                        @if (item.BU_Flag == "1")
-                        {
-                            <input type="checkbox" id="@item.BUId" name="custom-switch-checkbox" checked="@item.BU_Flag" class="custom-switch-input"
-                                   data-toggle="modal" data-target="#activeDeactiveUser">
-                        }
-                        else
-                        {
-                            <input type="checkbox" id="@item.BUId" name="custom-switch-checkbox" checked="@item.BU_Flag" disabled class="custom-switch-input"
-                                   data-toggle="modal" data-target="#activeDeactiveUser">
-                        }
-                        <span class="custom-switch-indicator"></span>
-                    </label>
-                </td>
+        <thead class="thead-dark">
+            <tr style="cursor:pointer ;white-space: nowrap">
+                <th onclick="sortTable(0)">
+                    @Html.DisplayNameFor(model => model.BUId)
+                </th>
+                <th onclick="sortTable(1)">
+                    @Html.DisplayNameFor(model => model.BUName)
+                </th>
+                <th onclick="sortTable(2)">
+                    @Html.DisplayNameFor(model => model.BUType)
+                </th>
+                <th onclick="sortTable(3)">
+                    @Html.DisplayNameFor(model => model.DUName)
+                </th>
+                <th onclick="sortTable(4)">
+                    @Html.DisplayNameFor(model => model.ProjectId)
+                </th>
+                <th onclick="sortTable(5)">
+                    @Html.DisplayNameFor(model => model.ProjectName)
+                </th>
+                <th onclick="sortTable(6)">
+                    @Html.DisplayNameFor(model => model.ContactName)
+                </th>
+                <th onclick="sortTable(7)">
+                    @Html.DisplayNameFor(model => model.EMAIL_ADDR)
+                </th>
+                <th onclick="sortTable(8)">
+                    @Html.DisplayNameFor(model => model.PHONE_NO)
+                </th>
+                <th class="text-center excludecol">Active/Inactive</th>
             </tr>
-        </tbody>
-    }
-</table>
+        </thead>
 
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr class="Search">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BUId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BUName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BUType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DUName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
+                    <td class="getId">
+                        @Html.DisplayFor(modelItem => item.ContactName)
+                    </td>
+                    <td id="txtEmail">
+                        @Html.DisplayFor(modelItem => item.EMAIL_ADDR)
+                    </td>
+                    <td id="txtPhoneNo">
+                        @Html.DisplayFor(modelItem => item.PHONE_NO)
+                    </td>
+                    <td class="text-center">
+                        <label class="custom-switch">
+                            @if (item.BU_Flag == "1")
+                            {
+                                <input type="checkbox" id="@item.BUId" name="custom-switch-checkbox" checked="@item.BU_Flag" class="custom-switch-input opacityok" 
+                                       data-toggle="modal" data-target="#activeDeactiveUser">
+                            }
+                            else
+                            {
+                                <input type="checkbox" id="@item.BUId" name="custom-switch-checkbox" checked="@item.BU_Flag" disabled class="custom-switch-input"
+                                       data-toggle="modal" data-target="#activeDeactiveUser">
+                            }
+                            <span class="custom-switch-indicator"></span>
+                        </label>
+                    </td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</div>
 <div class="container">
     <nav aria-label="Page navigation">
         <ul class="pagination" id="pagination"></ul>
@@ -251,7 +255,7 @@
                 $('#DataTable tbody').html('');
                 $.each(data, function (k, v) {
                     var x = v.BU_Flag;
-                    var rows = "<tr >"
+                    var rows = "<tr class='Search'>"
                         + "<td>" + v.BUId + "</td>"
                         + "<td>" + v.BUName + "</td>"
                         + "<td>" + v.BUType + "</td>"
@@ -262,7 +266,7 @@
                         + "<td id='txtEmail'>" + v.EMAIL_ADDR + "</td>"
                         + "<td id='txtPhoneNo'>" + v.PHONE_NO + "</td>"
                         + "<td class='text-center'><label class='switch'>"
-                        + "<input type='checkbox' name='custom-switch-checkbox class='custom-switch-input disabledClick' data-toggle='modal'  data-target=" + ' #activeDeactiveUser' + " id='" + v.BUId + "' checked ='" + x + "' " + (x == '0' ? $(':checkbox').wrap('<span class="important"/>') : "") + ">"
+                        + "<input type='checkbox' name='custom-switch-checkbox class='custom-switch-input disabledClick' data-toggle='modal'  data-target=" + ' #activeDeactiveUser' + " id='" + v.BUId + "' checked ='" + x + "' " + (x == '0' ? ('<span class="opacityblur"/>') : ('<span class="opacityok"/>')) + ""
                         + "<span class='slider round'></span></label></td>"
                         + "</tr>";
                     $('#DataTable').append(rows);
@@ -492,17 +496,16 @@
             type: "POST",
             url: "https://localhost:44350/BusinessUnit/CreateBusinessUnit",
             data: dataToBeSent,
-            success: function () {
+            success: function (response) {
                $("#btnAddRow").removeAttr("disabled");
-                var msg = '@TempData["message"]';
-                    if (msg != "Wrong") {
-                        toastr.success("Record added successfully.")
+                if (response.status === true) {
+                    toastr.success(response.message)
                         setTimeout(function () {
                             location.href = '/BusinessUnit/GetAllBU';
                         }, 3000);
                     }
-                    else {
-                        toastr.error("Something went wrong")
+                else {
+                    toastr.error(response.message)
                         setTimeout(function () {
                             location.href = '/BusinessUnit/GetAllBU';
                         }, 3000);

@@ -85,7 +85,7 @@ namespace IIDRS.Controllers
                     else
                     {
                         StringBuilder sb1 = new StringBuilder();
-                        var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"BU");
+                        var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"BBU");
                         var chng1 = res1[0].ToString().Split('-');
                         var inc1 = ((Convert.ToInt32(chng1[1])) + 1).ToString();
 
@@ -175,12 +175,11 @@ namespace IIDRS.Controllers
 
                     //Add contact details
                     AddContactDetails(contactDetails, sbContactId.ToString(), sbRowId.ToString(), session, bUViewModel.BUId);
-                    return RedirectToAction("GetAllBU");
+                    return Json(new { status = true, message = "Record added successfully." }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {
-                    TempData["message"] = "Wrong";
-                    return RedirectToAction("GetAllBU");
+                    return Json(new { status = false, message = "Something went wrong." }, JsonRequestBehavior.AllowGet);
                 }
             }
             else

@@ -73,6 +73,9 @@
                 @Html.DisplayNameFor(model => model.PROJ_NAME)
             </th>
             @*<th onclick="sortTable(8)">
+                @Html.DisplayNameFor(model => model.LAST_UPD_DT)
+            </th>*@
+            <th class="text-center excludecol">
                     @Html.DisplayNameFor(model => model.LAST_UPD_DT)
                 </th>*@
             <th class="text-center">
@@ -250,7 +253,7 @@
     $(function () {
         $("#btnExport").click(function () {
             $("#DataTable").table2excel({
-                exclude: "#actionHeader",
+                exclude: ".excludecol,#actionHeader",
                 filename: "Contacts_Details.xls",
                 name: "Contact Sheet",
             });
