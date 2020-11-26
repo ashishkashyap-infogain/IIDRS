@@ -12,6 +12,9 @@
         background-color: gray;
         opacity: 0.62;
     }
+    .required {
+        border-color: red;
+    }
 </style>
 <link href="~/Content/Search.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -19,6 +22,8 @@
 <script src="~/Scripts/twbsPagination.js" type="text/javascript"></script>
 <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
 <script src="~/scripts/BU_Contact.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 
 <div style="float:right">
 
@@ -188,7 +193,7 @@
             }
         }
     });
-   
+
     function GetContacts() {
         $.ajax({
             type: "GET",
@@ -205,7 +210,7 @@
                 var value = $('#ddlContacts1 option').filter(function () {
                     return this.value == proName;
                 }).data('value');
-                var contactId = value ? value : ''; 
+                var contactId = value ? value : '';
                 if (contactId != "") {
                     GetContactDetailsById(contactId);
                 }
@@ -257,7 +262,7 @@
                         + "<td id='txtEmail'>" + v.EMAIL_ADDR + "</td>"
                         + "<td id='txtPhoneNo'>" + v.PHONE_NO + "</td>"
                         + "<td class='text-center'><label class='switch'>"
-                        + "<input type='checkbox' name='custom-switch-checkbox class='custom-switch-input disabledClick' data-toggle='modal'  data-target=" + ' #activeDeactiveUser' + " id='" + v.BUId + "' checked ='" + x + "' " + (x == '0' ? disabledfunc() : "") + ">"
+                        + "<input type='checkbox' name='custom-switch-checkbox class='custom-switch-input disabledClick' data-toggle='modal'  data-target=" + ' #activeDeactiveUser' + " id='" + v.BUId + "' checked ='" + x + "' " + (x == '0' ? $(':checkbox').wrap('<span class="important"/>') : "") + ">"
                         + "<span class='slider round'></span></label></td>"
                         + "</tr>";
                     $('#DataTable').append(rows);
@@ -480,6 +485,7 @@
         data[headings[0]] = row.text();
         return data
     }
+
     function makeRequest(dataToBeSent) {
         dataToBeSent.PERSON_UID = valOfconatact;
         $.ajax({
@@ -487,8 +493,20 @@
             url: "https://localhost:44350/BusinessUnit/CreateBusinessUnit",
             data: dataToBeSent,
             success: function () {
-                $("#btnAddRow").removeAttr("disabled");
-                window.location.reload();
+               $("#btnAddRow").removeAttr("disabled");
+                var msg = '@TempData["message"]';
+                    if (msg != "Wrong") {
+                        toastr.success("Record added successfully.")
+                        setTimeout(function () {
+                            location.href = '/BusinessUnit/GetAllBU';
+                        }, 3000);
+                    }
+                    else {
+                        toastr.error("Something went wrong")
+                        setTimeout(function () {
+                            location.href = '/BusinessUnit/GetAllBU';
+                        }, 3000);
+                    }
             },
             error: function () {
                 $("#btnAddRow").removeAttr("disabled");
@@ -617,7 +635,4 @@
     });
     $('#clearToggle').click(function () { location.href = location.href; });
 
-    function disabledfunc() {
-        $(':checkbox').wrap('<span class="important"/>');
-    }
 </script>

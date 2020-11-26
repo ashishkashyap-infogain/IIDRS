@@ -66,9 +66,9 @@ namespace IIDRS.Controllers
         [HttpPost]
         public ActionResult CreateBusinessUnit(BUViewModel bUViewModel)
         {
-            if (ModelState.IsValid)
+            if (Session["Admin"] != null)
             {
-                if (Session["Admin"] != null)
+                try
                 {
                     var session = Session["LogedUser"].ToString();
 
@@ -85,7 +85,7 @@ namespace IIDRS.Controllers
                     else
                     {
                         StringBuilder sb1 = new StringBuilder();
-                        var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"BBU");
+                        var res1 = Regex.Split(m_PARTY.PARTY_TYPE_CD, @"BU");
                         var chng1 = res1[0].ToString().Split('-');
                         var inc1 = ((Convert.ToInt32(chng1[1])) + 1).ToString();
 
@@ -175,17 +175,17 @@ namespace IIDRS.Controllers
 
                     //Add contact details
                     AddContactDetails(contactDetails, sbContactId.ToString(), sbRowId.ToString(), session, bUViewModel.BUId);
-
                     return RedirectToAction("GetAllBU");
                 }
-                else
+                catch (Exception ex)
                 {
-                    return RedirectToAction("Login2", "Home");
+                    TempData["message"] = "Wrong";
+                    return RedirectToAction("GetAllBU");
                 }
             }
             else
             {
-                return RedirectToAction("GetAllBU");
+                return RedirectToAction("Login2", "Home");
             }
         }
 
@@ -194,36 +194,36 @@ namespace IIDRS.Controllers
         private void AddContactDetails(M_CONTACT contactDetails, string personId, string rowId, string createdBy, string buId)
         {
             try
-            {
-                M_CONTACT m_CONTACT = new M_CONTACT();
-                m_CONTACT.PERSON_UID = personId;
-                m_CONTACT.ACTIVE_FLG = contactDetails.ACTIVE_FLG;
-                m_CONTACT.EMAIL_ADDR = contactDetails.EMAIL_ADDR;
-                m_CONTACT.EMP_FLG = contactDetails.EMP_FLG;
-                m_CONTACT.EMP_ID = contactDetails.EMP_ID;
-                m_CONTACT.FST_NAME = contactDetails.FST_NAME;
-                m_CONTACT.LAST_NAME = contactDetails.LAST_NAME;
-                m_CONTACT.LAST_UPD_BY = null;
-                m_CONTACT.LAST_UPD_DT = null;
-                m_CONTACT.CREATED_BY = createdBy;
-                m_CONTACT.CREATED_DT = DateTime.UtcNow;
-                m_CONTACT.PAR_ROW_ID = contactDetails.PAR_ROW_ID;
-                m_CONTACT.PHONE_NO = contactDetails.PHONE_NO;
-                m_CONTACT.BU_ID = buId;
-                m_CONTACT.ROW_ID = rowId;
-                db.M_CONTACT.Add(m_CONTACT);
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+            {           
+                    M_CONTACT m_CONTACT = new M_CONTACT();
+                    m_CONTACT.PERSON_UID = personId;
+                    m_CONTACT.ACTIVE_FLG = contactDetails.ACTIVE_FLG;
+                    m_CONTACT.EMAIL_ADDR = contactDetails.EMAIL_ADDR;
+                    m_CONTACT.EMP_FLG = contactDetails.EMP_FLG;
+                    m_CONTACT.EMP_ID = contactDetails.EMP_ID;
+                    m_CONTACT.FST_NAME = contactDetails.FST_NAME;
+                    m_CONTACT.LAST_NAME = contactDetails.LAST_NAME;
+                    m_CONTACT.LAST_UPD_BY = null;
+                    m_CONTACT.LAST_UPD_DT = null;
+                    m_CONTACT.CREATED_BY = createdBy;
+                    m_CONTACT.CREATED_DT = DateTime.UtcNow;
+                    m_CONTACT.PAR_ROW_ID = contactDetails.PAR_ROW_ID;
+                    m_CONTACT.PHONE_NO = contactDetails.PHONE_NO;
+                    m_CONTACT.BU_ID = buId;
+                    m_CONTACT.ROW_ID = rowId;
+                    db.M_CONTACT.Add(m_CONTACT);
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
             }
             catch (Exception ex)
             {
-                throw ex;
+                TempData["message"]  = "Wrong";
             }
         }
 
@@ -231,34 +231,34 @@ namespace IIDRS.Controllers
         {
             try
             {
-                M_BU m_BU = new M_BU();
-                m_BU.ROW_ID = bUViewModel.ROW_ID;
-                m_BU.CREATED_BY = createdBy;
-                m_BU.CREATED_DT = System.DateTime.Now;
-                m_BU.LAST_UPD_BY = null;
-                m_BU.LAST_UPD_DT = null;
-                m_BU.BU_ID = bUViewModel.BUId;
-                m_BU.BU_NAME = bUViewModel.BUName;
-                m_BU.BU_TYPE = bUViewModel.BUType;
-                m_BU.DU_NAME = bUViewModel.DUName;
-                m_BU.PROJ_ID = bUViewModel.ProjectId;
-                m_BU.PROJ_NAME = bUViewModel.ProjectName;
-                m_BU.BU_FLG = "1";
-                m_BU.PAR_BU_ID = bUViewModel.PAR_BU_ID;
-                m_BU.PAR_ROW_ID = bUViewModel.PAR_ROW_ID;
-                db.M_BU.Add(m_BU);
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                    M_BU m_BU = new M_BU();
+                    m_BU.ROW_ID = bUViewModel.ROW_ID;
+                    m_BU.CREATED_BY = createdBy;
+                    m_BU.CREATED_DT = System.DateTime.Now;
+                    m_BU.LAST_UPD_BY = null;
+                    m_BU.LAST_UPD_DT = null;
+                    m_BU.BU_ID = bUViewModel.BUId;
+                    m_BU.BU_NAME = bUViewModel.BUName;
+                    m_BU.BU_TYPE = bUViewModel.BUType;
+                    m_BU.DU_NAME = bUViewModel.DUName;
+                    m_BU.PROJ_ID = bUViewModel.ProjectId;
+                    m_BU.PROJ_NAME = bUViewModel.ProjectName;
+                    m_BU.BU_FLG = "1";
+                    m_BU.PAR_BU_ID = bUViewModel.PAR_BU_ID;
+                    m_BU.PAR_ROW_ID = bUViewModel.PAR_ROW_ID;
+                    db.M_BU.Add(m_BU);
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
             }
             catch (Exception ex)
             {
-                throw ex;
+                TempData["message"] = "Wrong";
             }
         }
 
