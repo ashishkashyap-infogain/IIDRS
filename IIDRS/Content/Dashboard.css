@@ -99,6 +99,6 @@
 	border-bottom: 1px solid #e5e5e5;
 }
 
-input.error, textarea.error {
+input.error, textarea.error,select.error {
 	border: 1px solid red;
 }

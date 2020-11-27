@@ -32,6 +32,16 @@ namespace IIDRS.Controllers
             },
             "ID", "Name", 1);
             ViewBag.Quarter = quarters;
+            var currentYear = DateTime.Now.Year;
+
+            var years = new SelectList(new[]
+            {
+                //new { ID = "-1", Name = "Select" },
+                new { ID = currentYear.ToString(), Name = currentYear.ToString() },
+                new { ID = (currentYear-1).ToString(), Name = (currentYear-1).ToString()}
+            },
+            "ID", "Name", 1);
+            ViewBag.Years = years;
         }
         // GET: Survey
         public ActionResult Index()

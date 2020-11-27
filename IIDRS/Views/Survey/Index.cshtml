@@ -14,9 +14,12 @@
 @*<form method="post" action="/Survey/Save">*@
 
 <div style="float: right;padding-bottom: 10px;">
-    Select Quarter (*)
+    <b>Select Quarter (*)</b>
     @Html.DropDownList("selectedQuarter", (IEnumerable<SelectListItem>)ViewBag.Quarter, new { @class = "btn-sm btn-primary rounded-0", id = "ddQuarter" })
+    <b>Select Year (*)</b>
+    @Html.DropDownList("selectedYear", (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "btn-sm btn-primary rounded-0", id = "ddYear" })
 </div>
+
 
 
 <table class="table table-striped table-bordered">
@@ -118,7 +121,8 @@
                 alert("Please select quarter.");
                 $(window).scrollTop(0);
                 return false;
-            }
+			}
+            quarter = $('#ddYear').val() + '-' + quarter;
             var selectedrating = [];
             var surveyIds = [];
             $.each($('[id^="rating_"]:checked'), function (i, val) {

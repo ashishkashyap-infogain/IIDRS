@@ -3,7 +3,7 @@
     ViewBag.Title = "ExectiveQuestion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <h2>Create Executive Management Survey Question</h2>
 
 
@@ -28,7 +28,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.SURVEY_QUESTION_NAME, htmlAttributes: new { @class = "control-label " })
                     <div class="">                        
-                        @Html.DropDownListFor(m => m.SURVEY_QUESTION_NAME, ViewBag.SurveyQuestionCategory as SelectList, htmlAttributes: new { @class = "form-control " })
+                        @Html.DropDownListFor(m => m.SURVEY_QUESTION_NAME, ViewBag.SurveyQuestionCategory as SelectList, "Please Select", htmlAttributes: new { @class = "form-control " })
                         @Html.ValidationMessageFor(model => model.SURVEY_QUESTION_NAME, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -54,11 +54,16 @@
 
 <script type="text/javascript">
     $('.btnCreate').click(function () {
+        var status = true;
+        $('select, input').removeClass('error');
         if ($('#SURVEY_QUESTION_DESC').val() == "") {
             $('#SURVEY_QUESTION_DESC').addClass('error');
-            return false;
+            status = false;
         }
-        else
-            return true;
+        if ($('#SURVEY_QUESTION_NAME').val() == "") {
+            $('#SURVEY_QUESTION_NAME').addClass('error');
+            status = false;
+        }
+        return status;
     });
 </script>
