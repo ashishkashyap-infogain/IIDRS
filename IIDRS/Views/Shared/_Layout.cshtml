@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    @*<link rel="shortcut icon" type="image/png" href="="~/images/IDRS2.png" />*@    
+    @*<link rel="shortcut icon" type="image/png" href="="~/images/IDRS2.png" />*@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="~/Content/Dashboard.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
@@ -34,7 +34,7 @@
         @{
             if (Session["Admin"] != null)
             {
-                <span style="color:white; font-weight:500; font-size:larger;margin-left:-250px;">Integrated Development Reporting System</span>
+                <span style="color:white; font-weight:500; font-size:larger;margin-left:-317px;">Integrated Development Reporting System</span>
                 <div class="btn-group mr-2" style="width:200px">
                     <a class="btn btn-primary btn-sm btn-outline-light" href="#">ETL</a>
                     <a class="btn btn-primary btn-sm btn-outline-light" href="#">EIM</a>
@@ -145,26 +145,26 @@
                                         </a>
                                     </li>
                                 }
-                            }
-                            if (ViewBag.Title == "Contact Details")
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="/Contact/Index">
-                                        <span data-feather="phone"></span>
-                                        Contacts
-                                    </a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Contact/Index">
-                                        <span data-feather="phone"></span>
-                                        Contacts
-                                    </a>
-                                </li>
-                            }
-                        if (ViewBag.Title == "Business Unit")
+
+                                if (ViewBag.Title == "Contact Details")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="/Contact/Index">
+                                            <span data-feather="phone"></span>
+                                            Contacts
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/Contact/Index">
+                                            <span data-feather="phone"></span>
+                                            Contacts
+                                        </a>
+                                    </li>
+                                }
+                                if (ViewBag.Title == "Business Unit")
                                 {
                                     <li class="nav-item">
                                         <a class="nav-link" href="/BusinessUnit/GetAllBU">
@@ -182,53 +182,54 @@
                                         </a>
                                     </li>
                                 }
+                            }
                         }
                         @*else if (ViewBag.Title == "Index")
-        {
-            <li class="nav-item">
-                <a class="nav-link " href="/Admin/AdminActivities">
-                    <span data-feather="home"></span>
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link " href="/Admin/AdminActivities">
+                                        <span data-feather="home"></span>
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                        AI Analytics
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/Customer/Index2">
-                        <span data-feather="users"></span>
-                        Authorization
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span data-feather="bar-chart-2"></span>
-                        Survey
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span data-feather="phone"></span>
-                        Contacts
-                    </a>
-                </li>
-            }*@
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                            AI Analytics
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="/Customer/Index2">
+                                            <span data-feather="users"></span>
+                                            Authorization
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">
+                                            <span data-feather="bar-chart-2"></span>
+                                            Survey
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">
+                                            <span data-feather="phone"></span>
+                                            Contacts
+                                        </a>
+                                    </li>
+                                }*@
 
 
                         @*else if (Session["CustId"] != null)
-                        {
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                <span data-feather="bar-chart-2"></span>
-                Survey<span class="sr-only">(current)</span>
-            </a>
-                        </li>
-                        }
-                        }*@
+                                        {
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#">
+                                <span data-feather="bar-chart-2"></span>
+                                Survey<span class="sr-only">(current)</span>
+                            </a>
+                                        </li>
+                                        }
+                                        }*@
 
                     </ul>
                 </div>

@@ -19,7 +19,7 @@ namespace IIDRS.Controllers
             GetAction();
             if (Session["Admin"] != null)
             {
-               
+
                 var BU_User_Details = from bu in db.M_BU
                                       join contact in db.M_CONTACT on bu.BU_ID equals contact.BU_ID
                                       orderby bu.CREATED_DT descending
@@ -28,7 +28,7 @@ namespace IIDRS.Controllers
                 switch (getBUListByCondition)
                 {
                     case "1":
-                        BU_User_Details = BU_User_Details.Where(s=>s.BU_FLG == "1");
+                        BU_User_Details = BU_User_Details.Where(s => s.BU_FLG == "1");
                         break;
                     case "0":
                         BU_User_Details = BU_User_Details.Where(s => s.BU_FLG == "0");
@@ -66,9 +66,9 @@ namespace IIDRS.Controllers
         [HttpPost]
         public ActionResult CreateBusinessUnit(BUViewModel bUViewModel)
         {
-            if (ModelState.IsValid)
+            if (Session["Admin"] != null)
             {
-                if (Session["Admin"] != null)
+                try
                 {
                     var session = Session["LogedUser"].ToString();
 
@@ -118,7 +118,7 @@ namespace IIDRS.Controllers
                     var checks2 = db.M_BU.Where(x => x.BU_ID.Contains("BBU")).ToList();
                     bUViewModel.BUId = checks2.Max(x => x.BU_ID);
                     //for alphanumeric user id   
-                    var res = Regex.Split(bUViewModel.BUId, @"-");
+                    var res = Regex.Split(bUViewModel.BUId, @"BBU");
 
                     if (bUViewModel.BUId == "0" || bUViewModel.BUId == null)
                     {
@@ -126,28 +126,28 @@ namespace IIDRS.Controllers
                     }
                     else
                     {
-                        StringBuilder sb = new StringBuilder("2-");
-                        var chng = res[0].ToString().Split('B');
-                        var inc = (Convert.ToInt32(chng[0]) + 1).ToString();
-                        sb.Append(inc + "BBU");
+                        StringBuilder sb = new StringBuilder();
+                        var chng = res[0].ToString().Split('-');
+                        var inc = (Convert.ToInt32(chng[1]) + 1).ToString();
+                        sb.Append("2-" + inc + "BBU");
                         bUViewModel.BUId = sb.ToString();
                         //For RowId
-                        StringBuilder sbrowid = new StringBuilder("2-");
-                        var chng1 = res[0].ToString().Split('B');
-                        var inc1 = (Convert.ToInt32(chng1[0]) + 1).ToString();
-                        sbrowid.Append(inc1 + "BBU");
+                        StringBuilder sbrowid = new StringBuilder();
+                        var chng1 = res[0].ToString().Split('-');
+                        var inc1 = (Convert.ToInt32(chng1[1]) + 1).ToString();
+                        sbrowid.Append("2-" + inc1 + "BBU");
                         bUViewModel.ROW_ID = sbrowid.ToString();
                         //For PAR_Row_ID
-                        StringBuilder sbparrowid = new StringBuilder("2-");
-                        var chng2 = res[0].ToString().Split('B');
-                        var inc2 = (Convert.ToInt32(chng2[0]) + 1).ToString();
-                        sbparrowid.Append(inc2 + "BBU");
+                        StringBuilder sbparrowid = new StringBuilder();
+                        var chng2 = res[0].ToString().Split('-');
+                        var inc2 = (Convert.ToInt32(chng2[1]) + 1).ToString();
+                        sbparrowid.Append("2-" + inc2 + "BBU");
                         bUViewModel.PAR_ROW_ID = sbparrowid.ToString();
                         // for PAR_Bu_Id
-                        StringBuilder sbparbuid = new StringBuilder("2-");
-                        var chng3 = res[0].ToString().Split('B');
-                        var inc3 = (Convert.ToInt32(chng3[0]) + 1).ToString();
-                        sbparbuid.Append(inc3 + "BBU");
+                        StringBuilder sbparbuid = new StringBuilder();
+                        var chng3 = res[0].ToString().Split('-');
+                        var inc3 = (Convert.ToInt32(chng3[1]) + 1).ToString();
+                        sbparbuid.Append("2-" + inc3 + "BBU");
                         bUViewModel.PAR_BU_ID = sbparbuid.ToString();
                     }
 
@@ -157,72 +157,72 @@ namespace IIDRS.Controllers
                     //Contact Details 
                     var contactDetails = GetContactDetails(bUViewModel.PERSON_UID);
 
+
                     //create personId
-                    var res0 = Regex.Split(bUViewModel.BUId, @"\D+");
-                    StringBuilder sbContactId = new StringBuilder("2-");
-                    var chng0 = res0[1].ToString();
-                    var inc0 = (Convert.ToInt32(chng0) + 1).ToString();
-                    sbContactId.Append(inc0 + "CONTACT");
+                    var resC = Regex.Split(bUViewModel.BUId, @"BBU");
+                    StringBuilder sbContactId = new StringBuilder();
+                    var chng0 = resC[0].ToString().Split('-');
+                    var inc0 = (Convert.ToInt32(chng0[1]) + 1).ToString();
+                    sbContactId.Append("2-" + inc0 + "CONTACT");
 
                     //Create rowId
                     StringBuilder sbRowId = new StringBuilder();
-                    var chng01 = res0[1].ToString();
+                    var chng01 = resC[0].ToString().Split('-');
                     Random rnd = new Random();
                     char randomChar = (char)rnd.Next('A', 'Z');
-                    var inc01 = (Convert.ToInt32(chng01) + 1).ToString();
+                    var inc01 = (Convert.ToInt32(chng01[1]) + 1).ToString();
                     sbRowId.Append("2-" + inc01 + randomChar + "CONTACT");
 
                     //Add contact details
                     AddContactDetails(contactDetails, sbContactId.ToString(), sbRowId.ToString(), session, bUViewModel.BUId);
-
-                    return RedirectToAction("GetAllBU");
+                    return Json(new { status = true, message = "Record added successfully." }, JsonRequestBehavior.AllowGet);
                 }
-                else
+                catch (Exception ex)
                 {
-                    return RedirectToAction("Login2", "Home");
+                    return Json(new { status = false, message = "Something went wrong." }, JsonRequestBehavior.AllowGet);
                 }
             }
             else
             {
-                return RedirectToAction("GetAllBU");
+                return RedirectToAction("Login2", "Home");
             }
         }
 
-        
+
 
         private void AddContactDetails(M_CONTACT contactDetails, string personId, string rowId, string createdBy, string buId)
         {
             try
-            {
-                M_CONTACT m_CONTACT = new M_CONTACT();
-                m_CONTACT.PERSON_UID = personId;
-                m_CONTACT.ACTIVE_FLG = contactDetails.ACTIVE_FLG;
-                m_CONTACT.EMAIL_ADDR = contactDetails.EMAIL_ADDR;
-                m_CONTACT.EMP_FLG = contactDetails.EMP_FLG;
-                m_CONTACT.EMP_ID = contactDetails.EMP_ID;
-                m_CONTACT.FST_NAME = contactDetails.FST_NAME;
-                m_CONTACT.LAST_NAME = contactDetails.LAST_NAME;
-                m_CONTACT.LAST_UPD_BY = null;
-                m_CONTACT.LAST_UPD_DT = null;
-                m_CONTACT.CREATED_BY = createdBy;
-                m_CONTACT.CREATED_DT = DateTime.UtcNow;
-                m_CONTACT.PAR_ROW_ID = contactDetails.PAR_ROW_ID;
-                m_CONTACT.PHONE_NO = contactDetails.PHONE_NO;
-                m_CONTACT.BU_ID = buId;
-                m_CONTACT.ROW_ID = rowId;
-                db.M_CONTACT.Add(m_CONTACT);
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+            {           
+                    M_CONTACT m_CONTACT = new M_CONTACT();
+                    m_CONTACT.PERSON_UID = personId;
+                    m_CONTACT.ACTIVE_FLG = contactDetails.ACTIVE_FLG;
+                    m_CONTACT.EMAIL_ADDR = contactDetails.EMAIL_ADDR;
+                    m_CONTACT.EMP_FLG = contactDetails.EMP_FLG;
+                    m_CONTACT.EMP_ID = contactDetails.EMP_ID;
+                    m_CONTACT.FST_NAME = contactDetails.FST_NAME;
+                    m_CONTACT.LAST_NAME = contactDetails.LAST_NAME;
+                    m_CONTACT.LAST_UPD_BY = null;
+                    m_CONTACT.LAST_UPD_DT = null;
+                    m_CONTACT.CREATED_BY = createdBy;
+                    m_CONTACT.CREATED_DT = DateTime.UtcNow;
+                    m_CONTACT.PAR_ROW_ID = contactDetails.PAR_ROW_ID;
+                    m_CONTACT.PHONE_NO = contactDetails.PHONE_NO;
+                    m_CONTACT.BU_ID = buId;
+                    m_CONTACT.ROW_ID = rowId;
+                    db.M_CONTACT.Add(m_CONTACT);
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
             }
             catch (Exception ex)
             {
-                throw ex;
+                TempData["message"]  = "Wrong";
             }
         }
 
@@ -230,37 +230,38 @@ namespace IIDRS.Controllers
         {
             try
             {
-                M_BU m_BU = new M_BU();
-                m_BU.ROW_ID = bUViewModel.ROW_ID;
-                m_BU.CREATED_BY = createdBy;
-                m_BU.CREATED_DT = System.DateTime.Now;
-                m_BU.LAST_UPD_BY = null;
-                m_BU.LAST_UPD_DT = null;
-                m_BU.BU_ID = bUViewModel.BUId;
-                m_BU.BU_NAME = bUViewModel.BUName;
-                m_BU.BU_TYPE = bUViewModel.BUType;
-                m_BU.DU_NAME = bUViewModel.DUName;
-                m_BU.PROJ_ID = bUViewModel.ProjectId;
-                m_BU.PROJ_NAME = bUViewModel.ProjectName;
-                m_BU.BU_FLG = "1";
-                m_BU.PAR_BU_ID = bUViewModel.PAR_BU_ID;
-                m_BU.PAR_ROW_ID = bUViewModel.PAR_ROW_ID;
-                db.M_BU.Add(m_BU);
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                    M_BU m_BU = new M_BU();
+                    m_BU.ROW_ID = bUViewModel.ROW_ID;
+                    m_BU.CREATED_BY = createdBy;
+                    m_BU.CREATED_DT = System.DateTime.Now;
+                    m_BU.LAST_UPD_BY = null;
+                    m_BU.LAST_UPD_DT = null;
+                    m_BU.BU_ID = bUViewModel.BUId;
+                    m_BU.BU_NAME = bUViewModel.BUName;
+                    m_BU.BU_TYPE = bUViewModel.BUType;
+                    m_BU.DU_NAME = bUViewModel.DUName;
+                    m_BU.PROJ_ID = bUViewModel.ProjectId;
+                    m_BU.PROJ_NAME = bUViewModel.ProjectName;
+                    m_BU.BU_FLG = "1";
+                    m_BU.PAR_BU_ID = bUViewModel.PAR_BU_ID;
+                    m_BU.PAR_ROW_ID = bUViewModel.PAR_ROW_ID;
+                    db.M_BU.Add(m_BU);
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
             }
             catch (Exception ex)
             {
-                throw ex;
+                TempData["message"] = "Wrong";
             }
         }
-       
+
+
         [HttpPost]
         public ActionResult EditBusinessUnit(BUViewModel bUViewModel)
         {
@@ -294,7 +295,7 @@ namespace IIDRS.Controllers
             }
             return RedirectToAction("Login2", "Home");
         }
-        
+
         [HttpPost]
         public ActionResult DeleteBusinessUnit(BUViewModel id)
         {
@@ -348,13 +349,17 @@ namespace IIDRS.Controllers
         {
             try
             {
-                var contact = GetContactDetails(contactId);
-                var details = new
+                if (!string.IsNullOrEmpty(contactId))
                 {
-                    contact.EMAIL_ADDR,
-                    contact.PHONE_NO
-                };
-                return Json(details, JsonRequestBehavior.AllowGet);
+                    var contact = GetContactDetails(contactId);
+                    var details = new
+                    {
+                        contact.EMAIL_ADDR,
+                        contact.PHONE_NO
+                    };
+                    return Json(details, JsonRequestBehavior.AllowGet);
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -371,6 +376,35 @@ namespace IIDRS.Controllers
             },
             "ID", "Name", 1);
             ViewBag.ActionList = ActionList;
+        }
+        [HttpPost]
+        public ActionResult ActivateDeactivateUserBU(string id, string isActive)
+        {
+            try
+            {
+                if (isActive == "true")
+                {
+                    isActive = "1";
+                }
+                else
+                {
+                    isActive = "0";
+                }
+                var m_BUnit = db.M_BU.Where(m => m.BU_ID == id).FirstOrDefault();
+                if (m_BUnit != null)
+                {
+                    m_BUnit.BU_FLG = isActive;
+                    m_BUnit.LAST_UPD_BY = Session["LogedUser"].ToString();
+                    m_BUnit.LAST_UPD_DT = DateTime.Now;
+                    db.SaveChanges();
+                    return RedirectToAction("GetAllBU");
+                }
+                return RedirectToAction("Login2", "Home");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Login2", "Home");
+            }
         }
     }
 }

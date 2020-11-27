@@ -118,19 +118,19 @@ function ModoEdicion($row) {
 }
 function rowAcep(but) {
     //Accept the changes to the edition
-
     var $row = $(but).parents('tr');  //access the row
     var $cols = $row.find('td');  //read fields
-    if (!ModoEdicion($row)) return;  //It is already in editing
-    //It is in edit. Editing has to be finished
-    IterarCamposEdit($cols, function ($td) {  //iterate through columns
-        var cont = $td.find('input').val(); //read input content
-        $td.html(cont);  //pin content and remove controls
-    });
-    FijModoNormal(but);
-    params.onEdit($cols);
-    flag = true;
-
+    if (validateData(but)) {
+        if (!ModoEdicion($row)) return;  //It is already in editing
+        //It is in edit. Editing has to be finished
+        IterarCamposEdit($cols, function ($td) {  //iterate through columns
+            var cont = $td.find('input').val(); //read input content
+            $td.html(cont);  //pin content and remove controls
+        });
+        FijModoNormal(but);
+        params.onEdit($cols);
+        flag = true;
+    }
 }
 function rowCancel(but) {
     var $row = $(but).parents('tr');  //accede a la fila
@@ -154,20 +154,21 @@ function rowEdit(but) {
     rowAcep($td)
     var $row = $(but).parents('tr');
     var $cols = $row.find('td');
+    if (validateData(but)) {
+        if (ModoEdicion($row)) return;  //It is already in editing
+        IterarCamposEdit($cols, function ($td) {  //iterate through columnas
+            var cont = $td.html(); //read the content
+            var div = '<div style="display: none;">' + cont + '</div>';  //save content
+            var input = '<input class="form-control input-sm"  value="' + cont.trim() + '">';
+            $td.html(div + input);  //fix content
 
-    if (ModoEdicion($row)) return;  //It is already in editing
-    IterarCamposEdit($cols, function ($td) {  //iterate through columnas
-        var cont = $td.html(); //read the content
-        var div = '<div style="display: none;">' + cont + '</div>';  //save content
-        var input = '<input class="form-control input-sm"  value="' + cont.trim() + '">';
-        $td.html(div + input);  //fix content
-       
-        //Set dropdown for new row contact column
-        var dropdown = "<select id='ddlContacts' class='form-control' style='width: fit-content;'><option> "+cont +" </option></select>";
-        if ($td.hasClass('getId')) {
-            $td.html(div + dropdown);
-        }
-    });
+            //Set dropdown for new row contact column
+            var dropdown = "<select id='ddlContacts' class='form-control' style='width: fit-content;'><option> " + cont + " </option></select>";
+            if ($td.hasClass('getId')) {
+                $td.html(div + dropdown);
+            }
+        });
+    }
     FijModoEdit(but);
 }
 function rowElim(but) {  
@@ -234,7 +235,8 @@ function rowAddNew(tabId) {  //Add row to indicated table.
             $td.html(div + input);
 
             //Set dropdown for new row contact column
-            var dropdown = "<select id='ddlContacts' class='form-control' style='width: fit-content;'><option></option></select>";
+            //var dropdown = "<select id='ddlContacts' class='form-control' style='width: fit-content;'><option></option></select>";
+            var dropdown = "<input list='ddlContacts1' id='ddlContacts' class='form-control listclass'  placeholder='Select' style='width: fit-content;'>" + "<datalist  id='ddlContacts1'></datalist >";
             if ($cols[6].textContent != "dropdown") {
                 $td.html(div + dropdown);
             }
@@ -268,3 +270,25 @@ function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
     });
     return tmp;
 }
+function validateData(but) {
+    var $row = $(but).parents('tr');
+    var $cols = $row.find('td');
+    var status = true;
+    var i = 0
+    var requiredCols = [0,1, 2, 3,4,5,6]
+    IterarCamposEdit($cols, function ($td) {
+        var text = $td.find('input').val();
+        if (requiredCols.indexOf(i) != -1 && text === "")
+        {
+            $td.find('input').addClass('required');
+            status = false;
+        }
+        else
+        {
+            $td.find('input').removeClass('required');
+        }
+        i++;
+    });
+    return status;
+}
+
