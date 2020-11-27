@@ -7,10 +7,10 @@ namespace IIDRS.ViewModel
     {
         //public string ID { get; set; }
 
-        [Display(Name ="Category")]
+        [Display(Name ="Category (*)")]
         public string SURVEY_QUESTION_NAME { get; set; }
 
-        [Display(Name = "Question")]
+        [Display(Name = "Question (*)")]
         [Required(ErrorMessage = "Please enter Question")]
         public string SURVEY_QUESTION_DESC { get; set; }
     }
