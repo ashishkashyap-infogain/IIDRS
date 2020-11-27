@@ -203,17 +203,10 @@ namespace IIDRS.Controllers
                 var res = db.M_CUST_SURVEY
                 .Where(x => x.CUST_SURVEY_NAME == "DELIVERY MANAGEMENT")
                 .AsEnumerable()
-                .Select(x =>
-                {
-                    return new SurveyQuestionCategoryViewModel()
-                    {
-                        ROW_ID = x.ROW_ID,
-                        SURVEY_QUESTION_NAME = x.SURVEY_QUESTION_NAME
-                    };
-                })
+                .Select(x => x.SURVEY_QUESTION_NAME)
                 .Distinct()
                 .ToList();
-                ViewBag.SurveyQuestionCategory = new SelectList(res, "SURVEY_QUESTION_NAME", "SURVEY_QUESTION_NAME");
+                ViewBag.SurveyQuestionCategory = new SelectList(res.Select(x => new SurveyQuestionCategoryViewModel() { ROW_ID = x, SURVEY_QUESTION_NAME = x }), "SURVEY_QUESTION_NAME", "SURVEY_QUESTION_NAME");
                 return View();
             }
             return RedirectToAction("Login2", "Home");
@@ -226,18 +219,13 @@ namespace IIDRS.Controllers
                 ViewBag.Del = "Questionnaire - Executive Management";
                 var res = db.M_CUST_SURVEY
                 .Where(x => x.CUST_SURVEY_NAME == "EXECUTIVE MANAGEMENT")
+                .Distinct()
                 .AsEnumerable()
-                .Select(x =>
-                {
-                    return new SurveyQuestionCategoryViewModel()
-                    {
-                        ROW_ID = x.ROW_ID,
-                        SURVEY_QUESTION_NAME = x.SURVEY_QUESTION_NAME
-                    };
-                })
+                .Select(x => x.SURVEY_QUESTION_NAME)
                 .Distinct()
                 .ToList();
-                ViewBag.SurveyQuestionCategory = new SelectList(res, "SURVEY_QUESTION_NAME", "SURVEY_QUESTION_NAME");
+
+                ViewBag.SurveyQuestionCategory = new SelectList(res.Select(x => new SurveyQuestionCategoryViewModel() { ROW_ID = x, SURVEY_QUESTION_NAME = x }), "SURVEY_QUESTION_NAME", "SURVEY_QUESTION_NAME");
                 return View();
             }
             return RedirectToAction("Login2", "Home");
